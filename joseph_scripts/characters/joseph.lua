@@ -1,5 +1,6 @@
 local JosephChar = {}
 
+local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DAMAGE_REDUCTION = 0.6
 
@@ -17,17 +18,11 @@ function JosephChar:GiveCostumesOnInit(player)
     player:AddNullCostume(hairCostume)
     player:AddNullCostume(stolesCostume)
 
-    local NUMBER_TAROT_CARDS = 22
-    local cardList = {}
-    for itr = 0, NUMBER_TAROT_CARDS do
-        table.insert(cardList, itr)
-    end
-
     local startSeed = Game():GetSeeds():GetStartSeed()
     local rng = RNG()
     rng:SetSeed(startSeed, RECOMMENDED_SHIFT_IDX)
     
-    local randomCard = cardList[rng:RandomInt(NUMBER_TAROT_CARDS)]
+    local randomCard = rng:RandomInt(NUMBER_TAROT_CARDS) + 1
     player:AddCard(randomCard)
 end
 
