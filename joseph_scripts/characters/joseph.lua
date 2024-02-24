@@ -15,8 +15,8 @@ function JosephChar:GiveCostumesOnInit(player)
     local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
     player:RemoveCostume(config)
 
-    player:AddNullCostume(hairCostume)
-    player:AddNullCostume(stolesCostume)
+    -- player:AddNullCostume(hairCostume)
+    -- player:AddNullCostume(stolesCostume)
 
     local startSeed = Game():GetSeeds():GetStartSeed()
     local rng = RNG()

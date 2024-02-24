@@ -1,4 +1,4 @@
-<players root="gfx/characters/costumes/" portraitroot="gfx/ui/stage/" nameimageroot="gfx/ui/boss/">
+<players root="gfx/characters/costumes/" portraitroot="gfx/ui/stage/" nameimageroot="gfx/ui/boss/"> 
     <player name="Joseph"
         skin="character_joseph.png"
         nameimage="playername_joseph.png"
@@ -7,5 +7,7 @@
         portrait="playerportrait_joseph.png"
         skinColor="-1"
         items="286"
+        costume="87"
+        costumeSuffix="joseph"
     />
 </players>
