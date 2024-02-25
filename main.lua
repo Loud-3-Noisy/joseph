@@ -1,7 +1,8 @@
 JosephMod = RegisterMod("Joseph", 1)
-
 if REPENTOGON then
     include("joseph_scripts.characters.joseph")
+    JosephMod.saveManager = include("joseph_scripts.utility.save_manager")
+    JosephMod.saveManager.Init(JosephMod)
 else
     JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, function ()
         local pos = 50
