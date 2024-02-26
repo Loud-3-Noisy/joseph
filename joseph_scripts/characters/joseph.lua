@@ -3,8 +3,6 @@ local JosephChar = {}
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DAMAGE_REDUCTION = 0.6
-local CARD_DISPLAY_X = 60
-local CARD_DISPLAY_Y = 60
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local hairCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_hair.anm2") -- Exact path, with the "resources" folder as the root
 local stolesCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_poncho.anm2") -- Exact path, with the "resources" folder as the root
@@ -32,6 +30,20 @@ local tarotCardAnims = {
     {Card.CARD_SUN, "19_TheSun"},
     {Card.CARD_JUDGEMENT, "20_Judgement"},
     {Card.CARD_WORLD, "21_TheWorld"}
+}
+
+local cardDisplayPosPerPlayer = {
+    --Vector(394, 147),
+    Vector(60, 50), --player 1 top left
+    Vector(332, 50), --player 2 top right
+    Vector(30, 250), --player 3 bottom left
+    Vector(326, 250), --player 4 bottom right but slightly less
+}
+local playerAnchor = {
+    "topleft",
+    "topright",
+    "bottomleft",
+    "bottomright",
 }
 
 local f = Font() -- init font object
@@ -124,7 +136,6 @@ function JosephChar:showChargeBar(player)
         end
         local chargePos = Vector(-30, -70)
         JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargePos),playerData.cardChargeBar)
-        print("peanut")
         playerData.framesHeld = 0
         playerData.manualUse = false
         playerData.card = nil
@@ -169,22 +180,26 @@ JosephMod:AddCallback(ModCallbacks.MC_PRE_USE_CARD, JosephChar.onCardUse)
 
 
 
-function JosephChar:showEnchantment(player)
-    if player == nil then return end
-    local playerType = player:GetPlayerType()
-    if not (playerType == josephType) then return end
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData and playerData.EnchantedCard) then return end
+function JosephChar:showEnchantment()
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if player:GetPlayerType() == josephType then
 
-    local enchantmentDisplay = Sprite()
-    enchantmentDisplay.Scale = Vector(1.5, 1.5)
-    enchantmentDisplay:Load("gfx/ui/ui_CardFronts.anm2",true)
-    enchantmentDisplay:SetFrame(tarotCardAnims[playerData.EnchantedCard][2], 0)
-    enchantmentDisplay:Render(Vector(JosephMod.utility:HUDOffset(CARD_DISPLAY_X, CARD_DISPLAY_Y, 'topleft')),Vector.Zero, Vector.Zero)
-    enchantmentDisplay:Update()
-
+            local playerData = JosephMod.saveManager.GetRunSave(player)
+            if (playerData and playerData.EnchantedCard) then
+        
+                local enchantmentDisplay = Sprite()
+                enchantmentDisplay:Load("gfx/ui/ui_CardFronts.anm2",true)
+                enchantmentDisplay:SetFrame(tarotCardAnims[playerData.EnchantedCard][2], 0)
+                enchantmentDisplay:LoadGraphics()
+                if i == 0 then enchantmentDisplay.Scale = Vector(1.5, 1.5) end
+                local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+                enchantmentDisplay:Render(displayPos)
+            end
+        end
+    end
 end
-JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, JosephChar.showEnchantment, 0)
+JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, JosephChar.showEnchantment)
 
 
 
