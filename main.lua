@@ -1,6 +1,7 @@
 JosephMod = RegisterMod("Joseph", 1)
 if REPENTOGON then
     include("joseph_scripts.characters.joseph")
+    JosephMod.utility = include('joseph_scripts.utility.functions')
     JosephMod.saveManager = include("joseph_scripts.utility.save_manager")
     JosephMod.saveManager.Init(JosephMod)
 else
