@@ -379,6 +379,7 @@ function SaveManager.Load()
 
     if modReference:HasData() then
         local data = json.decode(modReference:LoadData())
+        if data == true or data == false then data = {} end
         saveData = SaveManager.Utility.PatchSaveFile(data, SaveManager.DEFAULT_SAVE)
     end
 
@@ -403,9 +404,7 @@ local function onGameStart(_, player)
 
     skipNextLevelClear = true
     skipNextRoomClear = true
-
     SaveManager.Load()
-
     if newGame then
         dataCache.game = SaveManager.Utility.PatchSaveFile({}, SaveManager.DEFAULT_SAVE.game)
         dataCache.gameNoBackup = SaveManager.Utility.PatchSaveFile({}, SaveManager.DEFAULT_SAVE.gameNoBackup)
@@ -505,7 +504,7 @@ end
 ]]
 
 -- Initializes the save manager.
----@param mod table @The reference to your mod. This is the table that is returned when you call `RegisterMod`.
+---@param mod table @The reference to your Mod. This is the table that is returned when you call `RegisterMod`.
 function SaveManager.Init(mod)
     modReference = mod
 

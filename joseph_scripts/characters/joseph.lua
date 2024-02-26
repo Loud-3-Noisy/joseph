@@ -147,10 +147,12 @@ function JosephChar:showChargeBar(player)
         JosephChar:RemoveCard(player, playerData.card)
         SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
         playerData.EnchantedCard = playerData.card
+        JosephMod.cardEffects:InitCardEffect(player, playerData.card)
         playerData.usingCard = false
         playerData.framesHeld = 0
         playerData.manualUse = false
         playerData.card = nil
+        JosephMod.saveManager.Save()
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, JosephChar.showChargeBar, 0)
@@ -189,10 +191,15 @@ function JosephChar:showEnchantment()
             if (playerData and playerData.EnchantedCard) then
         
                 local enchantmentDisplay = Sprite()
-                enchantmentDisplay:Load("gfx/ui/ui_CardFronts.anm2",true)
+                if i == 0 then
+                    --enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
+                    enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
+                else
+                    enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
+                end
                 enchantmentDisplay:SetFrame(tarotCardAnims[playerData.EnchantedCard][2], 0)
                 enchantmentDisplay:LoadGraphics()
-                if i == 0 then enchantmentDisplay.Scale = Vector(1.5, 1.5) end
+                --if i ~= 0 then enchantmentDisplay.Scale = Vector(0.75, 0.75) end
                 local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
                 enchantmentDisplay:Render(displayPos)
             end
