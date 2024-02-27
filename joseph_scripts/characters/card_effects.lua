@@ -100,6 +100,17 @@ end
 function CardEffects:addRoomEffect()
 
     local room = Game():GetRoom()
+    local centerPos = room:IsLShapedRoom() and Vector(580, 420) or room:GetCenterPos()
+    local offset = 40
+
+
+    local roomData = JosephMod.saveManager.GetRoomSave(nil)
+	if roomData then 
+        roomData.hasStarsPortal = false
+        roomData.hasEmporerPortal = false
+        roomData.hasFoolPortal = false
+        roomData.hasMoonPortal = false
+    end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         local playerData = JosephMod.saveManager.GetRunSave(player)
@@ -128,6 +139,32 @@ function CardEffects:addRoomEffect()
 
         if playerData.EnchantedCard == Card.CARD_DEVIL then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, true)
+        end
+
+        if room:IsClear() and room:IsFirstVisit() then
+            if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
+                JosephMod.cardEffects:spawnPortal(pos, player, 0)
+                roomData.hasStarsPortal = true
+            end
+
+            if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
+                JosephMod.cardEffects:spawnPortal(pos, player, 2)
+                roomData.hasMoonPortal = true
+            end
+
+            if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
+                JosephMod.cardEffects:spawnPortal(pos, player, 1)
+                roomData.hasEmporerPortal = true
+            end
+
+            if playerData.EnchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
+                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
+                JosephMod.cardEffects:spawnPortal(pos, player, 3)
+                roomData.hasFoolPortal = true
+            end
         end
 
 
