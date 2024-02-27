@@ -75,7 +75,11 @@ function JosephChar:HandleStartingStats(player, flag)
     if player:GetPlayerType() ~= josephType then return end
 
     if flag == CacheFlag.CACHE_DAMAGE then
-        player.Damage = player.Damage - DAMAGE_REDUCTION
+        local damageModifier = DAMAGE_REDUCTION
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
+            damageModifier = damageModifier*0.2
+        end
+        player.Damage = player.Damage - damageModifier
     end
 end
 
@@ -192,8 +196,8 @@ function JosephChar:showEnchantment()
         
                 local enchantmentDisplay = Sprite()
                 if i == 0 then
-                    --enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
-                    enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
+                    enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
+                    --enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
                 else
                     enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
                 end

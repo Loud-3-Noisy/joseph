@@ -22,4 +22,24 @@ function utilityFunctions:HUDOffset(x, y, anchor)
     return math.floor(xoffset + 0.5), math.floor(yoffset + 0.5)
 end
 
+function utilityFunctions:AddDamage(player, amount)
+    local damageModifier = amount
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
+        damageModifier = damageModifier*0.2
+    end
+    player.Damage = player.Damage - damageModifier
+end
+
+
+function utilityFunctions:AnyPlayerHasEnchantment(enchantment)
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        local playerData = JosephMod.saveManager.GetRunSave(player)
+        if (playerData and playerData.EnchantedCard and playerData.EnchantedCard == enchantment) then
+            return true
+        end
+    end
+    return false
+end
+
 return utilityFunctions

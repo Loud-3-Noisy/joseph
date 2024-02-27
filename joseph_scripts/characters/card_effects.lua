@@ -1,4 +1,24 @@
 local CardEffects = {}
+local itemManager = JosephMod.HiddenItemManager
+local utility = JosephMod.utility
+function CardEffects:addCardStats(player, flag)
+    local playerData = JosephMod.saveManager.GetRunSave(player)
+    if not (playerData and playerData.EnchantedCard) then return end
+
+    if playerData.EnchantedCard == Card.CARD_EMPRESS and flag == CacheFlag.CACHE_DAMAGE then
+        utility:AddDamage(player, -0.5)
+    end
+
+    if playerData.EnchantedCard == Card.CARD_STRENGTH and flag == CacheFlag.CACHE_DAMAGE then
+        player.Damage = player.Damage * 0.83
+    end
+
+    if playerData.EnchantedCard == Card.CARD_DEVIL and flag == CacheFlag.CACHE_DAMAGE then
+        utility:AddDamage(player, -0.5)
+    end
+
+end
+JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, CardEffects.addCardStats)
 
 
 function CardEffects:InitCardEffect(player, card)
@@ -6,6 +26,18 @@ function CardEffects:InitCardEffect(player, card)
         player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER, true)
     else
         player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER)
+    end
+
+    if card == Card.CARD_EMPRESS then
+        player:UseCard(Card.CARD_EMPRESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD)
+    else
+        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON)
+    end
+
+    if card == Card.CARD_CHARIOT then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_TAURUS, 0, 1, ENCHANTMENT)
+    else
+        itemManager:Remove(player, CollectibleType.COLLECTIBLE_TAURUS, ENCHANTMENT)
     end
 
     if card == Card.CARD_STRENGTH then
@@ -16,30 +48,53 @@ function CardEffects:InitCardEffect(player, card)
         -- player:EvaluateItems()
     end
 
+    if card == Card.CARD_HANGED_MAN then
+        player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE, true)
+    else
+        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE)
+    end
+
+    if card == Card.CARD_DEATH then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_DRY_BABY, 0, 1, ENCHANTMENT)
+    else
+        itemManager:Remove(player, CollectibleType.COLLECTIBLE_DRY_BABY, ENCHANTMENT)
+    end
+
     if card == Card.CARD_DEVIL then
         player:UseActiveItem(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, false)
     else
         player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
     end
-end
 
-function CardEffects:addCardStats(player, flag)
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData and playerData.EnchantedCard) then return end
-
-    if playerData.EnchantedCard == Card.CARD_STRENGTH and flag == CacheFlag.CACHE_DAMAGE then
-        player.Damage = player.Damage * 0.83
+    if card == Card.CARD_TOWER then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, 0, 1, ENCHANTMENT)
+    else
+        itemManager:Remove(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, ENCHANTMENT)
     end
 
-    if playerData.EnchantedCard == Card.CARD_DEVIL and flag == CacheFlag.CACHE_DAMAGE then
-        player.Damage = player.Damage - 0.5
+    if card == Card.CARD_WORLD then
+        Game():GetLevel():ShowMap()
+    else
+        itemManager:Remove(player, CollectibleType.COLLECTIBLE_MIND, ENCHANTMENT)
     end
 
+    if card == Card.CARD_JUDGEMENT then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, 0, 1, ENCHANTMENT)
+    else
+        itemManager:Remove(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, ENCHANTMENT)
+    end
+
+    if card == Card.CARD_SUN then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_SOL, 0, 1, ENCHANTMENT)
+    else
+        itemManager:Remove(player, CollectibleType.COLLECTIBLE_SOL, ENCHANTMENT)
+    end
 end
-JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, CardEffects.addCardStats)
 
 
 function CardEffects:addRoomEffect()
+
+    local room = Game():GetRoom()
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         local playerData = JosephMod.saveManager.GetRunSave(player)
@@ -50,8 +105,20 @@ function CardEffects:addRoomEffect()
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER, true)
         end
 
+        if playerData.EnchantedCard == Card.CARD_HIGH_PRIESTESS and (room:IsFirstVisit() or not room:IsClear()) then
+            player:UseCard(Card.CARD_HIGH_PRIESTESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD | UseFlag.USE_NOANIM)
+        end
+
+        if playerData.EnchantedCard == Card.CARD_EMPRESS then
+            player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON, true)
+        end
+
         if playerData.EnchantedCard == Card.CARD_STRENGTH then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM, true)
+        end
+
+        if playerData.EnchantedCard == Card.CARD_HANGED_MAN then
+            player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE, true)
         end
 
         if playerData.EnchantedCard == Card.CARD_DEVIL then
@@ -110,6 +177,15 @@ function CardEffects:RoomClearEffect(_, spawnPos)
 end
 JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, CardEffects.RoomClearEffect)
 
+
+
+function CardEffects.ApplyNewFloorEffect(curses)
+    if not utility:AnyPlayerHasEnchantment(Card.CARD_WORLD) then return end
+    Game():GetLevel():ShowMap()
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, CardEffects.ApplyNewFloorEffect)
+
+
 local function isDoor(pos)
 	local gridEntity = Game():GetRoom():GetGridEntityFromPos(pos)
 	if gridEntity then
@@ -123,6 +199,7 @@ function CardEffects:spawnPortal(pos, player, portalType)
     local existingPortals = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
     local canFly = player.CanFly
     local tempNPC, pathFinder
+    local attempts = 0
     repeat
         if not canFly then
             tempNPC = Isaac.Spawn(EntityType.ENTITY_GAPER, 0, 0, pos, Vector.Zero, nil):ToNPC()
@@ -146,7 +223,8 @@ function CardEffects:spawnPortal(pos, player, portalType)
             pos = Isaac.GetFreeNearPosition(pos, marg)
         end
         if tempNPC then tempNPC:Remove() end
-    until not overlaps
+        attempts = attempts + 1 
+    until not overlaps or attempts > 20
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, pos, Vector.Zero, player):ToEffect()
 end
 
