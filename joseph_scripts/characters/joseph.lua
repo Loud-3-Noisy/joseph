@@ -46,8 +46,8 @@ local playerAnchor = {
     "bottomright",
 }
 
-local f = Font() -- init font object
-f:Load("font/terminus.fnt")
+    local f = Font() -- init font object
+    f:Load("font/terminus.fnt")
 
 function JosephChar:GiveCostumesOnInit(player)
     if player:GetPlayerType() ~= josephType then return end

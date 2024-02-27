@@ -1,6 +1,11 @@
 local CardEffects = {}
 local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
+
+local RED_HEART_REPLACE_CHANCE = 0.25
+local SOUL_HEART_REPLACE_CHANCE = 0.143 -- 1/7
+local JUSTICE_DROP_REPLACE_CHANCE = 0.20 
+
 function CardEffects:addCardStats(player, flag)
     local playerData = JosephMod.saveManager.GetRunSave(player)
     if not (playerData and playerData.EnchantedCard) then return end
@@ -131,11 +136,13 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, CardEffects.addRoomEffect)
 
 
-function CardEffects:RoomClearEffect(_, spawnPos)
+function CardEffects:RoomClearEffect(rng, spawnPos)
     local room = Game():GetRoom()
+    local roomType = room:GetType()
     local centerPos = room:IsLShapedRoom() and Vector(580, 420) or room:GetCenterPos()
     local portalsCount = 0
     local offset = 40
+    local overrideClearReward = false
 
     local roomData = JosephMod.saveManager.GetRoomSave(nil)
 	if roomData then 
@@ -171,6 +178,36 @@ function CardEffects:RoomClearEffect(_, spawnPos)
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
                 JosephMod.cardEffects:spawnPortal(pos, player, 3)
                 roomData.hasFoolPortal = true
+            end
+
+
+            if roomType ~= RoomType.ROOM_BOSS then
+
+                if playerData.EnchantedCard == Card.CARD_LOVERS and rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE then
+                    SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                    local pos = room:FindFreePickupSpawnPosition(spawnPos)
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 1, pos, Vector(0, 0), nil)
+                end
+
+                if playerData.EnchantedCard == Card.CARD_HIEROPHANT and rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE then
+                    SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                    local pos = room:FindFreePickupSpawnPosition(spawnPos)
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 3, pos, Vector(0, 0), nil)
+                end
+
+                if playerData.EnchantedCard == Card.CARD_JUSTICE and rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE then
+                    SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                    for i=10, 40, 10 do
+                        if rng:RandomFloat() <= 0.90 then
+                            local pos = room:FindFreePickupSpawnPosition(spawnPos)
+                            Isaac.Spawn(EntityType.ENTITY_PICKUP, i, 0, pos, Vector(0, 0), nil)
+                        end
+                    end
+                end
+
+                local level = Game():GetLevel()
+                local roomDesc = level:GetRoomByIdx(level:GetCurrentRoomIndex())
+                roomDesc.AwardSeed = rng:GetSeed()
             end
         end
     end
@@ -208,7 +245,6 @@ function CardEffects:spawnPortal(pos, player, portalType)
         end
         local overlaps
 
-        print(pathFinder:HasPathToPos(player.Position, true))
         local scale = 40
         local X = pos.X
         local Y = pos.Y
@@ -217,7 +253,6 @@ function CardEffects:spawnPortal(pos, player, portalType)
 	    local Left = Vector(X - scale, Y)
 	    local Right = Vector(X + scale, Y)
         if ((pathFinder and not pathFinder:HasPathToPos(player.Position, true)) or isDoor(Up) or isDoor(Down) or isDoor(Left) or isDoor(Right)) then
-            print("overlaps")
             overlaps = true
             marg = marg + 10
             pos = Isaac.GetFreeNearPosition(pos, marg)
