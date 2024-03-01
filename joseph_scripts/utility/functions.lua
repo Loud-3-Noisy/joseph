@@ -1,5 +1,28 @@
 local utilityFunctions  = {}
 
+
+JosephMod.ScheduleData = {}
+function JosephMod.Schedule(delay, func, args)
+  table.insert(JosephMod.ScheduleData, {
+    Time = Game():GetFrameCount(),
+    Delay = delay,
+    Call = func,
+    Args = args
+  })
+end
+
+JosephMod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
+  local time = Game():GetFrameCount()
+  for i = #JosephMod.ScheduleData, 1, -1 do
+    local data = JosephMod.ScheduleData[i]
+    if data.Time + data.Delay <= time then
+      data.Call(table.unpack(data.Args))
+      table.remove(JosephMod.ScheduleData, i)
+    end
+  end
+end)
+
+
 function utilityFunctions:HUDOffset(x, y, anchor)
     local notches = math.floor(Options.HUDOffset * 10 + 0.5)
     local xoffset = (notches*2)
@@ -27,7 +50,7 @@ function utilityFunctions:AddDamage(player, amount)
     if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
         damageModifier = damageModifier*0.2
     end
-    player.Damage = player.Damage - damageModifier
+    player.Damage = player.Damage + damageModifier
 end
 
 

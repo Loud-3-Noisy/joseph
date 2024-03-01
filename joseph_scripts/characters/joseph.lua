@@ -1,5 +1,8 @@
 local JosephChar = {}
 
+local itemManager = JosephMod.HiddenItemManager
+local utility = JosephMod.utility
+
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DAMAGE_REDUCTION = 0.6
@@ -49,15 +52,14 @@ local playerAnchor = {
     local f = Font() -- init font object
     f:Load("font/terminus.fnt")
 
-function JosephChar:GiveCostumesOnInit(player)
+function JosephChar:onPlayerInit(player)
     if player:GetPlayerType() ~= josephType then return end
 
-    player:AddInnateCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK, 1)
-    local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
-    player:RemoveCostume(config)
 
-    -- player:AddNullCostume(hairCostume)
-    -- player:AddNullCostume(stolesCostume)
+    JosephMod.Schedule(1, function ()
+        local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
+        player:RemoveCostume(config)
+    end,{})
 
     local startSeed = Game():GetSeeds():GetStartSeed()
     local rng = RNG()
@@ -66,9 +68,29 @@ function JosephChar:GiveCostumesOnInit(player)
     local randomCard = rng:RandomInt(NUMBER_TAROT_CARDS) + 1
     player:AddCard(randomCard)
 end
+JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
-JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.GiveCostumesOnInit)
 
+function JosephChar:onNewRoom()
+    for i = 0, Game():GetNumPlayers() - 1 do
+        local player = Isaac.GetPlayer(i)
+        if player:GetPlayerType() == josephType then
+            local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
+            player:RemoveCostume(config)
+        end
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, JosephChar.onNewRoom)
+
+
+JosephMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+
+    if player:GetPlayerType() == josephType then
+        itemManager:CheckStack(player, CollectibleType.COLLECTIBLE_STARTER_DECK, 1, JOSEPH)
+    else
+        itemManager:CheckStack(player, CollectibleType.COLLECTIBLE_STARTER_DECK, 0, JOSEPH)
+    end
+end)
 
 
 function JosephChar:HandleStartingStats(player, flag)
@@ -82,7 +104,6 @@ function JosephChar:HandleStartingStats(player, flag)
         player.Damage = player.Damage - damageModifier
     end
 end
-
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, JosephChar.HandleStartingStats)
 
 
@@ -111,11 +132,17 @@ function JosephChar:showChargeBar(player)
     end
     
     --use the card if player presses for less than 15 frames
-    if playerData.usingCard == false and playerData.framesHeld < 15 then
+    if playerData.usingCard == false and playerData.framesHeld < 20 then
         playerData.usingCard = false
         playerData.framesHeld = 0
         playerData.manualUse = true
-        player:UseCard(playerData.card)
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
+            player:UseCard(playerData.card)
+            player:UseCard(playerData.card, UseFlag.USE_CARBATTERY)
+        else
+            player:UseCard(playerData.card)
+        end
+
         playerData.manualUse = false
         JosephChar:RemoveCard(player, playerData.card)
         playerData.card = nil
