@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="3/1/2024 1:24:36 AM" Version="106" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="3/1/2024 6:39:41 PM" Version="107" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="familiar\lilslotmachine.png" Id="0"/>
+			<Spritesheet Path="lilslotmachine.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

@@ -1,6 +1,7 @@
 local CardEffects = {}
 local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
+local enums = JosephMod.enums
 
 local RED_HEART_REPLACE_CHANCE = 0.25
 local SOUL_HEART_REPLACE_CHANCE = 0.143 -- 1/7
@@ -43,6 +44,34 @@ function CardEffects:InitCardEffect(player, card)
         itemManager:Add(player, CollectibleType.COLLECTIBLE_TAURUS, 0, 1, ENCHANTMENT)
     else
         itemManager:Remove(player, CollectibleType.COLLECTIBLE_TAURUS, ENCHANTMENT)
+    end
+
+    if card == Card.CARD_WHEEL_OF_FORTUNE then
+
+        if itemManager:Has(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT) then
+            itemManager:Remove(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
+        end
+        if itemManager:Has(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT) then
+            itemManager:Remove(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
+        end
+
+        JosephMod.Schedule(3, function ()
+            local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
+            local rand = rng:RandomInt(2) + 1
+            if rand == 1 then
+                itemManager:Add(player, enums.Collectibles.LIL_SLOT_MACHINE, 0, 1, ENCHANTMENT)
+            else
+                itemManager:Add(player, enums.Collectibles.LIL_FORTUNE_TELLER, 0, 1, ENCHANTMENT)
+            end
+        end,{})
+
+    else
+        if itemManager:Has(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT) then
+            itemManager:Remove(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
+        end
+        if itemManager:Has(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT) then
+            itemManager:Remove(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
+        end
     end
 
     if card == Card.CARD_STRENGTH then

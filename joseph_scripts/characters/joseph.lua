@@ -237,7 +237,14 @@ function JosephChar:showEnchantment()
         end
     end
 end
-JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, JosephChar.showEnchantment)
+
+function JosephChar:OnHUDRender()
+    for i = 0, Game():GetNumPlayers()-1 do
+        local player = Game():GetPlayer(i)
+        JosephChar.showEnchantment(player)
+    end
+  end
+JosephMod:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, JosephChar.OnHUDRender)
 
 
 

@@ -1,0 +1,11 @@
+<entities anm2root="gfx/" version="5" deathanm2="gfx/death enemies.anm2">
+
+    <entity anm2path="familiar/lil_slot_machine.anm2" name="Lil Slot Machine Familiar" id="3" tags="cansacrifice"
+        collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+
+        <entity anm2path="familiar/lil_fortune_teller.anm2" name="Lil Fortune Teller Familiar" id="3" tags="cansacrifice"
+        collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+
+</entities>
