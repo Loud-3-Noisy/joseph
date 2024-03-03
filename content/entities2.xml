@@ -4,7 +4,11 @@
         collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
 
-        <entity anm2path="familiar/lil_fortune_teller.anm2" name="Lil Fortune Teller Familiar" id="3" tags="cansacrifice"
+    <entity anm2path="familiar/lil_fortune_teller.anm2" name="Lil Fortune Teller Familiar" id="3" tags="cansacrifice"
+        collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
+    </entity>
+
+    <entity anm2path="familiar/lil_blood_bank.anm2" name="Lil Blood Bank Familiar" id="3" tags="cansacrifice"
         collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
 

@@ -1,7 +1,9 @@
 <items gfxroot="gfx/items/" deathanm2="gfx/death_items.anm2" version="1">
-    <familiar id="1" name="Lil Slot Machine" description="Gambling" gfx="lil_slot_machine.png" hidden="true" tags="noeden" quality="0" />
+    <familiar id="1" name="Lil Slot Machine" description="Gambling" gfx="lil_slot_machine.png" hidden="true" tags="noeden" quality="1" />
 
-    <familiar id="1" name="Lil Fortune Teller" description="Gambling 2" gfx="lil_fortune_teller.png" hidden="true" tags="noeden" quality="0" />
+    <familiar id="2" name="Lil Fortune Teller" description="Gambling 2" gfx="lil_fortune_teller.png" hidden="true" tags="noeden" quality="2" />
+
+    <familiar id="3" name="Lil Blood Bank" description="Gambling 3" gfx="lil_blood_bank.png" hidden="true" tags="noeden" quality="2" />
 
 
 </items>

@@ -49,8 +49,20 @@ local playerAnchor = {
     "bottomright",
 }
 
-    local f = Font() -- init font object
-    f:Load("font/terminus.fnt")
+local f = Font() -- init font object
+f:Load("font/terminus.fnt")
+
+function JosephChar:onRunStart(isContinued)
+    if isContinued == true then return end
+    local playerData = JosephMod.saveManager.GetRunSave()
+    local startSeed = Game():GetSeeds():GetStartSeed()
+    local rng = RNG()
+    rng:SetSeed(startSeed, RECOMMENDED_SHIFT_IDX)
+    playerData.RunRNG = rng
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, JosephChar.onRunStart)
+
+
 
 function JosephChar:onPlayerInit(player)
     if player:GetPlayerType() ~= josephType then return end
@@ -271,6 +283,31 @@ function JosephChar:ChargeBarRender(Meter,IsCharging,pos,Sprite) --Function cred
     Sprite:Render(render_pos,Vector.Zero, Vector.Zero)
     Sprite:Update()
 end
+
+function JosephChar:OnHit(entity, amount, flags, source, countDown)
+    local player = entity:ToPlayer()
+    if player:GetPlayerType() ~= josephType then return end
+    local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
+    if flags & fakeDamageFlags > 0 then return end
+
+    local playerData = JosephMod.saveManager.GetRunSave()
+
+    local rng = playerData.RunRNG
+
+    local randomFloat = rng:RandomFloat()
+    print(randomFloat)
+    if randomFloat < 0.33 then
+        local playerData = JosephMod.saveManager.GetRunSave(player)
+        if playerData.EnchantedCard ~= nil then
+            playerData.EnchantedCard = nil
+            JosephMod.cardEffects:InitCardEffect(player, nil)
+            SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+        end
+        playerData.RunRNG = rng:GetSeed()
+    end
+
+end
+JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityType.ENTITY_PLAYER)
 
 function JosephChar:RemoveCard(player, card)
     if player:GetCard(0) == card then
