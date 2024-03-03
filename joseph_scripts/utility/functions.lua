@@ -1,6 +1,5 @@
 local utilityFunctions  = {}
 
-
 JosephMod.ScheduleData = {}
 function JosephMod.Schedule(delay, func, args)
   table.insert(JosephMod.ScheduleData, {
@@ -22,6 +21,19 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
   end
 end)
 
+function utilityFunctions:toTearsPerSecond(maxFireDelay)
+  return 30 / (maxFireDelay + 1)
+end
+
+function utilityFunctions:toMaxFireDelay(tearsPerSecond)
+  return (30 / tearsPerSecond) - 1
+end
+
+function utilityFunctions:addTearMultiplier(player, multiplier)
+  local tearsPerSecond = JosephMod.utility:toTearsPerSecond(player.MaxFireDelay)
+  tearsPerSecond = tearsPerSecond * multiplier
+  player.MaxFireDelay = JosephMod.utility:toMaxFireDelay(tearsPerSecond)
+end
 
 function utilityFunctions:HUDOffset(x, y, anchor)
     local notches = math.floor(Options.HUDOffset * 10 + 0.5)

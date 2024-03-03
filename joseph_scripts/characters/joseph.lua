@@ -109,11 +109,19 @@ function JosephChar:HandleStartingStats(player, flag)
     if player:GetPlayerType() ~= josephType then return end
 
     if flag == CacheFlag.CACHE_DAMAGE then
-        local damageModifier = DAMAGE_REDUCTION
-        if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
-            damageModifier = damageModifier*0.2
-        end
-        player.Damage = player.Damage - damageModifier
+        -- local damageModifier = DAMAGE_REDUCTION
+        -- if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
+        --     damageModifier = damageModifier*0.2
+        -- end
+        player.Damage = player.Damage * 0.85
+    end
+
+    if flag == CacheFlag.CACHE_FIREDELAY then
+        utility:addTearMultiplier(player, 1.1)
+    end
+
+    if flag == CacheFlag.CACHE_SPEED then
+        player.MoveSpeed = player.MoveSpeed - 0.1
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, JosephChar.HandleStartingStats)
