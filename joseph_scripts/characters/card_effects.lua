@@ -94,6 +94,20 @@ function CardEffects:InitCardEffect(player, card)
         itemManager:Remove(player, CollectibleType.COLLECTIBLE_DRY_BABY, ENCHANTMENT)
     end
 
+    if card == Card.CARD_TEMPERANCE then
+        if itemManager:Has(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT) then
+            itemManager:Remove(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
+        end
+
+        JosephMod.Schedule(3, function ()
+            itemManager:Add(player, enums.Collectibles.LIL_BLOOD_BANK, 0, 1, ENCHANTMENT)
+        end,{})
+    else
+        if itemManager:Has(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT) then
+            itemManager:Remove(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
+        end
+    end
+
     if card == Card.CARD_DEVIL then
         player:UseActiveItem(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, false)
     else

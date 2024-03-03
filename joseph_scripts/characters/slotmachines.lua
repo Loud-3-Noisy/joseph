@@ -4,6 +4,7 @@ local enums = JosephMod.enums
 local BUM_PAYOUT_DISTANCE_SQR = 65*65
 local LIL_SLOT_COIN_COST = 3
 local LIL_FORTUNE_TELLER_COIN_COST = 5
+local LIL_BLOOD_BANK_HEART_COST = 1
 
 ---@class EntityToSpawn
 ---@field type EntityType
@@ -199,6 +200,29 @@ local lilSlotPickups = {
 	}}
 }
 
+local redHeartPickups = {
+	{reward = 2, value = {
+		variant = PickupVariant.PICKUP_HEART,
+		subtype = HeartSubType.HEART_FULL
+	}},
+	{reward = 2, value = {
+		variant = PickupVariant.PICKUP_HEART,
+		subtype = HeartSubType.HEART_HALF
+	}},
+	{reward = 1, value = {
+		variant = PickupVariant.PICKUP_HEART,
+		subtype = HeartSubType.HEART_ROTTEN
+	}},
+	{reward = 1, value = {
+		variant = PickupVariant.PICKUP_HEART,
+		subtype = HeartSubType.HEART_BLENDED
+	}, spawn = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_HEART,
+		subtype = HeartSubType.HEART_HALF_SOUL
+	}},
+}
+
 
 AddBumFamiliar(enums.Familiars.LIL_SLOT_MACHINE_FAMILIAR, enums.Collectibles.LIL_SLOT_MACHINE, false, LIL_SLOT_COIN_COST, lilSlotPickups, {
 	{chance = 10, value = {
@@ -248,5 +272,18 @@ AddBumFamiliar(enums.Familiars.LIL_FORTUNE_TELLER_FAMILIAR, enums.Collectibles.L
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TRINKET,
 		subtype = 0
+	}},
+})
+
+AddBumFamiliar(enums.Familiars.LIL_BLOOD_BANK_FAMILIAR, enums.Collectibles.LIL_BLOOD_BANK, false, LIL_BLOOD_BANK_HEART_COST, redHeartPickups, {
+	{chance = 200, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_COIN,
+		subtype = 0
+	}},
+	{chance = 1, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_TRINKET,
+		subtype = 32
 	}},
 })
