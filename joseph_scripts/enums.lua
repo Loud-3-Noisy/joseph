@@ -41,4 +41,9 @@ enums.Slots = {
 
 }
 
+enums.Callbacks = {
+
+    JOSEPH_PRE_CARD_ENCHANT = "JOSEPH_PRE_CARD_ENCHANT"
+}
+
 JosephMod.enums = enums

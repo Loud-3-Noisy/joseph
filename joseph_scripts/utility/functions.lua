@@ -1,4 +1,5 @@
 local utilityFunctions  = {}
+local itemManager = JosephMod.HiddenItemManager
 
 JosephMod.ScheduleData = {}
 function JosephMod.Schedule(delay, func, args)
@@ -75,6 +76,12 @@ function utilityFunctions:AnyPlayerHasEnchantment(enchantment)
         end
     end
     return false
+end
+
+function utilityFunctions:TryRemoveInnateCollectible(player, collectible, group)
+  if itemManager:Has(player, collectible, group) then
+    itemManager:Remove(player, collectible, group)
+  end
 end
 
 return utilityFunctions

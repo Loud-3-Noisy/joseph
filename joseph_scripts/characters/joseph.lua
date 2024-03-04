@@ -63,19 +63,17 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, JosephChar.onRunStart)
 
 
-
+--Give random card on player init
 function JosephChar:onPlayerInit(player)
     if player:GetPlayerType() ~= josephType then return end
-
 
     JosephMod.Schedule(1, function ()
         local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
         player:RemoveCostume(config)
     end,{})
 
-    local startSeed = Game():GetSeeds():GetStartSeed()
     local rng = RNG()
-    rng:SetSeed(startSeed, RECOMMENDED_SHIFT_IDX)
+    rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
     
     local randomCard = rng:RandomInt(NUMBER_TAROT_CARDS) + 1
     player:AddCard(randomCard)
@@ -83,6 +81,7 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
 
+--Remove starter deck costume every room in case it reappears
 function JosephChar:onNewRoom()
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
@@ -95,6 +94,7 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, JosephChar.onNewRoom)
 
 
+--Make sure Joseph always has starter deck
 JosephMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if player:GetPlayerType() == josephType then
@@ -105,14 +105,11 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 end)
 
 
+--Modify starting stats
 function JosephChar:HandleStartingStats(player, flag)
     if player:GetPlayerType() ~= josephType then return end
 
     if flag == CacheFlag.CACHE_DAMAGE then
-        -- local damageModifier = DAMAGE_REDUCTION
-        -- if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
-        --     damageModifier = damageModifier*0.2
-        -- end
         player.Damage = player.Damage * 0.85
     end
 
@@ -197,8 +194,9 @@ function JosephChar:showChargeBar(player)
         player:AnimateCard(playerData.card)
         JosephChar:RemoveCard(player, playerData.card)
         SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
-        playerData.EnchantedCard = playerData.card
+        JosephMod.cardEffects:RemoveCardEffect(player, playerData.EnchantedCard)
         JosephMod.cardEffects:InitCardEffect(player, playerData.card)
+        playerData.EnchantedCard = playerData.card
         playerData.usingCard = false
         playerData.framesHeld = 0
         playerData.manualUse = false
@@ -229,39 +227,42 @@ function JosephChar:onCardUse(card, player, useflags)
         return true
     end
 end
-JosephMod:AddCallback(ModCallbacks.MC_PRE_USE_CARD, JosephChar.onCardUse)
+JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_CARD, CallbackPriority.IMPORTANT, JosephChar.onCardUse)
 
 
 
-function JosephChar:showEnchantment()
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if player:GetPlayerType() == josephType then
+function JosephChar:showEnchantment(player, i)
 
-            local playerData = JosephMod.saveManager.GetRunSave(player)
-            if (playerData and playerData.EnchantedCard) then
-        
-                local enchantmentDisplay = Sprite()
-                if i == 0 then
-                    enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
-                    --enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
-                else
-                    enchantmentDisplay:Load("gfx/ui/ui_cardfronts.anm2",true)
-                end
-                enchantmentDisplay:SetFrame(tarotCardAnims[playerData.EnchantedCard][2], 0)
-                enchantmentDisplay:LoadGraphics()
-                --if i ~= 0 then enchantmentDisplay.Scale = Vector(0.75, 0.75) end
-                local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
-                enchantmentDisplay:Render(displayPos)
-            end
+    if player == nil then return end
+    if player:GetPlayerType() ~= josephType then return end
+
+    local playerData = JosephMod.saveManager.GetRunSave(player)
+    if not (playerData and playerData.EnchantedCard) then return end
+    local enchantedCard =  playerData.EnchantedCard
+    local enchantmentDisplay = Sprite()
+
+    if i == 0 then
+        enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
+        enchantmentDisplay:SetFrame("CardFronts", enchantedCard - 1)
+    else
+        enchantmentDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
+        if enchantedCard < 23 then
+            enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
+        else
+            enchantmentDisplay:SetFrame("CardFronts", enchantedCard - 1)
         end
     end
+
+    enchantmentDisplay:LoadGraphics()
+    local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+    enchantmentDisplay:Render(displayPos)
 end
+
 
 function JosephChar:OnHUDRender()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
-        JosephChar.showEnchantment(player)
+        JosephChar:showEnchantment(player, i)
     end
   end
 JosephMod:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, JosephChar.OnHUDRender)

@@ -30,30 +30,20 @@ JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, CardEffects.addCardStats)
 function CardEffects:InitCardEffect(player, card)
     if card == Card.CARD_MAGICIAN then
         player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER, true)
-    else
-        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER)
     end
 
     if card == Card.CARD_EMPRESS then
         player:UseCard(Card.CARD_EMPRESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD)
-    else
-        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON)
     end
 
     if card == Card.CARD_CHARIOT then
         itemManager:Add(player, CollectibleType.COLLECTIBLE_TAURUS, 0, 1, ENCHANTMENT)
-    else
-        itemManager:Remove(player, CollectibleType.COLLECTIBLE_TAURUS, ENCHANTMENT)
     end
 
     if card == Card.CARD_WHEEL_OF_FORTUNE then
 
-        if itemManager:Has(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT) then
-            itemManager:Remove(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
-        end
-        if itemManager:Has(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT) then
-            itemManager:Remove(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
-        end
+        utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
+        utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
 
         JosephMod.Schedule(3, function ()
             local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
@@ -64,80 +54,148 @@ function CardEffects:InitCardEffect(player, card)
                 itemManager:Add(player, enums.Collectibles.LIL_FORTUNE_TELLER, 0, 1, ENCHANTMENT)
             end
         end,{})
-
-    else
-        if itemManager:Has(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT) then
-            itemManager:Remove(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
-        end
-        if itemManager:Has(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT) then
-            itemManager:Remove(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
-        end
     end
 
     if card == Card.CARD_STRENGTH then
         player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM, true)
-    else
-        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM)
-        -- player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-        -- player:EvaluateItems()
     end
 
     if card == Card.CARD_HANGED_MAN then
         player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE, true)
-    else
-        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE)
     end
 
     if card == Card.CARD_DEATH then
         itemManager:Add(player, CollectibleType.COLLECTIBLE_DRY_BABY, 0, 1, ENCHANTMENT)
-    else
-        itemManager:Remove(player, CollectibleType.COLLECTIBLE_DRY_BABY, ENCHANTMENT)
     end
 
     if card == Card.CARD_TEMPERANCE then
-        if itemManager:Has(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT) then
-            itemManager:Remove(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
-        end
+        utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
 
         JosephMod.Schedule(3, function ()
             itemManager:Add(player, enums.Collectibles.LIL_BLOOD_BANK, 0, 1, ENCHANTMENT)
         end,{})
-    else
-        if itemManager:Has(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT) then
-            itemManager:Remove(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
-        end
     end
 
     if card == Card.CARD_DEVIL then
         player:UseActiveItem(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, false)
-    else
-        player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
     end
 
     if card == Card.CARD_TOWER then
         itemManager:Add(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, 0, 1, ENCHANTMENT)
-    else
-        itemManager:Remove(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, ENCHANTMENT)
     end
 
     if card == Card.CARD_WORLD then
         Game():GetLevel():ShowMap()
-    else
-        itemManager:Remove(player, CollectibleType.COLLECTIBLE_MIND, ENCHANTMENT)
     end
 
     if card == Card.CARD_JUDGEMENT then
         itemManager:Add(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, 0, 1, ENCHANTMENT)
-    else
-        itemManager:Remove(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, ENCHANTMENT)
     end
 
     if card == Card.CARD_SUN then
         itemManager:Add(player, CollectibleType.COLLECTIBLE_SOL, 0, 1, ENCHANTMENT)
-    else
-        itemManager:Remove(player, CollectibleType.COLLECTIBLE_SOL, ENCHANTMENT)
     end
 end
+
+
+--Runs when removing an enchantment before applying a new one
+function CardEffects:RemoveCardEffect(player, card)
+    
+    print("try tremove")
+    local switch = {
+        [Card.CARD_FOOL] = function()
+             -- Code for CARD_FOOL
+        end,
+        [Card.CARD_MAGICIAN] = function()
+            -- Code for CARD_MAGICIAN
+            player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER)
+        end,
+        [Card.CARD_HIGH_PRIESTESS] = function()
+            -- Code for CARD_HIGH_PRIESTESS
+        end,
+        [Card.CARD_EMPRESS] = function()
+            -- Code for CARD_EMPRESS
+            player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON)
+        end,
+        [Card.CARD_EMPEROR] = function()
+            -- Code for CARD_EMPEROR
+        end,
+        [Card.CARD_HIEROPHANT] = function()
+            -- Code for CARD_HIEROPHANT
+        end,
+        [Card.CARD_LOVERS] = function()
+            -- Code for CARD_LOVERS
+        end,
+        [Card.CARD_CHARIOT] = function()
+            -- Code for CARD_CHARIOT
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_TAURUS, ENCHANTMENT)
+        end,
+        [Card.CARD_JUSTICE] = function()
+            -- Code for CARD_JUSTICE
+        end,
+        [Card.CARD_HERMIT] = function()
+            -- Code for CARD_HERMIT
+        end,
+        [Card.CARD_WHEEL_OF_FORTUNE] = function()
+            -- Code for CARD_WHEEL_OF_FORTUNE
+            utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
+            utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
+        end,
+        [Card.CARD_STRENGTH] = function()
+            -- Code for CARD_STRENGTH
+            player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM)
+        end,
+        [Card.CARD_HANGED_MAN] = function()
+            -- Code for CARD_HANGED_MAN
+            player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE)
+        end,
+        [Card.CARD_DEATH] = function()
+            -- Code for CARD_DEATH
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_DRY_BABY, ENCHANTMENT)
+        end,
+        [Card.CARD_TEMPERANCE] = function()
+            -- Code for CARD_TEMPERANCE
+            utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
+        end,
+        [Card.CARD_DEVIL] = function()
+            -- Code for CARD_DEVIL
+            player:GetEffects():RemoveCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
+        end,
+        [Card.CARD_TOWER] = function()
+            -- Code for CARD_TOWER
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, ENCHANTMENT)
+        end,
+        [Card.CARD_STARS] = function()
+            -- Code for CARD_STAR
+        end,
+        [Card.CARD_MOON] = function()
+            -- Code for CARD_MOON
+        end,
+        [Card.CARD_SUN] = function()
+            -- Code for CARD_SUN
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_SOL, ENCHANTMENT)
+        end,
+        [Card.CARD_JUDGEMENT] = function()
+            -- Code for CARD_JUDGEMENT
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, ENCHANTMENT)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_DARK_BUM, ENCHANTMENT)
+        end,
+        [Card.CARD_WORLD] = function()
+            -- Code for CARD_WORLD
+        end,
+        
+        ["default"] = function()
+            -- Code for default case
+        end
+    }
+   
+   if switch[card] then
+      switch[card]()
+   else
+      switch["default"]()
+   end
+end
+
 
 
 function CardEffects:addRoomEffect()
