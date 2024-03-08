@@ -52,16 +52,6 @@ local playerAnchor = {
 local f = Font() -- init font object
 f:Load("font/terminus.fnt")
 
-function JosephChar:onRunStart(isContinued)
-    if isContinued == true then return end
-    local playerData = JosephMod.saveManager.GetRunSave()
-    local startSeed = Game():GetSeeds():GetStartSeed()
-    local rng = RNG()
-    rng:SetSeed(startSeed, RECOMMENDED_SHIFT_IDX)
-    playerData.RunRNG = rng
-end
-JosephMod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, JosephChar.onRunStart)
-
 
 --Give random card on player init
 function JosephChar:onPlayerInit(player)
@@ -70,13 +60,20 @@ function JosephChar:onPlayerInit(player)
     JosephMod.Schedule(1, function ()
         local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
         player:RemoveCostume(config)
-    end,{})
 
+        local rng = RNG()
+        rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
+        local playerData = JosephMod.saveManager.GetRunSave(player)
+        if playerData and not playerData.RNG then
+            playerData.RNG = rng
+        end
+    end,{})
     local rng = RNG()
     rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
     
     local randomCard = rng:RandomInt(NUMBER_TAROT_CARDS) + 1
     player:AddCard(randomCard)
+
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
@@ -194,9 +191,11 @@ function JosephChar:showChargeBar(player)
         player:AnimateCard(playerData.card)
         JosephChar:RemoveCard(player, playerData.card)
         SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
-        JosephMod.cardEffects:RemoveCardEffect(player, playerData.EnchantedCard)
-        JosephMod.cardEffects:InitCardEffect(player, playerData.card)
-        playerData.EnchantedCard = playerData.card
+        local oldCard = playerData.EnchantedCard
+        local newCard = playerData.card
+        playerData.EnchantedCard = newCard
+        JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
+        JosephMod.cardEffects:InitCardEffect(player, newCard)
         playerData.usingCard = false
         playerData.framesHeld = 0
         playerData.manualUse = false
@@ -299,10 +298,10 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end
 
-    local playerData = JosephMod.saveManager.GetRunSave()
-
-    local rng = playerData.RunRNG
-
+    local playerData = JosephMod.saveManager.GetRunSave(player)
+    if not playerData then print("missing save error") return end
+    if not playerData.RNG then JosephChar:CreateRNG(player) end
+    local rng = playerData.RNG
     local randomFloat = rng:RandomFloat()
     print(randomFloat)
     if randomFloat < 0.33 then
@@ -312,11 +311,20 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
             JosephMod.cardEffects:InitCardEffect(player, nil)
             SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
         end
-        playerData.RunRNG = rng:GetSeed()
+        playerData.RNG = rng
     end
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityType.ENTITY_PLAYER)
+
+function JosephChar:CreateRNG(player)
+    local rng = RNG()
+    rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
+    local playerData = JosephMod.saveManager.GetRunSave(player)
+    if playerData and not playerData.RNG then
+        playerData.RNG = rng
+    end
+end
 
 function JosephChar:RemoveCard(player, card)
     if player:GetCard(0) == card then

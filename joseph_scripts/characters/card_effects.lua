@@ -2,6 +2,7 @@ local CardEffects = {}
 local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
 local enums = JosephMod.enums
+local saveManager = JosephMod.saveManager
 
 local RED_HEART_REPLACE_CHANCE = 0.25
 local SOUL_HEART_REPLACE_CHANCE = 0.143 -- 1/7
@@ -28,6 +29,25 @@ JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, CardEffects.addCardStats)
 
 
 function CardEffects:InitCardEffect(player, card)
+
+    if card == Card.CARD_EMPEROR then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_THERES_OPTIONS, 0, 1, ENCHANTMENT)
+    end
+
+    if card == Card.CARD_STARS then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_MORE_OPTIONS, 0, 1, ENCHANTMENT)
+    end
+
+    if card == Card.CARD_HERMIT then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_MEMBER_CARD, 0, 1, ENCHANTMENT)
+        local save = saveManager.GetRunSave()
+        if save then save.RemovedShopTrapdoor = false end
+    end
+
+    if card == Card.CARD_MOON then
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_LUNA, 0, 1, ENCHANTMENT)
+    end
+
     if card == Card.CARD_MAGICIAN then
         player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER, true)
     end
@@ -100,8 +120,7 @@ end
 
 --Runs when removing an enchantment before applying a new one
 function CardEffects:RemoveCardEffect(player, card)
-    
-    print("try tremove")
+
     local switch = {
         [Card.CARD_FOOL] = function()
              -- Code for CARD_FOOL
@@ -119,6 +138,7 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_EMPEROR] = function()
             -- Code for CARD_EMPEROR
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_THERES_OPTIONS, ENCHANTMENT)
         end,
         [Card.CARD_HIEROPHANT] = function()
             -- Code for CARD_HIEROPHANT
@@ -135,6 +155,11 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_HERMIT] = function()
             -- Code for CARD_HERMIT
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_MEMBER_CARD, ENCHANTMENT)
+            JosephMod.Schedule(1, function ()
+                CardEffects:RemoveShopTrapdoor()
+            end,{})
+
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
@@ -167,9 +192,11 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_STARS] = function()
             -- Code for CARD_STAR
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_MORE_OPTIONS, ENCHANTMENT)
         end,
         [Card.CARD_MOON] = function()
             -- Code for CARD_MOON
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_LUNA, ENCHANTMENT)
         end,
         [Card.CARD_SUN] = function()
             -- Code for CARD_SUN
@@ -204,13 +231,14 @@ function CardEffects:addRoomEffect()
     local centerPos = room:IsLShapedRoom() and Vector(580, 420) or room:GetCenterPos()
     local offset = 40
 
+    CardEffects:RemoveShopTrapdoor()
 
     local roomData = JosephMod.saveManager.GetRoomSave(nil)
 	if roomData then 
-        roomData.hasStarsPortal = false
-        roomData.hasEmporerPortal = false
+        -- roomData.hasStarsPortal = false
+        -- roomData.hasEmporerPortal = false
         roomData.hasFoolPortal = false
-        roomData.hasMoonPortal = false
+        -- roomData.hasMoonPortal = false
     end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
@@ -243,23 +271,23 @@ function CardEffects:addRoomEffect()
         end
 
         if room:IsClear() and room:IsFirstVisit() then
-            if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
-                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
-                JosephMod.cardEffects:spawnPortal(pos, player, 0)
-                roomData.hasStarsPortal = true
-            end
+            -- if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 0)
+            --     roomData.hasStarsPortal = true
+            -- end
 
-            if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
-                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
-                JosephMod.cardEffects:spawnPortal(pos, player, 2)
-                roomData.hasMoonPortal = true
-            end
+            -- if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 2)
+            --     roomData.hasMoonPortal = true
+            -- end
 
-            if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
-                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
-                JosephMod.cardEffects:spawnPortal(pos, player, 1)
-                roomData.hasEmporerPortal = true
-            end
+            -- if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 1)
+            --     roomData.hasEmporerPortal = true
+            -- end
 
             if playerData.EnchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
@@ -272,7 +300,7 @@ function CardEffects:addRoomEffect()
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, CardEffects.addRoomEffect)
-
+JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, CardEffects.addRoomEffect)
 
 function CardEffects:RoomClearEffect(rng, spawnPos)
     local room = Game():GetRoom()
@@ -284,33 +312,33 @@ function CardEffects:RoomClearEffect(rng, spawnPos)
 
     local roomData = JosephMod.saveManager.GetRoomSave(nil)
 	if roomData then 
-        roomData.hasStarsPortal = false
-        roomData.hasEmporerPortal = false
+        -- roomData.hasStarsPortal = false
+        -- roomData.hasEmporerPortal = false
         roomData.hasFoolPortal = false
-        roomData.hasMoonPortal = false
+        -- roomData.hasMoonPortal = false
     end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         local playerData = JosephMod.saveManager.GetRunSave(player)
         if (playerData and playerData.EnchantedCard) then
 
-            if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
-                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
-                JosephMod.cardEffects:spawnPortal(pos, player, 0)
-                roomData.hasStarsPortal = true
-            end
+            -- if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 0)
+            --     roomData.hasStarsPortal = true
+            -- end
 
-            if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
-                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
-                JosephMod.cardEffects:spawnPortal(pos, player, 2)
-                roomData.hasMoonPortal = true
-            end
+            -- if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 2)
+            --     roomData.hasMoonPortal = true
+            -- end
 
-            if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
-                local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
-                JosephMod.cardEffects:spawnPortal(pos, player, 1)
-                roomData.hasEmporerPortal = true
-            end
+            -- if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 1)
+            --     roomData.hasEmporerPortal = true
+            -- end
 
             if playerData.EnchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
@@ -399,6 +427,25 @@ function CardEffects:spawnPortal(pos, player, portalType)
         attempts = attempts + 1 
     until not overlaps or attempts > 20
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, pos, Vector.Zero, player):ToEffect()
+end
+
+function CardEffects:RemoveShopTrapdoor()
+    local room = Game():GetRoom()
+    local roomType = room:GetType()
+    if roomType ~= RoomType.ROOM_SHOP then return end
+    if PlayerManager.AnyoneHasCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD) then return end
+    if utility:AnyPlayerHasEnchantment(Card.CARD_HERMIT) then return end
+    local save = saveManager.GetRunSave()
+    if not (save and save.RemovedShopTrapdoor == false) then return end
+    local shopCrawlSpaces = TSIL.GridSpecific.GetCrawlSpaces(TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP)
+    if (next(shopCrawlSpaces) ~= nil) then
+        local shopDoor = shopCrawlSpaces[1]
+        Isaac.Spawn(1000, 15, 0, shopDoor.Position, Vector(0, 0), nil)
+        TSIL.GridEntities.RemoveGridEntity(shopDoor)
+        save.RemovedShopTrapdoor = true
+    end
+
+
 end
 
 
