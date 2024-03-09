@@ -16,7 +16,9 @@ function CardEffects:addCardStats(player, flag)
         utility:AddDamage(player, -0.5)
     end
 
-    if playerData.EnchantedCard == Card.CARD_STRENGTH and flag == CacheFlag.CACHE_DAMAGE then
+    if playerData.EnchantedCard == Card.CARD_STRENGTH and flag == CacheFlag.CACHE_DAMAGE and
+    (player:GetCollectibleNum(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM)
+    + player:GetEffects():GetCollectibleEffectNum(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM) < 1) then
         player.Damage = player.Damage * 0.83
     end
 
@@ -120,6 +122,7 @@ end
 
 --Runs when removing an enchantment before applying a new one
 function CardEffects:RemoveCardEffect(player, card)
+
 
     local switch = {
         [Card.CARD_FOOL] = function()

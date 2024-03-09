@@ -293,6 +293,18 @@ function JosephChar:ChargeBarRender(Meter,IsCharging,pos,Sprite) --Function cred
 end
 
 function JosephChar:OnHit(entity, amount, flags, source, countDown)
+
+    -- JosephMod.Schedule(10, function ()
+    --     local allEntities = Isaac.GetRoomEntities()
+    --     for k,v in pairs(allEntities) do
+    --         if v.Variant ~= 21 and v.Variant ~= 68 then
+    --             print("Type " .. k.." = "..v.Type)
+    --             print("Variant " .. k.." = "..v.Variant)
+    --             print("Subtype " .. k.." = "..v.SubType)
+    --         end
+    --     end
+    -- end,{})
+
     local player = entity:ToPlayer()
     if player:GetPlayerType() ~= josephType then return end
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
@@ -307,15 +319,35 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if randomFloat < 0.33 then
         local playerData = JosephMod.saveManager.GetRunSave(player)
         if playerData.EnchantedCard ~= nil then
+            local oldCard = playerData.EnchantedCard
             playerData.EnchantedCard = nil
-            JosephMod.cardEffects:InitCardEffect(player, nil)
+            JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
             SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+            JosephChar:PlayDisenchantAnimation(player, oldCard)
         end
         playerData.RNG = rng
     end
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityType.ENTITY_PLAYER)
+
+
+function JosephChar:PlayDisenchantAnimation(player, card)
+    local disenchantEffectVariant = Isaac.GetEntityVariantByName("Disenchant Effect")
+
+    local entity = Isaac.Spawn(1000, disenchantEffectVariant, 0, player.Position, Vector(-15, 15), player)
+
+    local sprite = entity:GetSprite()
+
+
+    --sprite:Load(globinInfo.anm2, true)
+    print("Card: ".. card)
+    print(tarotCardAnims[card][2])
+    sprite:ReplaceSpritesheet(0, "gfx/effects/" .. tarotCardAnims[card][2] .. ".png")
+    sprite:LoadGraphics()
+    sprite:Play("Appear", true)
+end
+
 
 function JosephChar:CreateRNG(player)
     local rng = RNG()

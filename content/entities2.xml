@@ -12,4 +12,8 @@
         collisionMass="3" collisionRadius="13" friction="1" numGridCollisionPoints="12" shadowSize="11">
     </entity>
 
+    <entity
+        anm2path="effects/disenchant.anm2" name="Disenchant Effect" id="1000" variant="1015">
+    </entity>
+
 </entities>
