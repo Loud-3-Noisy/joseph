@@ -5,7 +5,7 @@ local utility = JosephMod.utility
 
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
-local DAMAGE_REDUCTION = 0.6
+local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local hairCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_hair.anm2") -- Exact path, with the "resources" folder as the root
 local stolesCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_poncho.anm2") -- Exact path, with the "resources" folder as the root
@@ -315,7 +315,6 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if not playerData.RNG then JosephChar:CreateRNG(player) end
     local rng = playerData.RNG
     local randomFloat = rng:RandomFloat()
-    print(randomFloat)
     if randomFloat < 0.33 then
         local playerData = JosephMod.saveManager.GetRunSave(player)
         if playerData.EnchantedCard ~= nil then
@@ -335,19 +334,30 @@ JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityT
 function JosephChar:PlayDisenchantAnimation(player, card)
     local disenchantEffectVariant = Isaac.GetEntityVariantByName("Disenchant Effect")
 
-    local entity = Isaac.Spawn(1000, disenchantEffectVariant, 0, player.Position, Vector(-15, 15), player)
+    local entity = Isaac.Spawn(1000, disenchantEffectVariant, 0, player.Position, 4*RandomVector(), player)
 
     local sprite = entity:GetSprite()
 
-
-    --sprite:Load(globinInfo.anm2, true)
-    print("Card: ".. card)
-    print(tarotCardAnims[card][2])
     sprite:ReplaceSpritesheet(0, "gfx/effects/" .. tarotCardAnims[card][2] .. ".png")
     sprite:LoadGraphics()
-    sprite:Play("Appear", true)
 end
 
+
+function JosephChar:DisenchantAnimationInit(entity)
+    entity:GetSprite():Play("Appear", true)
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, JosephChar.DisenchantAnimationInit, DISENCHANT_ENTITY_ID)
+
+
+function JosephChar:DisenchantAnimationUpdate(entity)
+    local sprite = entity:GetSprite()
+    if sprite:IsFinished("Appear") then
+        Isaac.Spawn(1000, 15, 0, entity.Position, Vector(0, 0), entity)
+        entity:Remove()
+    end
+
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, JosephChar.DisenchantAnimationUpdate, DISENCHANT_ENTITY_ID)
 
 function JosephChar:CreateRNG(player)
     local rng = RNG()

@@ -13,7 +13,7 @@
     </entity>
 
     <entity
-        anm2path="effects/disenchant.anm2" name="Disenchant Effect" id="1000" variant="1015">
+        anm2path="effects/disenchant.anm2" name="Disenchant Effect" id="1000" variant="1015" friction="1">
     </entity>
 
 </entities>
