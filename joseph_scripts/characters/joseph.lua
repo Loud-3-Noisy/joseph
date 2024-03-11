@@ -294,17 +294,6 @@ end
 
 function JosephChar:OnHit(entity, amount, flags, source, countDown)
 
-    -- JosephMod.Schedule(10, function ()
-    --     local allEntities = Isaac.GetRoomEntities()
-    --     for k,v in pairs(allEntities) do
-    --         if v.Variant ~= 21 and v.Variant ~= 68 then
-    --             print("Type " .. k.." = "..v.Type)
-    --             print("Variant " .. k.." = "..v.Variant)
-    --             print("Subtype " .. k.." = "..v.SubType)
-    --         end
-    --     end
-    -- end,{})
-
     local player = entity:ToPlayer()
     if player:GetPlayerType() ~= josephType then return end
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
@@ -355,9 +344,9 @@ function JosephChar:DisenchantAnimationUpdate(entity)
         Isaac.Spawn(1000, 15, 0, entity.Position, Vector(0, 0), entity)
         entity:Remove()
     end
-
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, JosephChar.DisenchantAnimationUpdate, DISENCHANT_ENTITY_ID)
+
 
 function JosephChar:CreateRNG(player)
     local rng = RNG()
@@ -367,6 +356,7 @@ function JosephChar:CreateRNG(player)
         playerData.RNG = rng
     end
 end
+
 
 function JosephChar:RemoveCard(player, card)
     if player:GetCard(0) == card then
@@ -380,3 +370,15 @@ function JosephChar:RemoveCard(player, card)
         end
     end
 end
+
+
+function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, ActiveSlot)
+    if player:GetPlayerType() ~= josephType then return end
+
+    local randomCard = RNG:RandomInt(22) + 1
+    player:AnimateCard(randomCard, "UseItem")
+    player:AddCard(randomCard)
+
+    return true
+end
+JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_ITEM, CallbackPriority.LATE, JosephChar.UseDeckOfCards, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
