@@ -9,31 +9,31 @@ local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local hairCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_hair.anm2") -- Exact path, with the "resources" folder as the root
 local stolesCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_poncho.anm2") -- Exact path, with the "resources" folder as the root
+local chargebarPos = Vector(-30, -52)
+local tarotCardAnims = {}
+tarotCardAnims[Card.CARD_FOOL] = "00_TheFool"
+tarotCardAnims[Card.CARD_MAGICIAN] = "01_TheMagician"
+tarotCardAnims[Card.CARD_HIGH_PRIESTESS] = "02_TheHighPriestess"
+tarotCardAnims[Card.CARD_EMPRESS] = "03_TheEmpress"
+tarotCardAnims[Card.CARD_EMPEROR] = "04_TheEmperor"
+tarotCardAnims[Card.CARD_HIEROPHANT] = "05_TheHierophant"
+tarotCardAnims[Card.CARD_LOVERS] = "06_TheLovers"
+tarotCardAnims[Card.CARD_CHARIOT] = "07_TheChariot"
+tarotCardAnims[Card.CARD_JUSTICE] = "08_TheJustice"
+tarotCardAnims[Card.CARD_HERMIT] = "09_TheHermit"
+tarotCardAnims[Card.CARD_WHEEL_OF_FORTUNE] = "10_WheelOfFortune"
+tarotCardAnims[Card.CARD_STRENGTH] = "11_Strength"
+tarotCardAnims[Card.CARD_HANGED_MAN] = "12_TheHangedMan"
+tarotCardAnims[Card.CARD_DEATH] = "13_Death"
+tarotCardAnims[Card.CARD_TEMPERANCE] = "14_Temperance"
+tarotCardAnims[Card.CARD_DEVIL] = "15_TheDevil"
+tarotCardAnims[Card.CARD_TOWER] = "16_TheTower"
+tarotCardAnims[Card.CARD_STARS] = "17_TheStars"
+tarotCardAnims[Card.CARD_MOON] = "18_TheMoon"
+tarotCardAnims[Card.CARD_SUN] = "19_TheSun"
+tarotCardAnims[Card.CARD_JUDGEMENT] = "20_Judgement"
+tarotCardAnims[Card.CARD_WORLD] = "21_TheWorld"
 
-local tarotCardAnims = {
-    {Card.CARD_FOOL, "00_TheFool"},
-    {Card.CARD_MAGICIAN, "01_TheMagician"},
-    {Card.CARD_HIGH_PRIESTESS, "02_TheHighPriestess"},
-    {Card.CARD_EMPRESS, "03_TheEmpress"},
-    {Card.CARD_EMPEROR, "04_TheEmperor"},
-    {Card.CARD_HIEROPHANT, "05_TheHierophant"},
-    {Card.CARD_LOVERS, "06_TheLovers"},
-    {Card.CARD_CHARIOT, "07_TheChariot"},
-    {Card.CARD_JUSTICE, "08_TheJustice"},
-    {Card.CARD_HERMIT, "09_TheHermit"},
-    {Card.CARD_WHEEL_OF_FORTUNE, "10_WheelOfFortune"},
-    {Card.CARD_STRENGTH, "11_Strength"},
-    {Card.CARD_HANGED_MAN, "12_TheHangedMan"},
-    {Card.CARD_DEATH, "13_Death"},
-    {Card.CARD_TEMPERANCE, "14_Temperance"},
-    {Card.CARD_DEVIL, "15_TheDevil"},
-    {Card.CARD_TOWER, "16_TheTower"},
-    {Card.CARD_STARS, "17_TheStars"},
-    {Card.CARD_MOON, "18_TheMoon"},
-    {Card.CARD_SUN, "19_TheSun"},
-    {Card.CARD_JUDGEMENT, "20_Judgement"},
-    {Card.CARD_WORLD, "21_TheWorld"}
-}
 
 local cardDisplayPosPerPlayer = {
     --Vector(394, 147),
@@ -126,28 +126,57 @@ function JosephChar:showChargeBar(player)
     if player:GetPlayerType() ~= josephType then return end
 
     local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData and playerData.usingCard == true) then return end
-    playerData.usingCard = false
+    if not (playerData) then return end
+
+    --show chargebar if held for more than 10 frames
+    if playerData.startedUsingCard == true and playerData.framesHeld > 10 then
+        if not playerData.cardChargeBar then
+            playerData.cardChargeBar = Sprite()
+            playerData.cardChargeBar:Load("gfx/ui/card_chargebar.anm2",true)
+        end
+        JosephChar:ChargeBarRender(playerData.framesHeld,true,Isaac.WorldToScreen(player.Position+chargebarPos),playerData.cardChargeBar)
+    end
+
+    if playerData.earlyCancel and playerData.earlyCancel >= 1 then
+        playerData.earlyCancel = playerData.earlyCancel + 1
+        if not playerData.cardChargeBar then
+            playerData.cardChargeBar = Sprite()
+            playerData.cardChargeBar:Load("gfx/ui/card_chargebar.anm2",true)
+        end
+        JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargebarPos),playerData.cardChargeBar)
+        if playerData.earlyCancel > 9 then playerData.earlyCancel = 0 end
+    end
+
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, JosephChar.showChargeBar, 0)
+
+
+function JosephChar:trackFramesHeld(player)
+    if player == nil then return end
+    if player:GetPlayerType() ~= josephType then return end
+
+    local playerData = JosephMod.saveManager.GetRunSave(player)
+    if not (playerData and playerData.startedUsingCard == true) then return end
+
 
     --if card isnt in main slot anymore then cancel
     if player:GetCard(0) ~= playerData.card then
-        playerData.usingCard = false
+        playerData.startedUsingCard = false
         playerData.framesHeld = 0
         playerData.card = nil
         return
     end
 
     if Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex) then
-        playerData.usingCard = true
         if playerData.framesHeld == nil then playerData.framesHeld = 0 end
         playerData.framesHeld = playerData.framesHeld + 1
-        --f:DrawString(tostring(playerData.framesHeld),60,50,KColor(1,1,1,1),0,true)
-        --print(playerData.framesHeld)
+
+    else
+        playerData.startedUsingCard = false
     end
     
     --use the card if player presses for less than 15 frames
-    if playerData.usingCard == false and playerData.framesHeld < 20 then
-        playerData.usingCard = false
+    if playerData.startedUsingCard == false and playerData.framesHeld < 20 then
         playerData.framesHeld = 0
         playerData.manualUse = true
         if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
@@ -162,29 +191,13 @@ function JosephChar:showChargeBar(player)
         playerData.card = nil
     end
 
-    --show chargebar if held for more than 10 frames
-    if playerData.usingCard == true and playerData.framesHeld > 10 then
-        if not playerData.cardChargeBar then
-            playerData.cardChargeBar = Sprite()
-            playerData.cardChargeBar:Load("gfx/ui/card_chargebar.anm2",true)
-        end
-        local chargePos = Vector(-30, -70)
-        JosephChar:ChargeBarRender(playerData.framesHeld,true,Isaac.WorldToScreen(player.Position+chargePos),playerData.cardChargeBar)
-
-    else
-
     --play chargebar disappear animation if let go early
-    if playerData.usingCard == false and playerData.framesHeld > 10 then
-        if not playerData.cardChargeBar then
-            playerData.cardChargeBar = Sprite()
-            playerData.cardChargeBar:Load("gfx/ui/card_chargebar.anm2",true)
-        end
-        local chargePos = Vector(-30, -70)
-        JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargePos),playerData.cardChargeBar)
+    if playerData.framesHeld > 10 and playerData.startedUsingCard == false then
+        playerData.earlyCancel = 1
         playerData.framesHeld = 0
         playerData.manualUse = false
         playerData.card = nil
-    end end
+    end
 
     --give enchantment if held longer than 100 frames
     if playerData.framesHeld > 100 then
@@ -196,14 +209,15 @@ function JosephChar:showChargeBar(player)
         playerData.EnchantedCard = newCard
         JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
         JosephMod.cardEffects:InitCardEffect(player, newCard)
-        playerData.usingCard = false
+        playerData.startedUsingCard = false
         playerData.framesHeld = 0
         playerData.manualUse = false
         playerData.card = nil
         JosephMod.saveManager.Save()
     end
+
 end
-JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, JosephChar.showChargeBar, 0)
+JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, JosephChar.trackFramesHeld, 0)
 
 
 function JosephChar:onCardUse(card, player, useflags)
@@ -220,8 +234,9 @@ function JosephChar:onCardUse(card, player, useflags)
     if not playerData then return end
     if playerData.manualUse ~= true then
         playerData.framesHeld = 0
-        playerData.usingCard = true
+        playerData.startedUsingCard = true
         playerData.card = card
+        playerData.earlyCancel = 0
         player:AddCard(card)
         return true
     end
@@ -327,7 +342,7 @@ function JosephChar:PlayDisenchantAnimation(player, card)
 
     local sprite = entity:GetSprite()
 
-    sprite:ReplaceSpritesheet(0, "gfx/effects/" .. tarotCardAnims[card][2] .. ".png")
+    sprite:ReplaceSpritesheet(0, "gfx/effects/" .. tarotCardAnims[card] .. ".png")
     sprite:LoadGraphics()
 end
 
