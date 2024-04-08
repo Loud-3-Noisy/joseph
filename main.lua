@@ -12,6 +12,7 @@ if REPENTOGON then
     JosephMod.cardEffects = include("joseph_scripts.characters.card_effects")
     include("joseph_scripts.characters.joseph")
     include("joseph_scripts.characters.slotmachines")
+    include("joseph_scripts.items.magic_skin2")
 
     function JosephMod:PreSave(data)
         -- notice how this callback is provided the entire save file

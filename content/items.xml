@@ -5,5 +5,7 @@
 
     <familiar id="3" name="Lil Blood Bank" description="Gambling 3" gfx="lil_blood_bank.png" hidden="true" tags="noeden" quality="2" />
 
+    <active id="4" name="Magic Skin " description="All your desires fulfilled" gfx="collectibles_642_magicskin.png" hidden="true" tags="noeden" quality="2" />
+
 
 </items>

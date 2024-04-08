@@ -2,6 +2,7 @@ local JosephChar = {}
 
 local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
+local enums = JosephMod.enums
 
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
@@ -10,29 +11,6 @@ local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in t
 local hairCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_hair.anm2") -- Exact path, with the "resources" folder as the root
 local stolesCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_poncho.anm2") -- Exact path, with the "resources" folder as the root
 local chargebarPos = Vector(-30, -52)
-local tarotCardAnims = {}
-tarotCardAnims[Card.CARD_FOOL] = "00_TheFool"
-tarotCardAnims[Card.CARD_MAGICIAN] = "01_TheMagician"
-tarotCardAnims[Card.CARD_HIGH_PRIESTESS] = "02_TheHighPriestess"
-tarotCardAnims[Card.CARD_EMPRESS] = "03_TheEmpress"
-tarotCardAnims[Card.CARD_EMPEROR] = "04_TheEmperor"
-tarotCardAnims[Card.CARD_HIEROPHANT] = "05_TheHierophant"
-tarotCardAnims[Card.CARD_LOVERS] = "06_TheLovers"
-tarotCardAnims[Card.CARD_CHARIOT] = "07_TheChariot"
-tarotCardAnims[Card.CARD_JUSTICE] = "08_TheJustice"
-tarotCardAnims[Card.CARD_HERMIT] = "09_TheHermit"
-tarotCardAnims[Card.CARD_WHEEL_OF_FORTUNE] = "10_WheelOfFortune"
-tarotCardAnims[Card.CARD_STRENGTH] = "11_Strength"
-tarotCardAnims[Card.CARD_HANGED_MAN] = "12_TheHangedMan"
-tarotCardAnims[Card.CARD_DEATH] = "13_Death"
-tarotCardAnims[Card.CARD_TEMPERANCE] = "14_Temperance"
-tarotCardAnims[Card.CARD_DEVIL] = "15_TheDevil"
-tarotCardAnims[Card.CARD_TOWER] = "16_TheTower"
-tarotCardAnims[Card.CARD_STARS] = "17_TheStars"
-tarotCardAnims[Card.CARD_MOON] = "18_TheMoon"
-tarotCardAnims[Card.CARD_SUN] = "19_TheSun"
-tarotCardAnims[Card.CARD_JUDGEMENT] = "20_Judgement"
-tarotCardAnims[Card.CARD_WORLD] = "21_TheWorld"
 
 
 local cardDisplayPosPerPlayer = {
@@ -228,7 +206,7 @@ function JosephChar:onCardUse(card, player, useflags)
     local fakeCardUseFlags = UseFlag.USE_NOANIM | UseFlag.USE_MIMIC | UseFlag.USE_NOHUD
 
     if useflags & fakeCardUseFlags > 0 then return end
-    if card > 22 then return end --Just use non tarot cards normally
+    if enums.CardAnims[card] == nil then return end --Just use non tarot cards normally
 
     local playerData = JosephMod.saveManager.GetRunSave(player)
     if not playerData then return end
@@ -257,13 +235,13 @@ function JosephChar:showEnchantment(player, i)
 
     if i == 0 then
         enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
-        enchantmentDisplay:SetFrame("CardFronts", enchantedCard - 1)
+        enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
     else
         enchantmentDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
         if enchantedCard < 23 then
             enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
         else
-            enchantmentDisplay:SetFrame("CardFronts", enchantedCard - 1)
+            enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
         end
     end
 
@@ -342,7 +320,7 @@ function JosephChar:PlayDisenchantAnimation(player, card)
 
     local sprite = entity:GetSprite()
 
-    sprite:ReplaceSpritesheet(0, "gfx/effects/" .. tarotCardAnims[card] .. ".png")
+    sprite:ReplaceSpritesheet(0, "gfx/effects/" .. enums.CardAnims[card] .. ".png")
     sprite:LoadGraphics()
 end
 

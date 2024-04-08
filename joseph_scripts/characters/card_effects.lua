@@ -231,7 +231,7 @@ end
 function CardEffects:addRoomEffect()
 
     local room = Game():GetRoom()
-    local centerPos = room:IsLShapedRoom() and Vector(580, 420) or room:GetCenterPos()
+    local centerPos = room:IsLShapedRoom() and Vector(853, 270) or room:GetCenterPos()
     local offset = 40
 
     CardEffects:RemoveShopTrapdoor()
