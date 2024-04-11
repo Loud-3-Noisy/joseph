@@ -22,6 +22,36 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
   end
 end)
 
+
+function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
+  if vars == nil then return end
+  for i = 1, #vars do
+    TSIL.SaveManager.AddPersistentVariable(
+      JosephMod,
+      vars[i],
+      {},
+      TSIL.Enums.VariablePersistenceMode.RESET_RUN
+    )
+  end
+end
+
+
+function utilityFunctions:GetPlayerSave(player, var)
+  local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+  local data = dataPerPlayer[playerIndex] or nil --You can change 0 to whatever the default should be for each player
+  return data
+end
+
+function utilityFunctions:SetPlayerSave(player, var, newData)
+  local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+  local data = dataPerPlayer[playerIndex] or nil --You can change 0 to whatever the default should be for each player
+  data = newData
+  dataPerPlayer[playerIndex] = data
+end
+
+
 function utilityFunctions:toTearsPerSecond(maxFireDelay)
   return 30 / (maxFireDelay + 1)
 end

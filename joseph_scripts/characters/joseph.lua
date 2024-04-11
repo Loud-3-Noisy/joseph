@@ -4,6 +4,31 @@ local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
 local enums = JosephMod.enums
 
+local vars = {
+    "playerRNG",
+    "EnchantedCard",
+}
+utility:CreateEmptyPlayerSaveDataVars(vars)
+
+local cardChargeBar = {}
+local startedUsingCard = {}
+local framesHeld = {}
+local earlyCancel = {}
+local card = {}
+local manualUse = {}
+
+
+
+-- local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "graterStacks")
+--   local playerIndex = TSIL.Players.GetPlayerIndex(player)
+--   local data = dataPerPlayer[playerIndex] or 0 --You can change 0 to whatever the default should be for each player
+
+--   --Do stuff with the data
+--   data = data + 1
+
+--   --Save the changed data
+--   dataPerPlayer[playerIndex] = data
+
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
@@ -38,20 +63,15 @@ function JosephChar:onPlayerInit(player)
     JosephMod.Schedule(1, function ()
         local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
         player:RemoveCostume(config)
-
-        local rng = RNG()
-        rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
-        local playerData = JosephMod.saveManager.GetRunSave(player)
-        if playerData and not playerData.RNG then
-            playerData.RNG = rng
-        end
     end,{})
+
     local rng = RNG()
     rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
-    
+
     local randomCard = rng:RandomInt(NUMBER_TAROT_CARDS) + 1
     player:AddCard(randomCard)
 
+    utility:SetPlayerSave(player, "playerRNG", rng)
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
@@ -293,21 +313,20 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if flags & fakeDamageFlags > 0 then return end
 
     local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not playerData then print("missing save error") return end
-    if not playerData.RNG then JosephChar:CreateRNG(player) end
-    local rng = playerData.RNG
+    if playerData.EnchantedCard == nil then return end
+
+    local rng = utility:GetPlayerSave(player, "playerRNG")
+    if not rng then rng = JosephChar:CreateRNG(player) end
+
     local randomFloat = rng:RandomFloat()
-    if randomFloat < 0.33 then
-        local playerData = JosephMod.saveManager.GetRunSave(player)
-        if playerData.EnchantedCard ~= nil then
-            local oldCard = playerData.EnchantedCard
-            playerData.EnchantedCard = nil
-            JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
-            SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
-            JosephChar:PlayDisenchantAnimation(player, oldCard)
-        end
-        playerData.RNG = rng
+    if randomFloat < 0.5 then
+        local oldCard = playerData.EnchantedCard
+        playerData.EnchantedCard = nil
+        JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
+        SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+        JosephChar:PlayDisenchantAnimation(player, oldCard)
     end
+    utility:SetPlayerSave(player, "PlayerRNG", rng)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityType.ENTITY_PLAYER)
@@ -344,10 +363,8 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, JosephChar.DisenchantA
 function JosephChar:CreateRNG(player)
     local rng = RNG()
     rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if playerData and not playerData.RNG then
-        playerData.RNG = rng
-    end
+    utility:SetPlayerSave(player, "playerRNG", rng)
+    return utility:GetPlayerSave(player, "playerRNG")
 end
 
 
