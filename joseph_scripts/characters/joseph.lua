@@ -10,12 +10,12 @@ local vars = {
 }
 utility:CreateEmptyPlayerSaveDataVars(vars)
 
-local cardChargeBar = {}
-local startedUsingCard = {}
-local framesHeld = {}
-local earlyCancel = {}
-local card = {}
-local manualUse = {}
+local CardChargeBar = {}
+local StartedUsingCard = {}
+local FramesHeld = {}
+local EarlyCancel = {}
+local Card = {}
+local ManualUse = {}
 
 
 
@@ -122,27 +122,26 @@ JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, JosephChar.HandleStartingS
 function JosephChar:showChargeBar(player)
     if player == nil then return end
     if player:GetPlayerType() ~= josephType then return end
-
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData) then return end
-
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    
+    --if not playerData then return end
     --show chargebar if held for more than 10 frames
-    if playerData.startedUsingCard == true and playerData.framesHeld > 10 then
-        if not playerData.cardChargeBar then
-            playerData.cardChargeBar = Sprite()
-            playerData.cardChargeBar:Load("gfx/ui/card_chargebar.anm2",true)
+    if StartedUsingCard[playerIndex] == true and FramesHeld[playerIndex] > 10 then
+        if not CardChargeBar[playerIndex] then
+            CardChargeBar[playerIndex] = Sprite()
+            CardChargeBar[playerIndex]:Load("gfx/ui/card_chargebar.anm2",true)
         end
-        JosephChar:ChargeBarRender(playerData.framesHeld,true,Isaac.WorldToScreen(player.Position+chargebarPos),playerData.cardChargeBar)
+        JosephChar:ChargeBarRender(FramesHeld[playerIndex],true,Isaac.WorldToScreen(player.Position+chargebarPos),CardChargeBar[playerIndex])
     end
 
-    if playerData.earlyCancel and playerData.earlyCancel >= 1 then
-        playerData.earlyCancel = playerData.earlyCancel + 1
-        if not playerData.cardChargeBar then
-            playerData.cardChargeBar = Sprite()
-            playerData.cardChargeBar:Load("gfx/ui/card_chargebar.anm2",true)
+    if EarlyCancel[playerIndex] and EarlyCancel[playerIndex] >= 1 then
+        EarlyCancel[playerIndex] = EarlyCancel[playerIndex] + 1
+        if not CardChargeBar[playerIndex] then
+            CardChargeBar[playerIndex] = Sprite()
+            CardChargeBar[playerIndex]:Load("gfx/ui/card_chargebar.anm2",true)
         end
-        JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargebarPos),playerData.cardChargeBar)
-        if playerData.earlyCancel > 9 then playerData.earlyCancel = 0 end
+        JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargebarPos),CardChargeBar[playerIndex])
+        if EarlyCancel[playerIndex] > 9 then EarlyCancel[playerIndex] = 0 end
     end
 
 end
@@ -153,65 +152,67 @@ function JosephChar:trackFramesHeld(player)
     if player == nil then return end
     if player:GetPlayerType() ~= josephType then return end
 
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData and playerData.startedUsingCard == true) then return end
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+    --if not playerData then return end
+    if not (StartedUsingCard[playerIndex] == true) then return end
 
 
     --if card isnt in main slot anymore then cancel
-    if player:GetCard(0) ~= playerData.card then
-        playerData.startedUsingCard = false
-        playerData.framesHeld = 0
-        playerData.card = nil
+    if player:GetCard(0) ~= Card[playerIndex] then
+        StartedUsingCard[playerIndex] = false
+        FramesHeld[playerIndex] = 0
+        Card[playerIndex] = nil
         return
     end
 
     if Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex) then
-        if playerData.framesHeld == nil then playerData.framesHeld = 0 end
-        playerData.framesHeld = playerData.framesHeld + 1
+        if FramesHeld[playerIndex] == nil then FramesHeld[playerIndex] = 0 end
+        FramesHeld[playerIndex] = FramesHeld[playerIndex] + 1
 
     else
-        playerData.startedUsingCard = false
+        StartedUsingCard[playerIndex] = false
     end
     
     --use the card if player presses for less than 15 frames
-    if playerData.startedUsingCard == false and playerData.framesHeld < 20 then
-        playerData.framesHeld = 0
-        playerData.manualUse = true
+    if StartedUsingCard[playerIndex] == false and FramesHeld[playerIndex] < 20 then
+        FramesHeld[playerIndex] = 0
+        ManualUse[playerIndex] = true
         if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
-            player:UseCard(playerData.card)
-            player:UseCard(playerData.card, UseFlag.USE_CARBATTERY)
+            player:UseCard(Card[playerIndex])
+            player:UseCard(Card[playerIndex], UseFlag.USE_CARBATTERY)
         else
-            player:UseCard(playerData.card)
+            player:UseCard(Card[playerIndex])
         end
 
-        playerData.manualUse = false
-        JosephChar:RemoveCard(player, playerData.card)
-        playerData.card = nil
+        ManualUse[playerIndex] = false
+        JosephChar:RemoveCard(player, Card[playerIndex])
+        Card[playerIndex] = nil
     end
 
     --play chargebar disappear animation if let go early
-    if playerData.framesHeld > 10 and playerData.startedUsingCard == false then
-        playerData.earlyCancel = 1
-        playerData.framesHeld = 0
-        playerData.manualUse = false
-        playerData.card = nil
+    if FramesHeld[playerIndex] > 10 and StartedUsingCard[playerIndex] == false then
+        EarlyCancel[playerIndex] = 1
+        FramesHeld[playerIndex] = 0
+        ManualUse[playerIndex] = false
+        Card[playerIndex] = nil
     end
 
     --give enchantment if held longer than 100 frames
-    if playerData.framesHeld > 100 then
-        player:AnimateCard(playerData.card)
-        JosephChar:RemoveCard(player, playerData.card)
+    if FramesHeld[playerIndex] > 100 then
+        player:AnimateCard(Card[playerIndex])
+        JosephChar:RemoveCard(player, Card[playerIndex])
         SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
         
         local oldCard = utility:GetPlayerSave(player, "EnchantedCard")
-        local newCard = playerData.card
+        local newCard = Card[playerIndex]
         utility:SetPlayerSave(player, "EnchantedCard", newCard)
         JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
         JosephMod.cardEffects:InitCardEffect(player, newCard)
-        playerData.startedUsingCard = false
-        playerData.framesHeld = 0
-        playerData.manualUse = false
-        playerData.card = nil
+        StartedUsingCard[playerIndex] = false
+        FramesHeld[playerIndex] = 0
+        ManualUse[playerIndex] = false
+        Card[playerIndex] = nil
         JosephMod.saveManager.Save()
     end
 
@@ -229,13 +230,13 @@ function JosephChar:onCardUse(card, player, useflags)
     if useflags & fakeCardUseFlags > 0 then return end
     if enums.CardAnims[card] == nil then return end --Just use non tarot cards normally
 
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not playerData then return end
-    if playerData.manualUse ~= true then
-        playerData.framesHeld = 0
-        playerData.startedUsingCard = true
-        playerData.card = card
-        playerData.earlyCancel = 0
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    --if not playerData then return end
+    if ManualUse[playerIndex] ~= true then
+        FramesHeld[playerIndex] = 0
+        StartedUsingCard[playerIndex] = true
+        Card[playerIndex] = card
+        EarlyCancel[playerIndex] = 0
         player:AddCard(card)
         return true
     end

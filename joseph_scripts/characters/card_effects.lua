@@ -299,7 +299,7 @@ function CardEffects:addRoomEffect()
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, CardEffects.addRoomEffect)
-JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, CardEffects.addRoomEffect)
+--JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, CardEffects.addRoomEffect)
 
 function CardEffects:RoomClearEffect(rng, spawnPos)
     local room = Game():GetRoom()

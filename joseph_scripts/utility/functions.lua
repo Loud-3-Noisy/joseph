@@ -30,7 +30,8 @@ function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
       JosephMod,
       vars[i],
       {},
-      TSIL.Enums.VariablePersistenceMode.RESET_RUN
+      TSIL.Enums.VariablePersistenceMode.RESET_RUN,
+      false
     )
   end
 end
@@ -102,12 +103,12 @@ end
 
 
 function utilityFunctions:AnyPlayerHasEnchantment(enchantment)
+  local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCard") or {}
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        local playerData = JosephMod.saveManager.GetRunSave(player)
-        if (playerData and playerData.EnchantedCard and playerData.EnchantedCard == enchantment) then
-            return true
-        end
+        local playerIndex = TSIL.Players.GetPlayerIndex(player)
+        
+        if playerEnchantments[playerIndex] == enchantment then return true end
     end
     return false
 end
