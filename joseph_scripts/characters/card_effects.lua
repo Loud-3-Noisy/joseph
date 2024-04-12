@@ -110,7 +110,13 @@ function CardEffects:InitCardEffect(player, card)
     end
 
     if card == Card.CARD_JUDGEMENT then
-        itemManager:Add(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, 0, 1, ENCHANTMENT)
+        local rng = player:GetCardRNG(Card.CARD_JUDGEMENT)
+        local rand = rng:RandomInt(2) + 1
+        if rand == 1 then
+            itemManager:Add(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, 0, 1, ENCHANTMENT)
+        else
+            itemManager:Add(player, CollectibleType.COLLECTIBLE_DARK_BUM, 0, 1, ENCHANTMENT)
+        end
     end
 
     if card == Card.CARD_SUN then
@@ -252,7 +258,10 @@ function CardEffects:addRoomEffect()
         end
 
         if enchantedCard == Card.CARD_HIGH_PRIESTESS and (room:IsFirstVisit() or not room:IsClear()) then
-            player:UseCard(Card.CARD_HIGH_PRIESTESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD | UseFlag.USE_NOANIM)
+            local rng = player:GetCardRNG(Card.CARD_HIGH_PRIESTESS)
+            if rng:RandomFloat() > 0.5 or (room:IsFirstVisit() and room:IsClear()) then
+                player:UseCard(Card.CARD_HIGH_PRIESTESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD | UseFlag.USE_NOANIM)
+            end
         end
 
         if enchantedCard == Card.CARD_EMPRESS then
