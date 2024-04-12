@@ -1,6 +1,5 @@
 local JosephChar = {}
 
-local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
 local enums = JosephMod.enums
 
@@ -93,10 +92,11 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, JosephChar.onNewRoom)
 JosephMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if player:GetPlayerType() == josephType then
-        itemManager:CheckStack(player, CollectibleType.COLLECTIBLE_STARTER_DECK, 1, JOSEPH)
-    else
-        itemManager:CheckStack(player, CollectibleType.COLLECTIBLE_STARTER_DECK, 0, JOSEPH)
+        if not player:HasCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK) then
+           player:AddInnateCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK) 
+        end
     end
+    
 end)
 
 
@@ -213,7 +213,6 @@ function JosephChar:trackFramesHeld(player)
         FramesHeld[playerIndex] = 0
         ManualUse[playerIndex] = false
         Card[playerIndex] = nil
-        JosephMod.saveManager.Save()
     end
 
 end
