@@ -46,11 +46,15 @@ end
 function utilityFunctions:SetPlayerSave(player, var, newData)
   local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
   local playerIndex = TSIL.Players.GetPlayerIndex(player)
-  local data = dataPerPlayer[playerIndex] or nil --You can change 0 to whatever the default should be for each player
+  local data = dataPerPlayer[playerIndex]
   data = newData
   dataPerPlayer[playerIndex] = data
 end
 
+function utilityFunctions:GetPlayerVar(player, var)
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+  return _G[var][playerIndex]
+end
 
 function utilityFunctions:toTearsPerSecond(maxFireDelay)
   return 30 / (maxFireDelay + 1)

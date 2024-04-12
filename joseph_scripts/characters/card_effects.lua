@@ -9,20 +9,19 @@ local SOUL_HEART_REPLACE_CHANCE = 0.143 -- 1/7
 local JUSTICE_DROP_REPLACE_CHANCE = 0.20 
 
 function CardEffects:addCardStats(player, flag)
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData and playerData.EnchantedCard) then return end
+    local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
 
-    if playerData.EnchantedCard == Card.CARD_EMPRESS and flag == CacheFlag.CACHE_DAMAGE then
+    if enchantedCard == Card.CARD_EMPRESS and flag == CacheFlag.CACHE_DAMAGE then
         utility:AddDamage(player, -0.5)
     end
 
-    if playerData.EnchantedCard == Card.CARD_STRENGTH and flag == CacheFlag.CACHE_DAMAGE and
+    if enchantedCard == Card.CARD_STRENGTH and flag == CacheFlag.CACHE_DAMAGE and
     (player:GetCollectibleNum(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM)
     + player:GetEffects():GetCollectibleEffectNum(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM) < 1) then
         player.Damage = player.Damage * 0.83
     end
 
-    if playerData.EnchantedCard == Card.CARD_DEVIL and flag == CacheFlag.CACHE_DAMAGE then
+    if enchantedCard == Card.CARD_DEVIL and flag == CacheFlag.CACHE_DAMAGE then
         utility:AddDamage(player, -0.5)
     end
 
@@ -245,61 +244,58 @@ function CardEffects:addRoomEffect()
     end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        local playerData = JosephMod.saveManager.GetRunSave(player)
-        if not (playerData and playerData.EnchantedCard) then return end
+        local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
 
 
-        if playerData.EnchantedCard == Card.CARD_MAGICIAN then
+        if enchantedCard == Card.CARD_MAGICIAN then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_SPOON_BENDER, true)
         end
 
-        if playerData.EnchantedCard == Card.CARD_HIGH_PRIESTESS and (room:IsFirstVisit() or not room:IsClear()) then
+        if enchantedCard == Card.CARD_HIGH_PRIESTESS and (room:IsFirstVisit() or not room:IsClear()) then
             player:UseCard(Card.CARD_HIGH_PRIESTESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD | UseFlag.USE_NOANIM)
         end
 
-        if playerData.EnchantedCard == Card.CARD_EMPRESS then
+        if enchantedCard == Card.CARD_EMPRESS then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON, true)
         end
 
-        if playerData.EnchantedCard == Card.CARD_STRENGTH then
+        if enchantedCard == Card.CARD_STRENGTH then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_MAGIC_MUSHROOM, true)
         end
 
-        if playerData.EnchantedCard == Card.CARD_HANGED_MAN then
+        if enchantedCard == Card.CARD_HANGED_MAN then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_TRANSCENDENCE, true)
         end
 
-        if playerData.EnchantedCard == Card.CARD_DEVIL then
+        if enchantedCard == Card.CARD_DEVIL then
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, true)
         end
 
         if room:IsClear() and room:IsFirstVisit() then
-            -- if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+            -- if enchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
             --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
             --     JosephMod.cardEffects:spawnPortal(pos, player, 0)
             --     roomData.hasStarsPortal = true
             -- end
 
-            -- if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+            -- if enchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
             --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
             --     JosephMod.cardEffects:spawnPortal(pos, player, 2)
             --     roomData.hasMoonPortal = true
             -- end
 
-            -- if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+            -- if enchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
             --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
             --     JosephMod.cardEffects:spawnPortal(pos, player, 1)
             --     roomData.hasEmporerPortal = true
             -- end
 
-            if playerData.EnchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
+            if enchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
                 JosephMod.cardEffects:spawnPortal(pos, player, 3)
                 roomData.hasFoolPortal = true
             end
         end
-
-
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, CardEffects.addRoomEffect)
@@ -322,28 +318,28 @@ function CardEffects:RoomClearEffect(rng, spawnPos)
     end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        local playerData = JosephMod.saveManager.GetRunSave(player)
-        if (playerData and playerData.EnchantedCard) then
+        local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
+        if (enchantedCard and enchantedCard ~= 0) then
 
-            -- if playerData.EnchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+            -- if enchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
             --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
             --     JosephMod.cardEffects:spawnPortal(pos, player, 0)
             --     roomData.hasStarsPortal = true
             -- end
 
-            -- if playerData.EnchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+            -- if enchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
             --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
             --     JosephMod.cardEffects:spawnPortal(pos, player, 2)
             --     roomData.hasMoonPortal = true
             -- end
 
-            -- if playerData.EnchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+            -- if enchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
             --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
             --     JosephMod.cardEffects:spawnPortal(pos, player, 1)
             --     roomData.hasEmporerPortal = true
             -- end
 
-            if playerData.EnchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
+            if enchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
                 JosephMod.cardEffects:spawnPortal(pos, player, 3)
                 roomData.hasFoolPortal = true
@@ -352,19 +348,19 @@ function CardEffects:RoomClearEffect(rng, spawnPos)
 
             if roomType ~= RoomType.ROOM_BOSS then
 
-                if playerData.EnchantedCard == Card.CARD_LOVERS and rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE then
+                if enchantedCard == Card.CARD_LOVERS and rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE then
                     SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
                     local pos = room:FindFreePickupSpawnPosition(spawnPos)
                     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 1, pos, Vector(0, 0), nil)
                 end
 
-                if playerData.EnchantedCard == Card.CARD_HIEROPHANT and rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE then
+                if enchantedCard == Card.CARD_HIEROPHANT and rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE then
                     SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
                     local pos = room:FindFreePickupSpawnPosition(spawnPos)
                     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 3, pos, Vector(0, 0), nil)
                 end
 
-                if playerData.EnchantedCard == Card.CARD_JUSTICE and rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE then
+                if enchantedCard == Card.CARD_JUSTICE and rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE then
                     SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
                     for i=10, 40, 10 do
                         if rng:RandomFloat() <= 0.90 then

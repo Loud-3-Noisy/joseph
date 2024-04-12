@@ -202,9 +202,10 @@ function JosephChar:trackFramesHeld(player)
         player:AnimateCard(playerData.card)
         JosephChar:RemoveCard(player, playerData.card)
         SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
-        local oldCard = playerData.EnchantedCard
+        
+        local oldCard = utility:GetPlayerSave(player, "EnchantedCard")
         local newCard = playerData.card
-        playerData.EnchantedCard = newCard
+        utility:SetPlayerSave(player, "EnchantedCard", newCard)
         JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
         JosephMod.cardEffects:InitCardEffect(player, newCard)
         playerData.startedUsingCard = false
@@ -248,9 +249,8 @@ function JosephChar:showEnchantment(player, i)
     if player == nil then return end
     if player:GetPlayerType() ~= josephType then return end
 
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if not (playerData and playerData.EnchantedCard) then return end
-    local enchantedCard =  playerData.EnchantedCard
+    local enchantedCard =  utility:GetPlayerSave(player, "EnchantedCard")
+    if not enchantedCard or enchantedCard == 0 then return end
     local enchantmentDisplay = Sprite()
 
     if i == 0 then
@@ -312,16 +312,16 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end
 
-    local playerData = JosephMod.saveManager.GetRunSave(player)
-    if playerData.EnchantedCard == nil then return end
+    local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
+    if enchantedCard == nil or enchantedCard == 0 then return end
 
     local rng = utility:GetPlayerSave(player, "playerRNG")
     if not rng then rng = JosephChar:CreateRNG(player) end
 
     local randomFloat = rng:RandomFloat()
     if randomFloat < 0.5 then
-        local oldCard = playerData.EnchantedCard
-        playerData.EnchantedCard = nil
+        local oldCard = enchantedCard
+        utility:SetPlayerSave(player, "EnchantedCard", 0)
         JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
         SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
         JosephChar:PlayDisenchantAnimation(player, oldCard)
