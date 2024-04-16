@@ -1,7 +1,8 @@
 local CardEffects = {}
+local itemManager = JosephMod.HiddenItemManager
 local utility = JosephMod.utility
 local enums = JosephMod.enums
-
+local saveManager = JosephMod.saveManager
 
 local RED_HEART_REPLACE_CHANCE = 0.25
 local SOUL_HEART_REPLACE_CHANCE = 0.143 -- 1/7
@@ -31,19 +32,21 @@ JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, CardEffects.addCardStats)
 function CardEffects:InitCardEffect(player, card)
 
     if card == Card.CARD_EMPEROR then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_THERES_OPTIONS)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_THERES_OPTIONS, 0, 1, ENCHANTMENT)
     end
 
     if card == Card.CARD_STARS then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_MORE_OPTIONS, 0, 1, ENCHANTMENT)
     end
 
     if card == Card.CARD_HERMIT then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_MEMBER_CARD, 0, 1, ENCHANTMENT)
+        local save = saveManager.GetRunSave()
+        if save then save.RemovedShopTrapdoor = false end
     end
 
     if card == Card.CARD_MOON then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_LUNA)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_LUNA, 0, 1, ENCHANTMENT)
     end
 
     if card == Card.CARD_MAGICIAN then
@@ -55,21 +58,21 @@ function CardEffects:InitCardEffect(player, card)
     end
 
     if card == Card.CARD_CHARIOT then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_TAURUS)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_TAURUS, 0, 1, ENCHANTMENT)
     end
 
     if card == Card.CARD_WHEEL_OF_FORTUNE then
 
-        player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
-        player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
+        utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
+        utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
 
         JosephMod.Schedule(3, function ()
             local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
             local rand = rng:RandomInt(2) + 1
             if rand == 1 then
-                player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE)
+                itemManager:Add(player, enums.Collectibles.LIL_SLOT_MACHINE, 0, 1, ENCHANTMENT)
             else
-                player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE)
+                itemManager:Add(player, enums.Collectibles.LIL_FORTUNE_TELLER, 0, 1, ENCHANTMENT)
             end
         end,{})
     end
@@ -83,14 +86,14 @@ function CardEffects:InitCardEffect(player, card)
     end
 
     if card == Card.CARD_DEATH then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DRY_BABY)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_DRY_BABY, 0, 1, ENCHANTMENT)
     end
 
     if card == Card.CARD_TEMPERANCE then
-        player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK, -1)
+        utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
 
         JosephMod.Schedule(3, function ()
-            player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK)
+            itemManager:Add(player, enums.Collectibles.LIL_BLOOD_BANK, 0, 1, ENCHANTMENT)
         end,{})
     end
 
@@ -99,7 +102,7 @@ function CardEffects:InitCardEffect(player, card)
     end
 
     if card == Card.CARD_TOWER then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, 0, 1, ENCHANTMENT)
     end
 
     if card == Card.CARD_WORLD then
@@ -110,14 +113,14 @@ function CardEffects:InitCardEffect(player, card)
         local rng = player:GetCardRNG(Card.CARD_JUDGEMENT)
         local rand = rng:RandomInt(2) + 1
         if rand == 1 then
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_BUM_FRIEND)
+            itemManager:Add(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, 0, 1, ENCHANTMENT)
         else
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DARK_BUM)
+            itemManager:Add(player, CollectibleType.COLLECTIBLE_DARK_BUM, 0, 1, ENCHANTMENT)
         end
     end
 
     if card == Card.CARD_SUN then
-        player:AddInnateCollectible(CollectibleType.COLLECTIBLE_SOL)
+        itemManager:Add(player, CollectibleType.COLLECTIBLE_SOL, 0, 1, ENCHANTMENT)
     end
 end
 
@@ -143,7 +146,7 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_EMPEROR] = function()
             -- Code for CARD_EMPEROR
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_THERES_OPTIONS, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_THERES_OPTIONS, ENCHANTMENT)
         end,
         [Card.CARD_HIEROPHANT] = function()
             -- Code for CARD_HIEROPHANT
@@ -153,14 +156,14 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_CHARIOT] = function()
             -- Code for CARD_CHARIOT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_TAURUS, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_TAURUS, ENCHANTMENT)
         end,
         [Card.CARD_JUSTICE] = function()
             -- Code for CARD_JUSTICE
         end,
         [Card.CARD_HERMIT] = function()
             -- Code for CARD_HERMIT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_MEMBER_CARD, ENCHANTMENT)
             JosephMod.Schedule(1, function ()
                 CardEffects:RemoveShopTrapdoor()
             end,{})
@@ -168,8 +171,8 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
-            player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE)
-            player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER)
+            utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_SLOT_MACHINE, ENCHANTMENT)
+            utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_FORTUNE_TELLER, ENCHANTMENT)
         end,
         [Card.CARD_STRENGTH] = function()
             -- Code for CARD_STRENGTH
@@ -181,11 +184,11 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_DEATH] = function()
             -- Code for CARD_DEATH
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DRY_BABY, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_DRY_BABY, ENCHANTMENT)
         end,
         [Card.CARD_TEMPERANCE] = function()
             -- Code for CARD_TEMPERANCE
-            player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK, -1)
+            utility:TryRemoveInnateCollectible(player, enums.Collectibles.LIL_BLOOD_BANK, ENCHANTMENT)
         end,
         [Card.CARD_DEVIL] = function()
             -- Code for CARD_DEVIL
@@ -193,24 +196,24 @@ function CardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_TOWER] = function()
             -- Code for CARD_TOWER
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, ENCHANTMENT)
         end,
         [Card.CARD_STARS] = function()
             -- Code for CARD_STAR
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_MORE_OPTIONS, ENCHANTMENT)
         end,
         [Card.CARD_MOON] = function()
             -- Code for CARD_MOON
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_LUNA, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_LUNA, ENCHANTMENT)
         end,
         [Card.CARD_SUN] = function()
             -- Code for CARD_SUN
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_SOL, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_SOL, ENCHANTMENT)
         end,
         [Card.CARD_JUDGEMENT] = function()
             -- Code for CARD_JUDGEMENT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_BUM_FRIEND, -1)
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DARK_BUM, -1)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_BUM_FRIEND, ENCHANTMENT)
+            utility:TryRemoveInnateCollectible(player, CollectibleType.COLLECTIBLE_DARK_BUM, ENCHANTMENT)
         end,
         [Card.CARD_WORLD] = function()
             -- Code for CARD_WORLD
@@ -228,7 +231,7 @@ function CardEffects:RemoveCardEffect(player, card)
    end
 end
 
-local hasFoolPortal = false
+
 
 function CardEffects:addRoomEffect()
 
@@ -238,8 +241,13 @@ function CardEffects:addRoomEffect()
 
     CardEffects:RemoveShopTrapdoor()
 
-    hasFoolPortal = false
-
+    local roomData = JosephMod.saveManager.GetRoomSave(nil)
+	if roomData then 
+        -- roomData.hasStarsPortal = false
+        -- roomData.hasEmporerPortal = false
+        roomData.hasFoolPortal = false
+        -- roomData.hasMoonPortal = false
+    end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
@@ -273,10 +281,28 @@ function CardEffects:addRoomEffect()
         end
 
         if room:IsClear() and room:IsFirstVisit() then
-            if enchantedCard == Card.CARD_FOOL and hasFoolPortal == false then
+            -- if enchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 0)
+            --     roomData.hasStarsPortal = true
+            -- end
+
+            -- if enchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 2)
+            --     roomData.hasMoonPortal = true
+            -- end
+
+            -- if enchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 1)
+            --     roomData.hasEmporerPortal = true
+            -- end
+
+            if enchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
                 JosephMod.cardEffects:spawnPortal(pos, player, 3)
-                hasFoolPortal = true
+                roomData.hasFoolPortal = true
             end
         end
     end
@@ -292,17 +318,40 @@ function CardEffects:RoomClearEffect(rng, spawnPos)
     local offset = 40
     local overrideClearReward = false
 
-    hasFoolPortal = false
-
+    local roomData = JosephMod.saveManager.GetRoomSave(nil)
+	if roomData then 
+        -- roomData.hasStarsPortal = false
+        -- roomData.hasEmporerPortal = false
+        roomData.hasFoolPortal = false
+        -- roomData.hasMoonPortal = false
+    end
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
         if (enchantedCard and enchantedCard ~= 0) then
 
-            if enchantedCard == Card.CARD_FOOL and hasFoolPortal == false then
+            -- if enchantedCard == Card.CARD_STARS and roomData.hasStarsPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 0)
+            --     roomData.hasStarsPortal = true
+            -- end
+
+            -- if enchantedCard == Card.CARD_MOON and roomData.hasMoonPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X - offset), centerPos.Y + offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 2)
+            --     roomData.hasMoonPortal = true
+            -- end
+
+            -- if enchantedCard == Card.CARD_EMPEROR and roomData.hasEmporerPortal == false then
+            --     local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y - offset), 10)
+            --     JosephMod.cardEffects:spawnPortal(pos, player, 1)
+            --     roomData.hasEmporerPortal = true
+            -- end
+
+            if enchantedCard == Card.CARD_FOOL and roomData.hasFoolPortal == false then
                 local pos = Isaac.GetFreeNearPosition(Vector((centerPos.X + offset), centerPos.Y + offset), 10)
                 JosephMod.cardEffects:spawnPortal(pos, player, 3)
-                hasFoolPortal = true
+                roomData.hasFoolPortal = true
             end
 
 
@@ -394,12 +443,17 @@ function CardEffects:RemoveShopTrapdoor()
     if roomType ~= RoomType.ROOM_SHOP then return end
     if PlayerManager.AnyoneHasCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD) then return end
     if utility:AnyPlayerHasEnchantment(Card.CARD_HERMIT) then return end
+    local save = saveManager.GetRunSave()
+    if not (save and save.RemovedShopTrapdoor == false) then return end
     local shopCrawlSpaces = TSIL.GridSpecific.GetCrawlSpaces(TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP)
     if (next(shopCrawlSpaces) ~= nil) then
         local shopDoor = shopCrawlSpaces[1]
         Isaac.Spawn(1000, 15, 0, shopDoor.Position, Vector(0, 0), nil)
         TSIL.GridEntities.RemoveGridEntity(shopDoor)
+        save.RemovedShopTrapdoor = true
     end
+
+
 end
 
 
