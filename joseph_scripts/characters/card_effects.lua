@@ -43,7 +43,7 @@ function CardEffects:InitCardEffect(player, card)
         if Game():GetRoom():GetType() == RoomType.ROOM_SHOP then
             TSIL.GridEntities.SpawnGridEntity(
                 GridEntityType.GRID_STAIRS,
-                TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP,
+                TSIL.Enums.StairsVariant.SECRET_SHOP,
                 Vector(440, 160),
                 true
             )
@@ -397,9 +397,9 @@ function CardEffects:RemoveShopTrapdoor()
     if Game():GetRoom():GetType() ~= RoomType.ROOM_SHOP then return end
     if PlayerManager.AnyoneHasCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD) then return end
     if utility:AnyPlayerHasEnchantment(Card.CARD_HERMIT) then return end
-
-    local shopCrawlSpaces = TSIL.GridSpecific.GetCrawlSpaces(TSIL.Enums.CrawlSpaceVariant.SECRET_SHOP)
+    local shopCrawlSpaces = TSIL.GridSpecific.GetStairs(TSIL.Enums.StairsVariant.SECRET_SHOP)
     if (next(shopCrawlSpaces) ~= nil) then
+        print("2")
         local shopDoor = shopCrawlSpaces[1]
         Isaac.Spawn(1000, 15, 0, shopDoor.Position, Vector(0, 0), nil)
         TSIL.GridEntities.RemoveGridEntity(shopDoor)
