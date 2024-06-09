@@ -4,7 +4,8 @@ if REPENTOGON then
 
   include("joseph_scripts.enums")
   JosephMod.utility = include('joseph_scripts.utility.functions')
-  JosephMod.cardEffects = include("joseph_scripts.characters.card_effects")
+  --JosephMod.CardEffects = include("joseph_scripts.characters.card_effects")
+  JosephMod.BaseCardEffects = include('joseph_scripts.card_enchants.base_card_effects')
   include("joseph_scripts.characters.joseph")
   include("joseph_scripts.characters.slotmachines")
   include("joseph_scripts.items.magic_skin2")

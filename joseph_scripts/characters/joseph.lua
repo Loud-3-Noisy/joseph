@@ -5,9 +5,15 @@ local enums = JosephMod.enums
 
 local vars = {
     "playerRNG",
-    "EnchantedCard",
+    "EnchantedCards",
 }
 utility:CreateEmptyPlayerSaveDataVars(vars)
+-- EnchantedCard slots:
+-- 1 - Joseph Base
+-- 2 - Joseph Birthright
+-- 3 - Card Sleeve
+-- 4 - Card Sleeve Schoolbag
+-- 5 - Card Sleeve Pocket
 
 local CardChargeBar = {}
 local StartedUsingCard = {}
@@ -18,28 +24,16 @@ local ManualUse = {}
 
 
 
--- local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "graterStacks")
---   local playerIndex = TSIL.Players.GetPlayerIndex(player)
---   local data = dataPerPlayer[playerIndex] or 0 --You can change 0 to whatever the default should be for each player
-
---   --Do stuff with the data
---   data = data + 1
-
---   --Save the changed data
---   dataPerPlayer[playerIndex] = data
-
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
-local hairCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_hair.anm2") -- Exact path, with the "resources" folder as the root
-local stolesCostume = Isaac.GetCostumeIdByPath("gfx/characters/joseph_poncho.anm2") -- Exact path, with the "resources" folder as the root
 local chargebarPos = Vector(-30, -52)
 
 
 local cardDisplayPosPerPlayer = {
     --Vector(394, 147),
-    Vector(60, 50), --player 1 top left
+    Vector(150, 14), --player 1 top left
     Vector(332, 50), --player 2 top right
     Vector(30, 250), --player 3 bottom left
     Vector(326, 250), --player 4 bottom right but slightly less
@@ -59,11 +53,6 @@ f:Load("font/terminus.fnt")
 function JosephChar:onPlayerInit(player)
     if player:GetPlayerType() ~= josephType then return end
 
-    JosephMod.Schedule(1, function ()
-        local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
-        player:RemoveCostume(config)
-    end,{})
-
     local rng = RNG()
     rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
 
@@ -75,25 +64,15 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
 
---Remove starter deck costume every room in case it reappears
-function JosephChar:onNewRoom()
-    for i = 0, Game():GetNumPlayers() - 1 do
-        local player = Isaac.GetPlayer(i)
-        if player:GetPlayerType() == josephType then
-            local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
-            player:RemoveCostume(config)
-        end
-    end
-end
-JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, JosephChar.onNewRoom)
-
 
 --Make sure Joseph always has starter deck
 JosephMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
 
     if player:GetPlayerType() == josephType then
         if not player:HasCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK) then
-           player:AddInnateCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK) 
+           player:AddInnateCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
+           local config = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
+           player:RemoveCostume(config)
         end
     end
     
@@ -204,11 +183,13 @@ function JosephChar:trackFramesHeld(player)
         JosephChar:RemoveCard(player, Card[playerIndex])
         SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
         
-        local oldCard = utility:GetPlayerSave(player, "EnchantedCard")
+        local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
         local newCard = Card[playerIndex]
-        utility:SetPlayerSave(player, "EnchantedCard", newCard)
-        JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
-        JosephMod.cardEffects:InitCardEffect(player, newCard)
+        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, newCard)
+        if oldCard and oldCard ~= 0 then
+            JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
+        end
+        JosephMod.BaseCardEffects:InitCardEffect(player, newCard)
         StartedUsingCard[playerIndex] = false
         FramesHeld[playerIndex] = 0
         ManualUse[playerIndex] = false
@@ -249,7 +230,9 @@ function JosephChar:showEnchantment(player, i)
     if player == nil then return end
     if player:GetPlayerType() ~= josephType then return end
 
-    local enchantedCard =  utility:GetPlayerSave(player, "EnchantedCard")
+    local enchantedCards =  utility:GetEnchantedCardsPerPlayer(player)
+    local enchantedCard = enchantedCards[enums.CardSlot.JOSEPH_INNATE]
+
     if not enchantedCard or enchantedCard == 0 then return end
     local enchantmentDisplay = Sprite()
 
@@ -312,7 +295,7 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     if flags & fakeDamageFlags > 0 then return end
 
-    local enchantedCard = utility:GetPlayerSave(player, "EnchantedCard")
+    local enchantedCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
     if enchantedCard == nil or enchantedCard == 0 then return end
 
     local rng = utility:GetPlayerSave(player, "playerRNG")
@@ -321,8 +304,8 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     local randomFloat = rng:RandomFloat()
     if randomFloat < 0.5 then
         local oldCard = enchantedCard
-        utility:SetPlayerSave(player, "EnchantedCard", 0)
-        JosephMod.cardEffects:RemoveCardEffect(player, oldCard)
+        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, 0)
+        JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
         SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
         JosephChar:PlayDisenchantAnimation(player, oldCard)
     end

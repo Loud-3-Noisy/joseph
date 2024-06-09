@@ -35,11 +35,10 @@ function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
   end
 end
 
-
 function utilityFunctions:GetPlayerSave(player, var)
   local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
   local playerIndex = TSIL.Players.GetPlayerIndex(player)
-  local data = dataPerPlayer[playerIndex] or nil --You can change 0 to whatever the default should be for each player
+  local data = dataPerPlayer[playerIndex] --You can change 0 to whatever the default should be for each player
   return data
 end
 
@@ -49,6 +48,46 @@ function utilityFunctions:SetPlayerSave(player, var, newData)
   local data = dataPerPlayer[playerIndex]
   data = newData
   dataPerPlayer[playerIndex] = data
+end
+
+function utilityFunctions:SetPlayerSaveAtIndex(player, var, newData, index)
+  local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+  local data = dataPerPlayer[playerIndex]
+  data[index] = newData
+  dataPerPlayer[playerIndex] = data
+end
+
+function utilityFunctions:GetEnchantedCardsPerPlayer(player)
+  local enchantedCardsPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards")
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+  local enchantedCards = enchantedCardsPerPlayer[playerIndex]
+
+  if not enchantedCards then
+    enchantedCards = {}
+    enchantedCardsPerPlayer[playerIndex] = enchantedCards
+  end
+
+  return enchantedCards
+end
+
+function utilityFunctions:GetEnchantedCardInPlayerSlot(player, slot)
+  local enchantedCardsPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards")
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+  local enchantedCards = enchantedCardsPerPlayer[playerIndex]
+
+  if not enchantedCards then
+    enchantedCards = {0, 0, 0, 0, 0}
+    enchantedCardsPerPlayer[playerIndex] = enchantedCards
+  end
+  return enchantedCards[slot]
+end
+
+function utilityFunctions:SetEnchantedCardInPlayerSlot(player, slot, card)
+  local enchantedCards = JosephMod.utility:GetEnchantedCardsPerPlayer(player)
+  enchantedCards[slot] = card
 end
 
 function utilityFunctions:GetPlayerVar(player, var)
@@ -102,12 +141,14 @@ end
 
 
 function utilityFunctions:AnyPlayerHasEnchantment(enchantment)
-  local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCard") or {}
+  local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards") or {}
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
         local playerIndex = TSIL.Players.GetPlayerIndex(player)
-        
-        if playerEnchantments[playerIndex] == enchantment then return true end
+        if not playerEnchantments or not playerEnchantments[playerIndex] or playerEnchantments[playerIndex] == {} then return false end
+        for key, value in pairs(playerEnchantments[playerIndex]) do
+          if value == enchantment then return true end
+        end
     end
     return false
 end

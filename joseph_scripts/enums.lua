@@ -47,9 +47,14 @@ enums.Callbacks = {
     JOSEPH_PRE_CARD_ENCHANT = "JOSEPH_PRE_CARD_ENCHANT"
 }
 
-enums.CardAnims = {
-
+enums.CardSlot = {
+    JOSEPH_INNATE = 1,
+    JOSEPH_BIRTHRIGHT = 2,
+    CARD_SLEEVE_MAIN = 3,
+    CARD_SLEEVE_SCHOOLBAG = 4,
+    CARD_SLEEVE_POCKET = 5
 }
+enums.CardAnims = {}
 
 enums.CardAnims[Card.CARD_FOOL] = "00_TheFool"
 enums.CardAnims[Card.CARD_MAGICIAN] = "01_TheMagician"
@@ -96,5 +101,56 @@ enums.CardAnims[Card.CARD_REVERSE_MOON] = "40_TheMoon"
 enums.CardAnims[Card.CARD_REVERSE_SUN] = "41_TheSun"
 enums.CardAnims[Card.CARD_REVERSE_JUDGEMENT] = "42_Judgement"
 enums.CardAnims[Card.CARD_REVERSE_WORLD] = "43_TheWorld"
+
+
+enums.CardDisenchantChances = {
+
+}
+
+enums.CardDisenchantChances[Card.CARD_FOOL] = 0.33
+enums.CardDisenchantChances[Card.CARD_MAGICIAN] = 0.90
+enums.CardDisenchantChances[Card.CARD_HIGH_PRIESTESS] = 0.90
+enums.CardDisenchantChances[Card.CARD_EMPRESS] = 0.90
+enums.CardDisenchantChances[Card.CARD_EMPEROR] = 0.25
+enums.CardDisenchantChances[Card.CARD_HIEROPHANT] = 0.25
+enums.CardDisenchantChances[Card.CARD_LOVERS] = 0.25
+enums.CardDisenchantChances[Card.CARD_CHARIOT] = 0.25
+enums.CardDisenchantChances[Card.CARD_JUSTICE] = 0.25
+enums.CardDisenchantChances[Card.CARD_HERMIT] = 0.25
+enums.CardDisenchantChances[Card.CARD_WHEEL_OF_FORTUNE] = 0.25
+enums.CardDisenchantChances[Card.CARD_STRENGTH] = 0.99
+enums.CardDisenchantChances[Card.CARD_HANGED_MAN] = 0.33
+enums.CardDisenchantChances[Card.CARD_DEATH] = 0.33
+enums.CardDisenchantChances[Card.CARD_TEMPERANCE] = 0.25
+enums.CardDisenchantChances[Card.CARD_DEVIL] = 0.90
+enums.CardDisenchantChances[Card.CARD_TOWER] = 0.10
+enums.CardDisenchantChances[Card.CARD_STARS] = 0.25
+enums.CardDisenchantChances[Card.CARD_MOON] = 0.25
+enums.CardDisenchantChances[Card.CARD_SUN] = 0.25
+enums.CardDisenchantChances[Card.CARD_JUDGEMENT] = 0.25
+enums.CardDisenchantChances[Card.CARD_WORLD] = 0.25
+
+enums.CardDisenchantChances[Card.CARD_REVERSE_FOOL] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_MAGICIAN] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_HIGH_PRIESTESS] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_EMPRESS] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_EMPEROR] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_HIEROPHANT] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_LOVERS] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_CHARIOT] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_JUSTICE] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_HERMIT] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_STRENGTH] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_HANGED_MAN] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_DEATH] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_TEMPERANCE] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_DEVIL] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_TOWER] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_STARS] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_MOON] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_SUN] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_JUDGEMENT] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_WORLD] = 0.33
 
 JosephMod.enums = enums
