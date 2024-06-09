@@ -38,6 +38,12 @@ local cardDisplayPosPerPlayer = {
     Vector(30, 250), --player 3 bottom left
     Vector(326, 250), --player 4 bottom right but slightly less
 }
+local birthrightCardDisplayPosPerPlayer = {
+    Vector(180, 14), --player 1 top left
+    Vector(332, 50), --player 2 top right
+    Vector(30, 250), --player 3 bottom left
+    Vector(326, 250), --player 4 bottom right but slightly less
+}
 local playerAnchor = {
     "topleft",
     "topright",
@@ -225,32 +231,69 @@ JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_CARD, CallbackPriority.IMP
 
 
 
+function JosephChar:pickupBirthright(CollectibleType, Charge, FirstTime, Slot, VarData, player)
+    if not player:GetPlayerType() ==  josephType or not FirstTime then return end
+    local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
+
+    if oldCard then
+        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, 0)
+        JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
+
+        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_BIRTHRIGHT, oldCard)
+        JosephMod.BaseCardEffects:InitCardEffect(player, oldCard)
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, JosephChar.pickupBirthright, 619)
+
+
+
 function JosephChar:showEnchantment(player, i)
 
     if player == nil then return end
     if player:GetPlayerType() ~= josephType then return end
-
     local enchantedCards =  utility:GetEnchantedCardsPerPlayer(player)
+
+
     local enchantedCard = enchantedCards[enums.CardSlot.JOSEPH_INNATE]
+    if enchantedCard and enchantedCard ~= 0 then
+        local enchantmentDisplay = Sprite()
 
-    if not enchantedCard or enchantedCard == 0 then return end
-    local enchantmentDisplay = Sprite()
-
-    if i == 0 then
-        enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
-        enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
-    else
-        enchantmentDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
-        if enchantedCard < 23 then
+        if i == 0 then
+            enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
             enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
         else
-            enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
+            enchantmentDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
+            if enchantedCard < 23 then
+                enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
+            else
+                enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
+            end
         end
+
+        enchantmentDisplay:LoadGraphics()
+        local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+        enchantmentDisplay:Render(displayPos)
     end
 
-    enchantmentDisplay:LoadGraphics()
-    local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
-    enchantmentDisplay:Render(displayPos)
+    local birthrightCard = enchantedCards[enums.CardSlot.JOSEPH_BIRTHRIGHT]
+    if birthrightCard and birthrightCard ~= 0 then
+        local birthrightDisplay = Sprite()
+        if i == 0 then
+            birthrightDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
+            birthrightDisplay:SetFrame("CardFronts", birthrightCard)
+        else
+            birthrightDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
+            if birthrightCard < 23 then
+                birthrightDisplay:SetFrame("CardFronts", birthrightCard)
+            else
+                birthrightDisplay:SetFrame("CardFronts", birthrightCard)
+            end
+        end
+
+        birthrightDisplay:LoadGraphics()
+        local displayPos = Vector(JosephMod.utility:HUDOffset(birthrightCardDisplayPosPerPlayer[i+1].X, birthrightCardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+        birthrightDisplay:Render(displayPos)
+    end
 end
 
 
@@ -288,6 +331,8 @@ function JosephChar:ChargeBarRender(Meter,IsCharging,pos,Sprite) --Function cred
     Sprite:Update()
 end
 
+
+
 function JosephChar:OnHit(entity, amount, flags, source, countDown)
 
     local player = entity:ToPlayer()
@@ -313,6 +358,7 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityType.ENTITY_PLAYER)
+
 
 
 function JosephChar:PlayDisenchantAnimation(player, card)

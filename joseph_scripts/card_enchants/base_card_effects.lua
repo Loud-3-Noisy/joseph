@@ -102,7 +102,7 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_EMPEROR] = function()
             -- Code for CARD_EMPEROR
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_THERES_OPTIONS, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_THERES_OPTIONS)
         end,
         [Card.CARD_HIEROPHANT] = function()
             -- Code for CARD_HIEROPHANT
@@ -112,14 +112,14 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_CHARIOT] = function()
             -- Code for CARD_CHARIOT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_TAURUS, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_TAURUS)
         end,
         [Card.CARD_JUSTICE] = function()
             -- Code for CARD_JUSTICE
         end,
         [Card.CARD_HERMIT] = function()
             -- Code for CARD_HERMIT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_MEMBER_CARD)
             JosephMod.Schedule(1, function ()
                 BaseCardEffects:RemoveShopTrapdoor()
             end,{})
@@ -152,19 +152,19 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_TOWER] = function()
             -- Code for CARD_TOWER
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_CURSE_OF_THE_TOWER)
         end,
         [Card.CARD_STARS] = function()
             -- Code for CARD_STAR
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_MORE_OPTIONS)
         end,
         [Card.CARD_MOON] = function()
             -- Code for CARD_MOON
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_LUNA, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_LUNA)
         end,
         [Card.CARD_SUN] = function()
             -- Code for CARD_SUN
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_SOL, -1)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_SOL)
         end,
         [Card.CARD_JUDGEMENT] = function()
             -- Code for CARD_JUDGEMENT

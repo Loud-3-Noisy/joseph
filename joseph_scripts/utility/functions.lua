@@ -153,4 +153,12 @@ function utilityFunctions:AnyPlayerHasEnchantment(enchantment)
     return false
 end
 
+
+function utilityFunctions:RemoveInnateItem(player, item)
+
+  player:AddInnateCollectible(item, -1)
+  local config = Isaac.GetItemConfig():GetCollectible(item)
+  player:RemoveCostume(config)
+end
+
 return utilityFunctions
