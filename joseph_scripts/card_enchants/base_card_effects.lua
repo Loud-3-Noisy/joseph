@@ -2,20 +2,14 @@ local BaseCardEffects = {}
 local utility = JosephMod.utility
 local enums = JosephMod.enums
 
-local RED_HEART_REPLACE_CHANCE = 1/4
-local SOUL_HEART_REPLACE_CHANCE = 1/7
-local JUSTICE_DROP_REPLACE_CHANCE = 1/5
+local RED_HEART_REPLACE_CHANCE = 1/5
+local SOUL_HEART_REPLACE_CHANCE = 1/8
+local JUSTICE_DROP_REPLACE_CHANCE = 1/7
 
 local firstTimeLovers = false
 local firstTimeHeirophant = false
 local firstTimeJustice = false
 
--- function BaseCardEffects:ForAllEnchantmentSlotOnPlayerRun(player, functionToRun)
---     local enchantedCards = utility:GetPlayerSave(player, "EnchantedCards")
---     for key, enchantedCard in pairs(enchantedCards) do
---         functionToRun(player, enchantedCard)
---     end
--- end
 
 function BaseCardEffects:addCardStats(player, flag)
     local enchantedCards = utility:GetEnchantedCardsPerPlayer(player)
@@ -282,10 +276,7 @@ end
 
 
 
-local hasFoolPortal = false
-
 function BaseCardEffects:EnchantmentEffects(player, enchantedCard)
-    print("In enchantment effects. Card: " .. enchantedCard)
 
     local room = Game():GetRoom()
     BaseCardEffects:RemoveShopTrapdoor()
@@ -318,8 +309,8 @@ function BaseCardEffects:EnchantmentEffects(player, enchantedCard)
     end
 
     if room:IsClear() and room:IsFirstVisit() then
-        if enchantedCard == Card.CARD_FOOL and hasFoolPortal == false then
-            JosephMod.BaseCardEffects:spawnPortal(player, 3)
+        if enchantedCard == Card.CARD_FOOL then
+            JosephMod.BaseCardEffects:spawnPortal(3)
         end
     end
 
@@ -327,22 +318,16 @@ end
 
 local gameContinued = false
 function BaseCardEffects:ReapplyCardEffects()
-    print("Reapply ccard effects (new room)")
     local room = Game():GetRoom()
     BaseCardEffects:RemoveShopTrapdoor()
 
     for i = 0, Game():GetNumPlayers() - 1 do
-        print("")
-        print("Player " .. i)
         local player = Isaac.GetPlayer(i)
         local enchantedCards = utility:GetEnchantedCardsPerPlayer(player)
         for key, enchantedCard in pairs(enchantedCards) do
-            print("Key " .. key)
-            print("Value " .. enchantedCard)
             BaseCardEffects:EnchantmentEffects(player, enchantedCard)
         end
     end
-    hasFoolPortal = false
 end
 --On new room, runs all card effects for all players
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, BaseCardEffects.ReapplyCardEffects)
@@ -360,7 +345,6 @@ end)
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, function (isContinued)
     if not isContinued then return end
     gameContinued = true
-    print("Game continue")
     JosephMod.Schedule(1, function ()
         for i = 0, Game():GetNumPlayers() - 1 do
             local player = Isaac.GetPlayer(i)
@@ -370,59 +354,57 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, fun
                 BaseCardEffects:AddInnateCollectibles(player, enchantedCard)
             end
         end
-        hasFoolPortal = false
     end,{})
 end)
 
 
-function BaseCardEffects:RoomClearEffect(rng, spawnPos)
+function BaseCardEffects:RoomClearEffectPerPlayer(player, enchantedCard, rng, spawnPos)
     local room = Game():GetRoom()
     local roomType = room:GetType()
-    local centerPos = room:IsLShapedRoom() and Vector(580, 420) or room:GetCenterPos()
-    local portalsCount = 0
-    local offset = 40
-    local overrideClearReward = false
 
-    hasFoolPortal = false
+    if roomType == RoomType.ROOM_BOSS then return end
+
+    if enchantedCard == Card.CARD_LOVERS and (rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE or firstTimeLovers == true) then
+        firstTimeLovers = false
+        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+        local pos = room:FindFreePickupSpawnPosition(spawnPos)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 1, pos, Vector(0, 0), nil)
+    end
+
+    if enchantedCard == Card.CARD_HIEROPHANT and (rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE or firstTimeHeirophant == true) then
+        firstTimeHeirophant = false
+        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+        local pos = room:FindFreePickupSpawnPosition(spawnPos)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 3, pos, Vector(0, 0), nil)
+    end
+
+    if enchantedCard == Card.CARD_JUSTICE and (rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE or firstTimeJustice == true) then
+        firstTimeJustice = false
+        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+        for i=10, 40, 10 do
+            if rng:RandomFloat() <= 0.80 then
+                local pos = room:FindFreePickupSpawnPosition(spawnPos)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, i, 0, pos, Vector(0, 0), nil)
+            end
+        end
+    end
+
+    local level = Game():GetLevel()
+    local roomDesc = level:GetRoomByIdx(level:GetCurrentRoomIndex())
+    roomDesc.AwardSeed = rng:GetSeed()
+
+end
+
+function BaseCardEffects:RoomClearEffect(rng, spawnPos)
+    if utility:AnyPlayerHasEnchantment(Card.CARD_FOOL) then
+        JosephMod.BaseCardEffects:spawnPortal(3)
+    end
 
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        local enchantedCard = utility:GetPlayerSave(player, "EnchantedCards")
-        if (enchantedCard and enchantedCard ~= 0) then
-
-            if enchantedCard == Card.CARD_FOOL and hasFoolPortal == false then
-                JosephMod.BaseCardEffects:spawnPortal(player, 3)
-            end
-
-
-            if roomType ~= RoomType.ROOM_BOSS then
-
-                if enchantedCard == Card.CARD_LOVERS and rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE then
-                    SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
-                    local pos = room:FindFreePickupSpawnPosition(spawnPos)
-                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 1, pos, Vector(0, 0), nil)
-                end
-
-                if enchantedCard == Card.CARD_HIEROPHANT and rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE then
-                    SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
-                    local pos = room:FindFreePickupSpawnPosition(spawnPos)
-                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 3, pos, Vector(0, 0), nil)
-                end
-
-                if enchantedCard == Card.CARD_JUSTICE and rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE then
-                    SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
-                    for i=10, 40, 10 do
-                        if rng:RandomFloat() <= 0.90 then
-                            local pos = room:FindFreePickupSpawnPosition(spawnPos)
-                            Isaac.Spawn(EntityType.ENTITY_PICKUP, i, 0, pos, Vector(0, 0), nil)
-                        end
-                    end
-                end
-
-                local level = Game():GetLevel()
-                local roomDesc = level:GetRoomByIdx(level:GetCurrentRoomIndex())
-                roomDesc.AwardSeed = rng:GetSeed()
-            end
+        local enchantedCards = utility:GetEnchantedCardsPerPlayer(player)
+        for key, enchantedCard in pairs(enchantedCards) do
+            BaseCardEffects:RoomClearEffectPerPlayer(player, enchantedCard, rng, spawnPos)
         end
     end
 end
@@ -430,7 +412,7 @@ JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, BaseCardEffects.Roo
 
 
 
-function BaseCardEffects.ApplyNewFloorEffect()
+function BaseCardEffects:ApplyNewFloorEffect()
     if not utility:AnyPlayerHasEnchantment(Card.CARD_WORLD) then return end
     Game():GetLevel():ShowMap()
 end
@@ -446,10 +428,10 @@ local function isDoor(pos)
 	return false
 end
 
-function BaseCardEffects:spawnPortal(player, portalType)
+function BaseCardEffects:spawnPortal(portalType)
+    local player = Isaac.GetPlayer()
     local room = Game():GetRoom()
     local marg = 40
-    local existingPortals = Isaac.FindByType(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
     local canFly = player.CanFly
     local tempNPC, pathFinder
     local attempts = 0

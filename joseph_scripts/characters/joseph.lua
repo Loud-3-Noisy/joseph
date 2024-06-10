@@ -347,7 +347,7 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if not rng then rng = JosephChar:CreateRNG(player) end
 
     local randomFloat = rng:RandomFloat()
-    if randomFloat < 0.5 then
+    if randomFloat < enums.CardDisenchantChances[enchantedCard] then
         local oldCard = enchantedCard
         utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, 0)
         JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
