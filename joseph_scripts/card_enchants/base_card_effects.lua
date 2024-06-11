@@ -121,8 +121,12 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
-            player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
-            player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
+            if player:GetCollectibleNum(enums.Collectibles.LIL_SLOT_MACHINE) - player:GetCollectibleNum(enums.Collectibles.LIL_SLOT_MACHINE, false, true) > 0 then
+                player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
+            end
+            if player:GetCollectibleNum(enums.Collectibles.LIL_FORTUNE_TELLER) - player:GetCollectibleNum(enums.Collectibles.LIL_FORTUNE_TELLER, false, true) > 0 then
+                player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
+            end
         end,
         [Card.CARD_STRENGTH] = function()
             -- Code for CARD_STRENGTH
@@ -138,7 +142,9 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_TEMPERANCE] = function()
             -- Code for CARD_TEMPERANCE
-            player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK, -1)
+            if player:GetCollectibleNum(enums.Collectibles.LIL_BLOOD_BANK) - player:GetCollectibleNum(enums.Collectibles.LIL_BLOOD_BANK, false, true) > 0 then
+                player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK, -1)
+            end
         end,
         [Card.CARD_DEVIL] = function()
             -- Code for CARD_DEVIL
@@ -161,9 +167,13 @@ function BaseCardEffects:RemoveCardEffect(player, card)
             utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_SOL)
         end,
         [Card.CARD_JUDGEMENT] = function()
-            -- Code for CARD_JUDGEMENT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_BUM_FRIEND, -1)
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DARK_BUM, -1)
+            -- Code for 
+            if player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BUM_FRIEND) - player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BUM_FRIEND, false, true) > 0 then
+                player:AddInnateCollectible(CollectibleType.COLLECTIBLE_BUM_FRIEND, -1)
+            end
+            if player:GetCollectibleNum(CollectibleType.COLLECTIBLE_DARK_BUM) - player:GetCollectibleNum(CollectibleType.COLLECTIBLE_DARK_BUM, false, true) > 0 then
+                player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DARK_BUM, -1)
+            end
         end,
         [Card.CARD_WORLD] = function()
             -- Code for CARD_WORLD
@@ -208,16 +218,17 @@ function BaseCardEffects:AddInnateCollectibles(player, card)
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
-            player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
-            player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
+            --player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
+            --player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
     
-            JosephMod.Schedule(3, function ()
+            JosephMod.Schedule(5, function ()
                 local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
                 local rand = rng:RandomInt(2) + 1
+                print(rand)
                 if rand == 1 then
                     player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE)
                 else
-                    player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE)
+                    player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER)
                 end
             end,{})
         end,
@@ -227,8 +238,6 @@ function BaseCardEffects:AddInnateCollectibles(player, card)
         end,
         [Card.CARD_TEMPERANCE] = function()
             -- Code for CARD_TEMPERANCE
-            player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK, -1)
-
             JosephMod.Schedule(3, function ()
                 player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK)
             end,{})

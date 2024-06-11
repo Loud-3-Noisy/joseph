@@ -152,7 +152,7 @@ local function BumFamiliarUpdate(_, familiar)
 		newPos = Vector.Zero
 	end
 
-	newPos:Resize(3)
+	newPos:Resize(4)
 	---@diagnostic disable-next-line: assign-type-mismatch, param-type-mismatch
 	familiar.Velocity = TSIL.Utils.Math.Lerp(familiar.Velocity, newPos, 0.25)
 end
