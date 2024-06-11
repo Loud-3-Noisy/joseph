@@ -78,7 +78,17 @@ function BaseCardEffects:InitCardEffect(player, card)
         for idx = 0, allRooms.Size - 1 do
             local room = allRooms:Get(idx)
             if room.Data.Type == RoomType.ROOM_SECRET or room.Data.Type == RoomType.ROOM_SUPERSECRET then
-                room.DisplayFlags = RoomDescriptor.DISPLAY_ICON
+                room.DisplayFlags = RoomDescriptor.DISPLAY_ICON | RoomDescriptor.DISPLAY_BOX
+            end
+        end
+    end
+
+    if card == Card.CARD_SUN then
+        local allRooms = Game():GetLevel():GetRooms()
+        for idx = 0, allRooms.Size - 1 do
+            local room = allRooms:Get(idx)
+            if room.Data.Type == RoomType.ROOM_BOSS then
+                room.DisplayFlags = RoomDescriptor.DISPLAY_ICON | RoomDescriptor.DISPLAY_BOX
             end
         end
     end
