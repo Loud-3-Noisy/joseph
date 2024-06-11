@@ -131,8 +131,8 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
-            utility:RemoveInnateItem(enums.Collectibles.LIL_SLOT_MACHINE)
-            utility:RemoveInnateItem(enums.Collectibles.LIL_FORTUNE_TELLER)
+            utility:RemoveInnateItem(player, enums.Collectibles.LIL_SLOT_MACHINE)
+            utility:RemoveInnateItem(player, enums.Collectibles.LIL_FORTUNE_TELLER)
         end,
         [Card.CARD_STRENGTH] = function()
             -- Code for CARD_STRENGTH
@@ -148,7 +148,7 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_TEMPERANCE] = function()
             -- Code for CARD_TEMPERANCE
-            utility:RemoveInnateItem(enums.Collectibles.LIL_BLOOD_BANK)
+            utility:RemoveInnateItem(player, enums.Collectibles.LIL_BLOOD_BANK)
         end,
         [Card.CARD_DEVIL] = function()
             -- Code for CARD_DEVIL
@@ -172,8 +172,8 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_JUDGEMENT] = function()
             -- Code for 
-            utility:RemoveInnateItem(CollectibleType.COLLECTIBLE_BUM_FRIEND)
-            utility:RemoveInnateItem(CollectibleType.COLLECTIBLE_DARK_BUM)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_BUM_FRIEND)
+            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_DARK_BUM)
         end,
         [Card.CARD_WORLD] = function()
             -- Code for CARD_WORLD
@@ -224,7 +224,6 @@ function BaseCardEffects:AddInnateCollectibles(player, card)
             JosephMod.Schedule(5, function ()
                 local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
                 local rand = rng:RandomInt(2) + 1
-                print(rand)
                 if rand == 1 then
                     player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE)
                 else
