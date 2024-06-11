@@ -73,6 +73,16 @@ function BaseCardEffects:InitCardEffect(player, card)
         Game():GetLevel():ShowMap()
     end
 
+    if card == Card.CARD_MOON then
+        local allRooms = Game():GetLevel():GetRooms()
+        for idx = 0, allRooms.Size - 1 do
+            local room = allRooms:Get(idx)
+            if room.Data.Type == RoomType.ROOM_SECRET or room.Data.Type == RoomType.ROOM_SUPERSECRET then
+                room.DisplayFlags = RoomDescriptor.DISPLAY_ICON
+            end
+        end
+    end
+
 end
 
 
@@ -121,12 +131,8 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
-            if player:GetCollectibleNum(enums.Collectibles.LIL_SLOT_MACHINE) - player:GetCollectibleNum(enums.Collectibles.LIL_SLOT_MACHINE, false, true) > 0 then
-                player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
-            end
-            if player:GetCollectibleNum(enums.Collectibles.LIL_FORTUNE_TELLER) - player:GetCollectibleNum(enums.Collectibles.LIL_FORTUNE_TELLER, false, true) > 0 then
-                player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
-            end
+            utility:RemoveInnateItem(enums.Collectibles.LIL_SLOT_MACHINE)
+            utility:RemoveInnateItem(enums.Collectibles.LIL_FORTUNE_TELLER)
         end,
         [Card.CARD_STRENGTH] = function()
             -- Code for CARD_STRENGTH
@@ -142,9 +148,7 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_TEMPERANCE] = function()
             -- Code for CARD_TEMPERANCE
-            if player:GetCollectibleNum(enums.Collectibles.LIL_BLOOD_BANK) - player:GetCollectibleNum(enums.Collectibles.LIL_BLOOD_BANK, false, true) > 0 then
-                player:AddInnateCollectible(enums.Collectibles.LIL_BLOOD_BANK, -1)
-            end
+            utility:RemoveInnateItem(enums.Collectibles.LIL_BLOOD_BANK)
         end,
         [Card.CARD_DEVIL] = function()
             -- Code for CARD_DEVIL
@@ -168,12 +172,8 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         end,
         [Card.CARD_JUDGEMENT] = function()
             -- Code for 
-            if player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BUM_FRIEND) - player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BUM_FRIEND, false, true) > 0 then
-                player:AddInnateCollectible(CollectibleType.COLLECTIBLE_BUM_FRIEND, -1)
-            end
-            if player:GetCollectibleNum(CollectibleType.COLLECTIBLE_DARK_BUM) - player:GetCollectibleNum(CollectibleType.COLLECTIBLE_DARK_BUM, false, true) > 0 then
-                player:AddInnateCollectible(CollectibleType.COLLECTIBLE_DARK_BUM, -1)
-            end
+            utility:RemoveInnateItem(CollectibleType.COLLECTIBLE_BUM_FRIEND)
+            utility:RemoveInnateItem(CollectibleType.COLLECTIBLE_DARK_BUM)
         end,
         [Card.CARD_WORLD] = function()
             -- Code for CARD_WORLD
@@ -285,7 +285,7 @@ end
 
 
 
-function BaseCardEffects:EnchantmentEffects(player, enchantedCard)
+function BaseCardEffects:EnchantmentEffects(player, enchantedCard, slot)
 
     local room = Game():GetRoom()
     BaseCardEffects:RemoveShopTrapdoor()
@@ -322,24 +322,43 @@ function BaseCardEffects:EnchantmentEffects(player, enchantedCard)
             JosephMod.BaseCardEffects:spawnPortal(3)
         end
     end
-
 end
 
 local gameContinued = false
 function BaseCardEffects:ReapplyCardEffects()
     local room = Game():GetRoom()
     BaseCardEffects:RemoveShopTrapdoor()
+    local anyPlayerHasMoreOptions = false
+    local choicePedestalCount = 0
 
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS, false, true) then
+            anyPlayerHasMoreOptions = true
+        end
+
         local enchantedCards = utility:GetEnchantedCardsPerPlayer(player)
-        for key, enchantedCard in pairs(enchantedCards) do
-            BaseCardEffects:EnchantmentEffects(player, enchantedCard)
+        for slot, enchantedCard in pairs(enchantedCards) do
+            BaseCardEffects:EnchantmentEffects(player, enchantedCard, slot)
+        end
+
+        --Handle stars
+        choicePedestalCount = choicePedestalCount + utility:GetEnchantmentCount(player, Card.CARD_STARS)
+    end
+    if anyPlayerHasMoreOptions then 
+        choicePedestalCount = choicePedestalCount + 1
+    end
+
+    if utility:AnyPlayerHasEnchantment(Card.CARD_STARS) and room:IsFirstVisit() == true and room:GetType() == RoomType.ROOM_TREASURE then
+        for i = 0, choicePedestalCount - 2 do
+            local choiceA = Isaac.Spawn(EntityType.ENTITY_PICKUP, 100, 0, room:FindFreePickupSpawnPosition(room:GetGridPosition(65), 0, true, false), Vector(0, 0), nil)
+            choiceA:ToPickup().OptionsPickupIndex = 1
         end
     end
 end
 --On new room, runs all card effects for all players
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, BaseCardEffects.ReapplyCardEffects)
+
 
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_LEVEL_REORDERED, function ()
     if gameContinued then 
@@ -350,6 +369,7 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_LEVEL_REORDERED, functi
         JosephMod.BaseCardEffects:ReapplyCardEffects()
     end,{})
 end)
+
 
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, function (isContinued)
     if not isContinued then return end
@@ -405,15 +425,36 @@ function BaseCardEffects:RoomClearEffectPerPlayer(player, enchantedCard, rng, sp
 end
 
 function BaseCardEffects:RoomClearEffect(rng, spawnPos)
+    local room = Game():GetRoom()
+    local roomType = room:GetType()
+    local anyPlayerHasTheresOptions = false
+    local choicePedestalCount = 0
     if utility:AnyPlayerHasEnchantment(Card.CARD_FOOL) then
         JosephMod.BaseCardEffects:spawnPortal(3)
     end
 
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_THERES_OPTIONS, false, true) then
+            anyPlayerHasTheresOptions = true
+        end
+
         local enchantedCards = utility:GetEnchantedCardsPerPlayer(player)
         for key, enchantedCard in pairs(enchantedCards) do
             BaseCardEffects:RoomClearEffectPerPlayer(player, enchantedCard, rng, spawnPos)
+        end
+        --Handle emperor
+        choicePedestalCount = choicePedestalCount + utility:GetEnchantmentCount(player, Card.CARD_EMPEROR)
+    end
+
+    if anyPlayerHasTheresOptions then
+        choicePedestalCount = choicePedestalCount + 1
+    end
+    
+    if utility:AnyPlayerHasEnchantment(Card.CARD_EMPEROR) and roomType == RoomType.ROOM_BOSS then
+        for i = 0, choicePedestalCount - 2 do
+            local choiceA = Isaac.Spawn(EntityType.ENTITY_PICKUP, 100, 0, room:FindFreePickupSpawnPosition(room:GetGridPosition(65), 0, true, false), Vector(0, 0), nil)
+            choiceA:ToPickup().OptionsPickupIndex = 1
         end
     end
 end

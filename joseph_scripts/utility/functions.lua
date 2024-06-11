@@ -154,11 +154,25 @@ function utilityFunctions:AnyPlayerHasEnchantment(enchantment)
 end
 
 
-function utilityFunctions:RemoveInnateItem(player, item)
+function utilityFunctions:GetEnchantmentCount(player, enchantment)
+  local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards") or {}
+  local enchantmentCount = 0
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+  if not playerEnchantments or not playerEnchantments[playerIndex] or playerEnchantments[playerIndex] == {} then return 0 end
+  for key, value in pairs(playerEnchantments[playerIndex]) do
+    if value == enchantment then enchantmentCount = enchantmentCount + 1 end
+  end
 
-  player:AddInnateCollectible(item, -1)
-  local config = Isaac.GetItemConfig():GetCollectible(item)
-  player:RemoveCostume(config)
+  return enchantmentCount
+end
+
+
+function utilityFunctions:RemoveInnateItem(player, item)
+  if player:GetCollectibleNum(item) - player:GetCollectibleNum(item, false, true) > 0 then
+    player:AddInnateCollectible(item, -1)
+    local config = Isaac.GetItemConfig():GetCollectible(item)
+    player:RemoveCostume(config)
+  end
 end
 
 return utilityFunctions

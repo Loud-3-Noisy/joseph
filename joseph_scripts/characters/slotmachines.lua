@@ -3,7 +3,7 @@ local BumFamiliars = {}
 local enums = JosephMod.enums
 local BUM_PAYOUT_DISTANCE_SQR = 65*65
 local LIL_SLOT_COIN_COST = 3
-local LIL_FORTUNE_TELLER_COIN_COST = 5
+local LIL_FORTUNE_TELLER_COIN_COST = 4
 local LIL_BLOOD_BANK_HEART_COST = 1
 
 ---@class EntityToSpawn
