@@ -22,7 +22,7 @@ local EarlyCancel = {}
 local Card = {}
 local ManualUse = {}
 
-
+local ENCHANTMENT_GLINT_FREQ = 100 --ticks to complete full glint cycle
 local BIRTHRIGHT_CARD_DISPLAY_OFFSET = 22
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
@@ -257,55 +257,51 @@ function JosephChar:showEnchantment(player, i)
     local enchantedCard = enchantedCards[enums.CardSlot.JOSEPH_INNATE]
     if enchantedCard and enchantedCard ~= 0 then
         local enchantmentDisplay = Sprite()
+        local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+        enchantmentDisplay.Color = Color(1, 1, 1, 0.8)
 
         if i == 0 then
             enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
             enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
+            if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and
+                Game():GetNearestPlayer(displayPos).Position.X - Isaac.ScreenToWorld(displayPos).X < 100 and
+                Game():GetNearestPlayer(displayPos).Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then
+                enchantmentDisplay.Color = Color(1, 1, 1, 0.2) --Transparent if player is near
+            end
         else
             enchantmentDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
-            if enchantedCard < 23 then
-                enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
-            else
+            if enchantedCard < 78 then --Check to make sure its not trying to render a frame that doesnt exist
                 enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
             end
         end
 
-
         enchantmentDisplay:LoadGraphics()
-        local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
-
-        enchantmentDisplay.Color = Color(1, 1, 1, 0.8)
         --print("X distance: " .. player.Position.X - Isaac.ScreenToWorld(displayPos).X .. " | Y distance: " ..  player.Position.Y - Isaac.ScreenToWorld(displayPos).Y)
-        if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and 
-        player.Position.X - Isaac.ScreenToWorld(displayPos).X < 100 and player.Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then 
-            enchantmentDisplay.Color = Color(1, 1, 1, 0.2)
-        end
         enchantmentDisplay:Render(displayPos)
     end
 
     local birthrightCard = enchantedCards[enums.CardSlot.JOSEPH_BIRTHRIGHT]
     if birthrightCard and birthrightCard ~= 0 then
         local birthrightDisplay = Sprite()
+        local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X + BIRTHRIGHT_CARD_DISPLAY_OFFSET, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+        birthrightDisplay.Color = Color.Lerp(Color(1, 1, 1, 0.8), Color(0.8, 0.8, 2, 0.8, 0.2, 0, 0.3), 0.5*(1 + math.sin(2*3.14 * (1/ENCHANTMENT_GLINT_FREQ) * Game():GetFrameCount()))) --Color goes from normal to purple tinted every ENCHANTMENT_GLINT_FREQ ticks
+
         if i == 0 then
             birthrightDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
             birthrightDisplay:SetFrame("CardFronts", birthrightCard)
+            if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and --If in the room bounds
+                Game():GetNearestPlayer(displayPos).Position.X - Isaac.ScreenToWorld(displayPos).X < 110 and
+                Game():GetNearestPlayer(displayPos).Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then
+                    birthrightDisplay.Color = Color(1, 1, 1, 0.2) --Transparent if player is near
+            end
         else
             birthrightDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
-            if birthrightCard < 23 then
-                birthrightDisplay:SetFrame("CardFronts", birthrightCard)
-            else
+            if birthrightCard < 78 then --Check to make sure its not trying to render a frame that doesnt exist
                 birthrightDisplay:SetFrame("CardFronts", birthrightCard)
             end
         end
 
         birthrightDisplay:LoadGraphics()
-        local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X + BIRTHRIGHT_CARD_DISPLAY_OFFSET, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
-
-        birthrightDisplay.Color = Color(1, 1, 1, 0.8)
-        if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and 
-        player.Position.X - Isaac.ScreenToWorld(displayPos).X < 100 and player.Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then 
-            birthrightDisplay.Color = Color(1, 1, 1, 0.2)
-        end
         birthrightDisplay:Render(displayPos)
     end
 end
