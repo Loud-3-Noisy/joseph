@@ -23,7 +23,7 @@ local Card = {}
 local ManualUse = {}
 
 
-
+local BIRTHRIGHT_CARD_DISPLAY_OFFSET = 22
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
@@ -33,13 +33,13 @@ local chargebarPos = Vector(-30, -52)
 
 local cardDisplayPosPerPlayer = {
     --Vector(394, 147),
-    Vector(150, 14), --player 1 top left
+    Vector(45, 46), --player 1 top left
     Vector(332, 50), --player 2 top right
     Vector(30, 250), --player 3 bottom left
     Vector(326, 250), --player 4 bottom right but slightly less
 }
 local birthrightCardDisplayPosPerPlayer = {
-    Vector(180, 14), --player 1 top left
+    Vector(180, 46), --player 1 top left
     Vector(332, 50), --player 2 top right
     Vector(30, 250), --player 3 bottom left
     Vector(326, 250), --player 4 bottom right but slightly less
@@ -270,8 +270,16 @@ function JosephChar:showEnchantment(player, i)
             end
         end
 
+
         enchantmentDisplay:LoadGraphics()
         local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+
+        enchantmentDisplay.Color = Color(1, 1, 1, 0.8)
+        --print("X distance: " .. player.Position.X - Isaac.ScreenToWorld(displayPos).X .. " | Y distance: " ..  player.Position.Y - Isaac.ScreenToWorld(displayPos).Y)
+        if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and 
+        player.Position.X - Isaac.ScreenToWorld(displayPos).X < 100 and player.Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then 
+            enchantmentDisplay.Color = Color(1, 1, 1, 0.2)
+        end
         enchantmentDisplay:Render(displayPos)
     end
 
@@ -291,19 +299,26 @@ function JosephChar:showEnchantment(player, i)
         end
 
         birthrightDisplay:LoadGraphics()
-        local displayPos = Vector(JosephMod.utility:HUDOffset(birthrightCardDisplayPosPerPlayer[i+1].X, birthrightCardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+        local displayPos = Vector(JosephMod.utility:HUDOffset(cardDisplayPosPerPlayer[i+1].X + BIRTHRIGHT_CARD_DISPLAY_OFFSET, cardDisplayPosPerPlayer[i+1].Y, playerAnchor[i+1]))
+
+        birthrightDisplay.Color = Color(1, 1, 1, 0.8)
+        if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and 
+        player.Position.X - Isaac.ScreenToWorld(displayPos).X < 100 and player.Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then 
+            birthrightDisplay.Color = Color(1, 1, 1, 0.2)
+        end
         birthrightDisplay:Render(displayPos)
     end
 end
 
-
 function JosephChar:OnHUDRender()
+    if RoomTransition.IsRenderingBossIntro() then return end
+
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
         JosephChar:showEnchantment(player, i)
     end
   end
-JosephMod:AddCallback(ModCallbacks.MC_POST_HUD_RENDER, JosephChar.OnHUDRender)
+JosephMod:AddPriorityCallback(ModCallbacks.MC_HUD_RENDER, CallbackPriority.IMPORTANT, JosephChar.OnHUDRender)
 
 
 

@@ -272,6 +272,11 @@ AddBumFamiliar(enums.Familiars.LIL_FORTUNE_TELLER_FAMILIAR, enums.Collectibles.L
 		variant = PickupVariant.PICKUP_HEART,
 		subtype = HeartSubType.HEART_SOUL
 	}},
+	{chance = 7, value = {
+		type = EntityType.ENTITY_PICKUP,
+		variant = PickupVariant.PICKUP_HEART,
+		subtype = HeartSubType.HEART_HALF_SOUL
+	}},
 	{chance = 14, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TRINKET,
