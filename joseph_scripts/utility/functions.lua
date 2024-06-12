@@ -167,6 +167,13 @@ function utilityFunctions:GetEnchantmentCount(player, enchantment)
 end
 
 
+function utilityFunctions:IsEnchantmentSlotEmpty(player, slot)
+  local enchantedCard = utilityFunctions:GetEnchantedCardInPlayerSlot(player, slot)
+  if enchantedCard == nil or enchantedCard == 0 then return true end
+  return false
+end
+
+
 function utilityFunctions:RemoveInnateItem(player, item)
   if player:GetCollectibleNum(item) - player:GetCollectibleNum(item, false, true) > 0 then
     player:AddInnateCollectible(item, -1)

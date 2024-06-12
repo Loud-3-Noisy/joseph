@@ -231,7 +231,7 @@ function BaseCardEffects:AddInnateCollectibles(player, card)
             --player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
             --player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
     
-            JosephMod.Schedule(5, function ()
+            JosephMod.Schedule(3, function ()
                 local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
                 local rand = rng:RandomInt(2) + 1
                 if rand == 1 then
