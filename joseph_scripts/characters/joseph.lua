@@ -396,7 +396,7 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if not rng then rng = JosephChar:CreateRNG(player) end
 
     local randomFloat = rng:RandomFloat()
-    if randomFloat < 1 then
+    if randomFloat < enums.CardDisenchantChances[enchantedCard] then
         JosephChar:DisenchantCard(player, enchantedCard, enums.CardSlot.JOSEPH_INNATE, true)
     end
     utility:SetPlayerSave(player, "PlayerRNG", rng)
