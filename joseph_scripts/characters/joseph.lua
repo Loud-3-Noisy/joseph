@@ -33,17 +33,13 @@ local chargebarPos = Vector(-30, -52)
 
 local cardDisplayPosPerPlayer = {
     --Vector(394, 147),
+    --Vector(45, 46)
     Vector(45, 46), --player 1 top left
     Vector(332, 50), --player 2 top right
     Vector(30, 250), --player 3 bottom left
     Vector(326, 250), --player 4 bottom right but slightly less
 }
-local birthrightCardDisplayPosPerPlayer = {
-    Vector(180, 46), --player 1 top left
-    Vector(332, 50), --player 2 top right
-    Vector(30, 250), --player 3 bottom left
-    Vector(326, 250), --player 4 bottom right but slightly less
-}
+
 local playerAnchor = {
     "topleft",
     "topright",
@@ -171,7 +167,7 @@ function JosephChar:trackFramesHeld(player)
         end
 
         ManualUse[playerIndex] = false
-        JosephChar:RemoveCard(player, Card[playerIndex])
+        JosephChar:RemoveHeldCard(player, Card[playerIndex])
         Card[playerIndex] = nil
     end
 
@@ -185,17 +181,15 @@ function JosephChar:trackFramesHeld(player)
 
     --give enchantment if held longer than 100 frames
     if FramesHeld[playerIndex] > 100 then
-        player:AnimateCard(Card[playerIndex])
-        JosephChar:RemoveCard(player, Card[playerIndex])
-        SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
-        
-        local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
-        local newCard = Card[playerIndex]
-        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, newCard)
-        if oldCard and oldCard ~= 0 then
-            JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
+        local card = Card[playerIndex]
+
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and
+        utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
+            JosephChar:EnchantCard(player, card, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
+        else
+            JosephChar:EnchantCard(player, card, enums.CardSlot.JOSEPH_INNATE, true)
         end
-        JosephMod.BaseCardEffects:InitCardEffect(player, newCard)
+        
         StartedUsingCard[playerIndex] = false
         FramesHeld[playerIndex] = 0
         ManualUse[playerIndex] = false
@@ -232,19 +226,63 @@ JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_CARD, CallbackPriority.IMP
 
 
 function JosephChar:pickupBirthright(CollectibleType, Charge, FirstTime, Slot, VarData, player)
-    if not player:GetPlayerType() ==  josephType or not FirstTime then return end
-    local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
+    if not player:GetPlayerType() == josephType or not FirstTime then return end
 
-    if oldCard then
-        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, 0)
-        JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
-
-        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_BIRTHRIGHT, oldCard)
-        JosephMod.BaseCardEffects:InitCardEffect(player, oldCard)
+    if not utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_INNATE) then
+        local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
+        JosephChar:DisenchantCard(player, oldCard, enums.CardSlot.JOSEPH_INNATE)
+        JosephChar:EnchantCard(player, oldCard, enums.CardSlot.JOSEPH_BIRTHRIGHT)
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, JosephChar.pickupBirthright, 619)
 
+
+
+function JosephChar:removeBirthright(player, _)
+    if not player or player:GetPlayerType() ~= josephType then return end
+    local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_BIRTHRIGHT)
+
+    if oldCard then
+        JosephChar:DisenchantCard(player, oldCard, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, JosephChar.removeBirthright, 619)
+
+
+
+---@param player EntityPlayer
+---@param card Card
+---@param slot CardSlot 
+---@param removeCard boolean | nil
+function JosephChar:EnchantCard(player, card, slot, removeCard)
+    if removeCard and removeCard == true then
+        JosephChar:RemoveHeldCard(player, card)
+    end
+    player:AnimateCard(card)
+    SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
+
+    local oldCard = utility:GetEnchantedCardInPlayerSlot(player, slot)
+    if oldCard and oldCard ~= 0 then
+        utility:SetEnchantedCardInPlayerSlot(player, slot, 0)
+        JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
+    end
+    utility:SetEnchantedCardInPlayerSlot(player, slot, card)
+    JosephMod.BaseCardEffects:InitCardEffect(player, card)
+end
+
+---@param player EntityPlayer
+---@param card Card
+---@param slot CardSlot 
+---@param playEffect boolean | nil play the on hit disenchant perfection effect
+function JosephChar:DisenchantCard(player, card, slot, playEffect) 
+    utility:SetEnchantedCardInPlayerSlot(player, slot, 0)
+    JosephMod.BaseCardEffects:RemoveCardEffect(player, card)
+
+    if playEffect and playEffect == true then
+        SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+        JosephChar:PlayDisenchantAnimation(player, card)
+    end
+end
 
 
 function JosephChar:showEnchantment(player, i)
@@ -352,18 +390,14 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if flags & fakeDamageFlags > 0 then return end
 
     local enchantedCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
-    if enchantedCard == nil or enchantedCard == 0 then return end
+    if utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_INNATE) then return end
 
     local rng = utility:GetPlayerSave(player, "playerRNG")
     if not rng then rng = JosephChar:CreateRNG(player) end
 
     local randomFloat = rng:RandomFloat()
     if randomFloat < enums.CardDisenchantChances[enchantedCard] then
-        local oldCard = enchantedCard
-        utility:SetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE, 0)
-        JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
-        SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
-        JosephChar:PlayDisenchantAnimation(player, oldCard)
+        JosephChar:DisenchantCard(player, enchantedCard, enums.CardSlot.JOSEPH_INNATE, true)
     end
     utility:SetPlayerSave(player, "PlayerRNG", rng)
 
@@ -408,7 +442,7 @@ function JosephChar:CreateRNG(player)
 end
 
 
-function JosephChar:RemoveCard(player, card)
+function JosephChar:RemoveHeldCard(player, card)
     if player:GetCard(0) == card then
         local secondaryCard = player:GetCard(1)
         if secondaryCard ~= nil then
