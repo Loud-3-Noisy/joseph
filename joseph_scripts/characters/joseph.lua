@@ -69,7 +69,7 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
 --Make sure Joseph always has starter deck
 JosephMod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
-
+    if player:HasCurseMistEffect() then return end
     if player:GetPlayerType() == josephType then
         if not player:HasCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK) then
            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
@@ -268,6 +268,7 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
     JosephMod.BaseCardEffects:InitCardEffect(player, card)
+    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, slot)
 end
 
 ---@param player EntityPlayer
@@ -277,6 +278,7 @@ end
 function JosephChar:DisenchantCard(player, card, slot, playEffect) 
     utility:SetEnchantedCardInPlayerSlot(player, slot, 0)
     JosephMod.BaseCardEffects:RemoveCardEffect(player, card)
+    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, card, player, card, slot)
 
     if playEffect and playEffect == true then
         SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
@@ -396,7 +398,7 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     if not rng then rng = JosephChar:CreateRNG(player) end
 
     local randomFloat = rng:RandomFloat()
-    if randomFloat < enums.CardDisenchantChances[enchantedCard] then
+    if randomFloat < (enums.CardDisenchantChances[enchantedCard] or 0.33) then
         JosephChar:DisenchantCard(player, enchantedCard, enums.CardSlot.JOSEPH_INNATE, true)
     end
     utility:SetPlayerSave(player, "PlayerRNG", rng)

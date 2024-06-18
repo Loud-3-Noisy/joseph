@@ -5,10 +5,12 @@ if REPENTOGON then
   include("joseph_scripts.enums")
   JosephMod.utility = include('joseph_scripts.utility.functions')
   JosephMod.BaseCardEffects = include('joseph_scripts.card_enchants.base_card_effects')
+
+  include("joseph_scripts.card_enchants.reverse_lovers")
+
   include("joseph_scripts.characters.joseph")
   include("joseph_scripts.characters.slotmachines")
   --include("joseph_scripts.items.lil_slots")
-  include("joseph_scripts.items.magic_skin2")
 
 else
   JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, function()
