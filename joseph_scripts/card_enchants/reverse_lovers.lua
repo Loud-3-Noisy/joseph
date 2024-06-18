@@ -46,6 +46,11 @@ function ReverseLovers:UseNewMagicSkin(item, rng, player, flags, slot)
     if player == nil then return end
 
     player:AddBrokenHearts(1)
+    if player:GetMaxHearts() >= 2 then
+        player:AddMaxHearts(-2)
+    else
+        player:AddSoulHearts(-4)
+    end
     dontReplace = true
     local item = Isaac.Spawn(5, 100, 0, Isaac.GetFreeNearPosition(player.Position, 20), Vector.Zero, player)
     dontReplace = false
