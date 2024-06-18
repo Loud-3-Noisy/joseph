@@ -228,8 +228,6 @@ function BaseCardEffects:AddInnateCollectibles(player, card)
         end,
         [Card.CARD_WHEEL_OF_FORTUNE] = function()
             -- Code for CARD_WHEEL_OF_FORTUNE
-            --player:AddInnateCollectible(enums.Collectibles.LIL_SLOT_MACHINE, -1)
-            --player:AddInnateCollectible(enums.Collectibles.LIL_FORTUNE_TELLER, -1)
     
             JosephMod.Schedule(3, function ()
                 local rng = player:GetCardRNG(Card.CARD_WHEEL_OF_FORTUNE)
@@ -390,6 +388,7 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, fun
             for key, enchantedCard in pairs(enchantedCards) do
                 --BaseCardEffects:EnchantmentEffects(player, enchantedCard)
                 BaseCardEffects:AddInnateCollectibles(player, enchantedCard)
+                Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, enchantedCard, player, enchantedCard, key )
             end
         end
     end,{})

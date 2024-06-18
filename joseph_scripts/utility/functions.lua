@@ -167,6 +167,18 @@ function utilityFunctions:GetEnchantmentCount(player, enchantment)
 end
 
 
+function utilityFunctions:HasEnchantment(player, enchantment)
+  local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards") or {}
+  local hasEnchantment = false
+  local playerIndex = TSIL.Players.GetPlayerIndex(player)
+  if not playerEnchantments or not playerEnchantments[playerIndex] or playerEnchantments[playerIndex] == {} then return false end
+  for key, value in pairs(playerEnchantments[playerIndex]) do
+    if value == enchantment then hasEnchantment = true end
+  end
+
+  return hasEnchantment
+end
+
 function utilityFunctions:IsEnchantmentSlotEmpty(player, slot)
   local enchantedCard = utilityFunctions:GetEnchantedCardInPlayerSlot(player, slot)
   if enchantedCard == nil or enchantedCard == 0 then return true end

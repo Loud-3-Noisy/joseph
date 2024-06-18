@@ -22,6 +22,7 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseLovers.ini
 ---@param card Card
 ---@param slot CardSlot
 function ReverseLovers:removeReverseLovers(player, card, slot)
+    print("shit")
     firstTimeMagicSkin = false
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseLovers.removeReverseLovers, Card.CARD_REVERSE_LOVERS)

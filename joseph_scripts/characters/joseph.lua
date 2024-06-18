@@ -263,8 +263,7 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
 
     local oldCard = utility:GetEnchantedCardInPlayerSlot(player, slot)
     if oldCard and oldCard ~= 0 then
-        utility:SetEnchantedCardInPlayerSlot(player, slot, 0)
-        JosephMod.BaseCardEffects:RemoveCardEffect(player, oldCard)
+        JosephChar:DisenchantCard(player, oldCard, slot)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
     JosephMod.BaseCardEffects:InitCardEffect(player, card)
@@ -275,7 +274,7 @@ end
 ---@param card Card
 ---@param slot CardSlot 
 ---@param playEffect boolean | nil play the on hit disenchant perfection effect
-function JosephChar:DisenchantCard(player, card, slot, playEffect) 
+function JosephChar:DisenchantCard(player, card, slot, playEffect)
     utility:SetEnchantedCardInPlayerSlot(player, slot, 0)
     JosephMod.BaseCardEffects:RemoveCardEffect(player, card)
     Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, card, player, card, slot)

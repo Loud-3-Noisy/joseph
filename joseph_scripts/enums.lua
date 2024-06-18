@@ -48,7 +48,9 @@ enums.Callbacks = {
     JOSEPH_POST_ENCHANT_ADD = "JOSEPH_POST_ENCHANT_ADD",
 
     --JOSEPH_PRE_ENCHANT_REMOVE = "JOSEPH_PRE_ENCHANT_REMOVE",
-    JOSEPH_POST_ENCHANT_REMOVE = "JOSEPH_POST_ENCHANT_REMOVE"
+    JOSEPH_POST_ENCHANT_REMOVE = "JOSEPH_POST_ENCHANT_REMOVE",
+
+    JOSEPH_GAME_START_ENCHANT_REFRESH = "JOSEPH_GAME_START_ENCHANT_REFRESH"
 }
 
 ---@enum CardSlot
@@ -152,7 +154,7 @@ enums.CardDisenchantChances[Card.CARD_REVERSE_DEATH] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_TEMPERANCE] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_DEVIL] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_TOWER] = 0.33
-enums.CardDisenchantChances[Card.CARD_REVERSE_STARS] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_STARS] = 0
 enums.CardDisenchantChances[Card.CARD_REVERSE_MOON] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_SUN] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_JUDGEMENT] = 0.33

@@ -7,6 +7,7 @@ if REPENTOGON then
   JosephMod.BaseCardEffects = include('joseph_scripts.card_enchants.base_card_effects')
 
   include("joseph_scripts.card_enchants.reverse_lovers")
+  include("joseph_scripts.card_enchants.reverse_stars")
 
   include("joseph_scripts.characters.joseph")
   include("joseph_scripts.characters.slotmachines")
