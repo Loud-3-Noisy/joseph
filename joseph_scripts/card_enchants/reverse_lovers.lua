@@ -41,13 +41,15 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_PRE_GET_COLLECTIBLE, ReverseLovers.ReplaceItemSpawn)
 
 
-
+---@param player EntityPlayer
 function ReverseLovers:UseNewMagicSkin(item, rng, player, flags, slot)
     if player == nil then return end
 
     player:AddBrokenHearts(1)
     if player:GetMaxHearts() >= 2 then
         player:AddMaxHearts(-2)
+    elseif player:GetBoneHearts() >= 1 then
+        player:AddBoneHearts(-1)
     else
         player:AddSoulHearts(-4)
     end
