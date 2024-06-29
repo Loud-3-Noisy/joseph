@@ -26,7 +26,6 @@ local ENCHANTMENT_GLINT_FREQ = 100 --ticks to complete full glint cycle
 local BIRTHRIGHT_CARD_DISPLAY_OFFSET = 22
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
-local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local chargebarPos = Vector(-30, -52)
 
@@ -240,9 +239,9 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, JosephChar.pickupBir
 
 function JosephChar:removeBirthright(player, _)
     if not player or player:GetPlayerType() ~= josephType then return end
-    local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_BIRTHRIGHT)
 
-    if oldCard then
+    if not utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
+        local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_BIRTHRIGHT)
         JosephChar:DisenchantCard(player, oldCard, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
     end
 end
@@ -261,8 +260,8 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
     player:AnimateCard(card)
     SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
 
-    local oldCard = utility:GetEnchantedCardInPlayerSlot(player, slot)
-    if oldCard and oldCard ~= 0 then
+    if not utility:IsEnchantmentSlotEmpty(player, slot) then
+        local oldCard = utility:GetEnchantedCardInPlayerSlot(player, slot)
         JosephChar:DisenchantCard(player, oldCard, slot)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
@@ -408,9 +407,8 @@ JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityT
 
 
 function JosephChar:PlayDisenchantAnimation(player, card)
-    local disenchantEffectVariant = Isaac.GetEntityVariantByName("Disenchant Effect")
 
-    local entity = Isaac.Spawn(1000, disenchantEffectVariant, 0, player.Position, 4*RandomVector(), player)
+    local entity = Isaac.Spawn(1000, enums.Effects.DISENCHANT_EFFECT, 0, player.Position, 4*RandomVector(), player)
 
     local sprite = entity:GetSprite()
 
@@ -467,3 +465,5 @@ function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, Activ
     return true
 end
 JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_ITEM, CallbackPriority.LATE, JosephChar.UseDeckOfCards, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
+
+return JosephChar

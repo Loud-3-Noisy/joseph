@@ -72,6 +72,8 @@ function utilityFunctions:GetEnchantedCardsPerPlayer(player)
   return enchantedCards
 end
 
+---@param player EntityPlayer
+---@param slot CardSlot
 function utilityFunctions:GetEnchantedCardInPlayerSlot(player, slot)
   local enchantedCardsPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards")
   local playerIndex = TSIL.Players.GetPlayerIndex(player)

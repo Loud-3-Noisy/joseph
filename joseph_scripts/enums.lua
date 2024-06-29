@@ -17,10 +17,12 @@ enums.Familiars = {
     LIL_SLOT_MACHINE_FAMILIAR = Isaac.GetEntityVariantByName("Lil Slot Machine Familiar"),
     LIL_FORTUNE_TELLER_FAMILIAR = Isaac.GetEntityVariantByName("Lil Fortune Teller Familiar"),
     LIL_BLOOD_BANK_FAMILIAR = Isaac.GetEntityVariantByName("Lil Blood Bank Familiar"),
-    
+
 }
 
 enums.Effects = {
+    DISENCHANT_EFFECT = Isaac.GetEntityVariantByName("Disenchant Effect"),
+    FALLEN_GOLD_DAMOCLES = Isaac.GetEntityVariantByName("Fallen Golden Damocles")
 }
 
 enums.Enemies = {

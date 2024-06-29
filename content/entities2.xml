@@ -16,4 +16,8 @@
         anm2path="effects/disenchant.anm2" name="Disenchant Effect" id="1000" variant="1015" friction="1">
     </entity>
 
+    <entity
+        anm2path="effects/fallen_gold_damocles.anm2" name="Fallen Golden Damocles" id="1000" variant="1016" friction="1">
+    </entity>
+
 </entities>
