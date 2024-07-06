@@ -26,6 +26,7 @@ local ENCHANTMENT_GLINT_FREQ = 100 --ticks to complete full glint cycle
 local BIRTHRIGHT_CARD_DISPLAY_OFFSET = 22
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
+local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local chargebarPos = Vector(-30, -52)
 
