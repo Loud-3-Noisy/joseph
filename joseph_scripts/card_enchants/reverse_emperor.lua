@@ -11,7 +11,7 @@ local EmperorPortalSubType = 9
 ---@param card Card
 ---@param slot CardSlot
 function ReverseEmperor:initReverseEmperor(player, card, slot)
-
+    ReverseEmperor:checkSpawnPortal()
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseEmperor.initReverseEmperor, Card.CARD_REVERSE_EMPEROR)
 
@@ -25,24 +25,27 @@ end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseEmperor.removeReverseEmperor, Card.CARD_REVERSE_EMPEROR)
 
 
-function ReverseEmperor:postBossKill(rng, spawnPos)
+function ReverseEmperor:checkSpawnPortal(rng, spawnPos)
+    local level = Game():GetLevel()
     local room = Game():GetRoom()
     local roomType = room:GetType()
-    if roomType ~= RoomType.ROOM_BOSS then return end
+    if roomType ~= RoomType.ROOM_BOSS or level:GetCurrentRoomIndex() == GridRooms.ROOM_EXTRA_BOSS_IDX then return end
+    if not room:IsClear() then return end
     if not utility:AnyPlayerHasEnchantment(Card.CARD_REVERSE_EMPEROR) then return end
+
     JosephMod.BaseCardEffects:spawnPortal(EmperorPortalSubType)
 end
-JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseEmperor.postBossKill)
+JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseEmperor.checkSpawnPortal)
+JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, ReverseEmperor.checkSpawnPortal)
 
-
-function ReverseEmperor:portalSpawn(entity)
+function ReverseEmperor:portalInit(entity)
     if entity.SubType ~= EmperorPortalSubType then return end
     entity.Color = Color(1, 0, 0, 1, 0, 0)
     local sprite = entity:GetSprite()
     sprite:Play("Appear")
 
 end
-JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, ReverseEmperor.portalSpawn, EmperorPortal)
+JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_INIT, ReverseEmperor.portalInit, EmperorPortal)
 
 
 function ReverseEmperor:touchPortal(entity)
@@ -62,17 +65,19 @@ function ReverseEmperor:touchPortal(entity)
         if utility:GetData(entity, "Used") == true then return end
         utility:SetData(entity, "Used", true)
 
-        local diff = (entity.Position + Vector(0, -10)) - player.Position
-        player.Velocity = diff:Resized(math.min(diff:Length() * 0.1, 17.5))
+        -- local diff = (entity.Position + Vector(0, -10)) - player.Position
+        -- player.Velocity = diff:Resized(math.min(diff:Length() * 0.1, 17.5))
+        player.Velocity = Vector.Zero
+        player.Position = Vector(entity.Position.X, entity.Position.Y-10)
 
-       -- TSIL.Pause.Pause()
+        TSIL.Pause.Pause()
 
         player:AddControlsCooldown(30)
 
         player:PlayExtraAnimation("Trapdoor")
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
             ReverseEmperor:GoToExtraBossRoom(player)
-            --TSIL.Pause.Unpause()
+            TSIL.Pause.Unpause()
             utility:SetData(entity, "False", true)
                 end, 14)
         --Isaac.RenderText("Hi", 50, 80, 1, 1, 1, 1)
