@@ -20,4 +20,8 @@
         anm2path="effects/fallen_gold_damocles.anm2" name="Fallen Golden Damocles" id="1000" variant="1016" friction="1">
     </entity>
 
+    <entity
+        anm2path="306.001_lil portal.anm2" name="Reverse Emperor Portal" id="1000" variant="161" subtype="9" friction="1">
+    </entity>
+
 </entities>
