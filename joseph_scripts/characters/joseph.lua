@@ -8,6 +8,28 @@ local vars = {
     "EnchantedCards",
 }
 utility:CreateEmptyPlayerSaveDataVars(vars)
+
+-- TSIL.SaveManager.AddPersistentVariable(
+--       JosephMod,
+--       "GlowingHourglassTest",
+--       0,
+--       TSIL.Enums.VariablePersistenceMode.RESET_RUN,
+--       false
+--     )
+
+-- function JosephChar:Debug()
+--     Isaac.RenderText(TSIL.SaveManager.GetPersistentVariable(JosephMod, "GlowingHourglassTest"), 50, 80, 1, 1, 1, 1)
+
+-- end
+-- JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, JosephChar.Debug)
+
+
+-- function JosephChar:Increment()
+--     TSIL.SaveManager.SetPersistentVariable(JosephMod, "GlowingHourglassTest", TSIL.SaveManager.GetPersistentVariable(JosephMod, "GlowingHourglassTest") + 1)
+-- end
+-- JosephMod:AddCallback(ModCallbacks.MC_PRE_USE_CARD, JosephChar.Increment)
+
+
 -- EnchantedCard slots:
 -- 1 - Joseph Base
 -- 2 - Joseph Birthright

@@ -10,6 +10,7 @@ local vars = {
 }
 utility:CreateEmptyPlayerSaveDataVars(vars)
 
+
 ---@param player EntityPlayer
 ---@param card Card
 ---@param slot CardSlot

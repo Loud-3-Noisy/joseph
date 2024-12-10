@@ -340,6 +340,7 @@ function BaseCardEffects:ReapplyCardEffects()
 
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
+        
         if player:HasCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS, false, true) then
             anyPlayerHasMoreOptions = true
         end
@@ -363,6 +364,8 @@ function BaseCardEffects:ReapplyCardEffects()
         end
     end
 end
+
+
 --On new room, runs all card effects for all players
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, BaseCardEffects.ReapplyCardEffects)
 

@@ -22,7 +22,8 @@ enums.Familiars = {
 
 enums.Effects = {
     DISENCHANT_EFFECT = Isaac.GetEntityVariantByName("Disenchant Effect"),
-    FALLEN_GOLD_DAMOCLES = Isaac.GetEntityVariantByName("Fallen Golden Damocles")
+    FALLEN_GOLD_DAMOCLES = Isaac.GetEntityVariantByName("Fallen Golden Damocles"),
+    REVERSE_EMPEROR_PORTAL = Isaac.GetEntityVariantByName("Reverse Emperor Portal")
 }
 
 enums.Enemies = {
@@ -143,7 +144,7 @@ enums.CardDisenchantChances[Card.CARD_REVERSE_FOOL] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_MAGICIAN] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_HIGH_PRIESTESS] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_EMPRESS] = 0.33
-enums.CardDisenchantChances[Card.CARD_REVERSE_EMPEROR] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_EMPEROR] = 0.25
 enums.CardDisenchantChances[Card.CARD_REVERSE_HIEROPHANT] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_LOVERS] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_CHARIOT] = 0.33

@@ -22,6 +22,32 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
 end)
 
 
+---Acts as a replacement for Entity:GetData()
+---@param entity Entity
+---@param identifier string
+---@return any
+function utilityFunctions:GetData(entity, identifier)
+  return TSIL.Entities.GetEntityData(
+      JosephMod,
+      entity,
+      identifier
+  )
+end
+
+---Acts as a replacement for Entity:GetData()
+---@param entity Entity
+---@param identifier string
+---@param data any
+function utilityFunctions:SetData(entity, identifier, data)
+  TSIL.Entities.SetEntityData(
+      JosephMod,
+      entity,
+      identifier,
+      data
+  )
+end
+
+
 function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
   if vars == nil then return end
   for i = 1, #vars do
@@ -35,6 +61,8 @@ function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
   end
 end
 
+---@param player EntityPlayer
+---@param var string
 function utilityFunctions:GetPlayerSave(player, var)
   local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
   local playerIndex = TSIL.Players.GetPlayerIndex(player)
