@@ -64,6 +64,7 @@ function ReverseEmperor:touchPortal(entity)
 
         if utility:GetData(entity, "Used") == true then return end
         utility:SetData(entity, "Used", true)
+        utility:SetData(player, "DisableDamage", true)
 
         -- local diff = (entity.Position + Vector(0, -10)) - player.Position
         -- player.Velocity = diff:Resized(math.min(diff:Length() * 0.1, 17.5))
@@ -74,12 +75,12 @@ function ReverseEmperor:touchPortal(entity)
 
         player:AddControlsCooldown(30)
 
-        player:PlayExtraAnimation("Trapdoor")
+        player:AnimateTrapdoor()
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
             ReverseEmperor:GoToExtraBossRoom(player)
             TSIL.Pause.Unpause()
             utility:SetData(entity, "False", true)
-                end, 14)
+        end, 15)
         --Isaac.RenderText("Hi", 50, 80, 1, 1, 1, 1)
     end
 end
@@ -97,8 +98,10 @@ function ReverseEmperor:GoToExtraBossRoom(player)
 
     for _, v in ipairs(Isaac.FindByType(EntityType.ENTITY_PLAYER)) do
         local player = v:ToPlayer() ---@cast player EntityPlayer
-        player:SetColor(Color(1, 1, 1, 0), 3, 99, false, false)
+        --player:SetColor(Color(1, 1, 1, 0), 3, 99, false, false)
+        player.Visible = false
         player:StopExtraAnimation()
+        utility:SetData(player, "DisableDamage", false)
     end
 
     SFXManager():Stop(SoundEffect.SOUND_HELL_PORTAL1)
@@ -106,6 +109,18 @@ function ReverseEmperor:GoToExtraBossRoom(player)
 
     Game():StartRoomTransition(GridRooms.ROOM_EXTRA_BOSS_IDX, Direction.NO_DIRECTION, RoomTransitionAnim.WALK)
 end
+
+---@param entity Entity
+JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, function (_, entity)
+    if not utility:GetData(entity, "DisableDamage") then return end
+    return false
+end)
+
+---@param player EntityPlayer
+JosephMod:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, function (_, player)
+    if not utility:GetData(player, "DisableDamage") then return end
+    return true
+end)
 
 -- ---@param player EntityPlayer
 -- ---@param useFlags UseFlag
