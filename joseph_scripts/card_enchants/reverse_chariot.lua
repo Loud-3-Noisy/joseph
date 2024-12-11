@@ -7,7 +7,7 @@ local RECOMMENDED_SHIFT_IDX = 35
 local chargeBarOffset = Vector(18,-5)
 local chariotActived = {false, false, false, false}
 
-local secondsToCharge = 4
+local secondsToCharge = 3.8
 local chargePerTick = 100/(secondsToCharge*20)
 
 local secondsToDischarge = 5
@@ -39,15 +39,31 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseChariot
 function ReverseChariot:ReverseChariotNewRoom()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
-        local playerIndex = TSIL.Players.GetPlayerIndex(player)
+        if not utility:HasEnchantment(player, Card.CARD_REVERSE_CHARIOT) then return end
 
+        local playerIndex = TSIL.Players.GetPlayerIndex(player)
         chariotActived[playerIndex] = false
+
+        player:GetEffects():RemoveNullEffect(NullItemID.ID_REVERSE_CHARIOT)
+
         local data = utility:GetData(player, "ReverseChariotCharge")
         data.Charge = 0
     end
 end
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, ReverseChariot.ReverseChariotNewRoom)
 
+
+function ReverseChariot:RoomClear()
+    for i = 0, Game():GetNumPlayers()-1 do
+        local player = Game():GetPlayer(i)
+        local playerIndex = TSIL.Players.GetPlayerIndex(player)
+
+        if chariotActived[playerIndex] and player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_CHARIOT) then
+            player:GetEffects():RemoveNullEffect(NullItemID.ID_REVERSE_CHARIOT)
+        end
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseChariot.RoomClear)
 
 function ReverseChariot:PlayerUpdate(player)
     local room = Game():GetRoom()
@@ -67,7 +83,7 @@ function ReverseChariot:PlayerUpdate(player)
         else
             data.Charge = 0
         end
-    else
+    else --if reverse chariot hasnt been activated in the room yet
         if player.Velocity:Length() <= movementSpeedMaxThreshold and player:GetMovementDirection() == -1 then
             data.Charge = math.min(100, data.Charge + chargePerTick)
         else
