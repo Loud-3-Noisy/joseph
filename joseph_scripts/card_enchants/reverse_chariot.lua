@@ -23,7 +23,10 @@ local movementSpeedMaxThreshold = 0.3
 ---@param card Card
 ---@param slot CardSlot
 function ReverseChariot:initReverseChariot(player, card, slot)
-
+    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+    chariotActived[playerIndex] = false
+    local data = utility:GetData(player, "ReverseChariotCharge")
+    data.Charge = 0
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseChariot.initReverseChariot, Card.CARD_REVERSE_CHARIOT)
 
