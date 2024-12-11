@@ -6,7 +6,15 @@ local enums = JosephMod.enums
 local RECOMMENDED_SHIFT_IDX = 35
 local chargeBarOffset = Vector(18,-5)
 local chariotActived = {false, false, false, false}
+
+local secondsToCharge = 4
+local chargePerTick = 100/(secondsToCharge*20)
+
+local secondsToDischarge = 5
+local dischargePerTick = 100/(secondsToDischarge*20)
+
 local movementSpeedMaxThreshold = 0.3
+
 
 
 
@@ -61,9 +69,9 @@ function ReverseChariot:PlayerUpdate(player)
         end
     else
         if player.Velocity:Length() <= movementSpeedMaxThreshold and player:GetMovementDirection() == -1 then
-            data.Charge = math.min(100, data.Charge + 1)
+            data.Charge = math.min(100, data.Charge + chargePerTick)
         else
-            data.Charge = math.max(0, data.Charge - 0.75)
+            data.Charge = math.max(0, data.Charge - dischargePerTick)
         end
     end
 
