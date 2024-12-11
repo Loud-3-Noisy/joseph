@@ -10,6 +10,7 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.chariot")
 
   include("joseph_scripts.card_enchants.reverse_chariot")
+  include("joseph_scripts.card_enchants.reverse_high_priestess")
   include("joseph_scripts.card_enchants.reverse_lovers")
   include("joseph_scripts.card_enchants.reverse_stars")
   include("joseph_scripts.card_enchants.reverse_emperor")

@@ -5,10 +5,17 @@ local enums = JosephMod.enums
 local char = JosephMod.josephCharacter
 local RECOMMENDED_SHIFT_IDX = 35
 
-local vars = {
-    "starsDamoclesFell"
-}
-utility:CreateEmptyPlayerSaveDataVars(vars)
+
+
+TSIL.SaveManager.AddPersistentPlayerVariable(
+      JosephMod,
+      "starsDamoclesFell",
+      false,
+      TSIL.Enums.VariablePersistenceMode.RESET_RUN,
+      false
+)
+
+
 
 
 ---@param player EntityPlayer
@@ -63,7 +70,7 @@ function ReverseStars:OnHit(entity, amount, flags, source, countDown)
     if flags & fakeDamageFlags > 0 then return end
     if not utility:HasEnchantment(player, Card.CARD_REVERSE_STARS) then return end
     --if utility:GetPlayerSave(player, "starsDamoclesFell") == true then return end
-    utility:SetPlayerSave(player, "starsDamoclesFell", true)
+    TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "starsDamoclesFell", player, true)
     ReverseStars:DamoclesFall(player)
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, ReverseStars.OnHit, EntityType.ENTITY_PLAYER)
@@ -96,7 +103,7 @@ function ReverseStars:DamoclesFall(player)
                 player:SpawnBloodEffect()
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_D4, UseFlag.USE_NOANIM)
                 local entity = Isaac.Spawn(1000, enums.Effects.FALLEN_GOLD_DAMOCLES, 0, player.Position, Vector(0, 0), player)
-                utility:SetPlayerSave(player, "starsDamoclesFell", false)
+                TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "starsDamoclesFell", player, false)
              end, 13, 0, true)
         end
     end
@@ -109,7 +116,7 @@ if not isContinued then return end
 Isaac.CreateTimer( function ()
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        if utility:HasEnchantment(player, Card.CARD_REVERSE_STARS) and utility:GetPlayerSave(player, "starsDamoclesFell") then
+        if utility:HasEnchantment(player, Card.CARD_REVERSE_STARS) and TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "starsDamoclesFell", player) == true then
             ReverseStars:DamoclesFall(player)
         end
     end

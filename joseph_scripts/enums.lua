@@ -142,12 +142,12 @@ enums.CardDisenchantChances[Card.CARD_WORLD] = 0.25
 
 enums.CardDisenchantChances[Card.CARD_REVERSE_FOOL] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_MAGICIAN] = 0.33
-enums.CardDisenchantChances[Card.CARD_REVERSE_HIGH_PRIESTESS] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_HIGH_PRIESTESS] = 0.25
 enums.CardDisenchantChances[Card.CARD_REVERSE_EMPRESS] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_EMPEROR] = 0.25
-enums.CardDisenchantChances[Card.CARD_REVERSE_HIEROPHANT] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_HIEROPHANT] = 0.25
 enums.CardDisenchantChances[Card.CARD_REVERSE_LOVERS] = 0.33
-enums.CardDisenchantChances[Card.CARD_REVERSE_CHARIOT] = 0.33
+enums.CardDisenchantChances[Card.CARD_REVERSE_CHARIOT] = 0.25
 enums.CardDisenchantChances[Card.CARD_REVERSE_JUSTICE] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_HERMIT] = 0.33
 enums.CardDisenchantChances[Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = 0.33

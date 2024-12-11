@@ -3,12 +3,21 @@ local JosephChar = {}
 local utility = JosephMod.utility
 local enums = JosephMod.enums
 
-local vars = {
-    "playerRNG",
-    "EnchantedCards",
-}
-utility:CreateEmptyPlayerSaveDataVars(vars)
+TSIL.SaveManager.AddPersistentPlayerVariable(
+      JosephMod,
+      "playerRNG",
+      nil,
+      TSIL.Enums.VariablePersistenceMode.RESET_RUN,
+      false
+)
 
+TSIL.SaveManager.AddPersistentPlayerVariable(
+      JosephMod,
+      "EnchantedCards",
+      {0, 0, 0, 0, 0},
+      TSIL.Enums.VariablePersistenceMode.RESET_RUN,
+      false
+)
 -- TSIL.SaveManager.AddPersistentVariable(
 --       JosephMod,
 --       "GlowingHourglassTest",
@@ -83,7 +92,7 @@ function JosephChar:onPlayerInit(player)
     local randomCard = rng:RandomInt(NUMBER_TAROT_CARDS) + 1
     player:AddCard(randomCard)
 
-    utility:SetPlayerSave(player, "playerRNG", rng)
+    TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
@@ -415,14 +424,14 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
     local enchantedCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
     if utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_INNATE) then return end
 
-    local rng = utility:GetPlayerSave(player, "playerRNG")
-    if not rng then rng = JosephChar:CreateRNG(player) end
+    local rng = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "playerRNG", player)
+    if not rng or rng == 0 then rng = JosephChar:CreateRNG(player) end
 
     local randomFloat = rng:RandomFloat()
     if randomFloat < (enums.CardDisenchantChances[enchantedCard] or 0.33) then
         JosephChar:DisenchantCard(player, enchantedCard, enums.CardSlot.JOSEPH_INNATE, true)
     end
-    utility:SetPlayerSave(player, "PlayerRNG", rng)
+    TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, JosephChar.OnHit, EntityType.ENTITY_PLAYER)
@@ -459,8 +468,13 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, JosephChar.DisenchantA
 function JosephChar:CreateRNG(player)
     local rng = RNG()
     rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
-    utility:SetPlayerSave(player, "playerRNG", rng)
-    return utility:GetPlayerSave(player, "playerRNG")
+    print(rng)
+    TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
+    print("Saved rng:")
+    TSIL.Utils.Functions.RunInFramesTemporary(function ()
+        print(TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "playerRNG", player))
+        return TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "playerRNG", player)
+    end, 1)
 end
 
 

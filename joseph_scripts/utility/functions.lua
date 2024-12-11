@@ -73,22 +73,6 @@ function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
   end
 end
 
----@param player EntityPlayer
----@param var string
-function utilityFunctions:GetPlayerSave(player, var)
-  local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
-  local playerIndex = TSIL.Players.GetPlayerIndex(player)
-  local data = dataPerPlayer[playerIndex] --You can change 0 to whatever the default should be for each player
-  return data
-end
-
-function utilityFunctions:SetPlayerSave(player, var, newData)
-  local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
-  local playerIndex = TSIL.Players.GetPlayerIndex(player)
-  local data = dataPerPlayer[playerIndex]
-  data = newData
-  dataPerPlayer[playerIndex] = data
-end
 
 function utilityFunctions:SetPlayerSaveAtIndex(player, var, newData, index)
   local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
@@ -99,43 +83,24 @@ function utilityFunctions:SetPlayerSaveAtIndex(player, var, newData, index)
 end
 
 function utilityFunctions:GetEnchantedCardsPerPlayer(player)
-  local enchantedCardsPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards")
-  local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-  local enchantedCards = enchantedCardsPerPlayer[playerIndex]
-
-  if not enchantedCards then
-    enchantedCards = {}
-    enchantedCardsPerPlayer[playerIndex] = enchantedCards
-  end
-
-  return enchantedCards
+  return TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)
 end
 
 ---@param player EntityPlayer
 ---@param slot CardSlot
 function utilityFunctions:GetEnchantedCardInPlayerSlot(player, slot)
-  local enchantedCardsPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards")
-  local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
-  local enchantedCards = enchantedCardsPerPlayer[playerIndex]
-
-  if not enchantedCards then
-    enchantedCards = {0, 0, 0, 0, 0}
-    enchantedCardsPerPlayer[playerIndex] = enchantedCards
-  end
+  local enchantedCards = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)
   return enchantedCards[slot]
+
 end
 
 function utilityFunctions:SetEnchantedCardInPlayerSlot(player, slot, card)
-  local enchantedCards = JosephMod.utility:GetEnchantedCardsPerPlayer(player)
+  local enchantedCards = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)
+
   enchantedCards[slot] = card
 end
 
-function utilityFunctions:GetPlayerVar(player, var)
-  local playerIndex = TSIL.Players.GetPlayerIndex(player)
-  return _G[var][playerIndex]
-end
 
 function utilityFunctions:toTearsPerSecond(maxFireDelay)
   return 30 / (maxFireDelay + 1)

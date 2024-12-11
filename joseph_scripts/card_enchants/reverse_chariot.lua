@@ -42,15 +42,16 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseChariot
 function ReverseChariot:ReverseChariotNewRoom()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
-        if not utility:HasEnchantment(player, Card.CARD_REVERSE_CHARIOT) then return end
+        if utility:HasEnchantment(player, Card.CARD_REVERSE_CHARIOT) then
 
-        local playerIndex = TSIL.Players.GetPlayerIndex(player)
-        chariotActived[playerIndex] = false
+            local playerIndex = TSIL.Players.GetPlayerIndex(player)
+            chariotActived[playerIndex] = false
 
-        player:GetEffects():RemoveNullEffect(NullItemID.ID_REVERSE_CHARIOT)
+            player:GetEffects():RemoveNullEffect(NullItemID.ID_REVERSE_CHARIOT)
 
-        local data = utility:GetData(player, "ReverseChariotCharge")
-        data.Charge = 0
+            local data = utility:GetData(player, "ReverseChariotCharge")
+            data.Charge = 0
+        end
     end
 end
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, ReverseChariot.ReverseChariotNewRoom)
