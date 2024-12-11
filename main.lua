@@ -6,7 +6,10 @@ if REPENTOGON then
   JosephMod.utility = include('joseph_scripts.utility.functions')
   JosephMod.BaseCardEffects = include('joseph_scripts.card_enchants.base_card_effects')
   JosephMod.josephCharacter = include("joseph_scripts.characters.joseph")
-  
+  JosephMod.Chargebar = include("joseph_scripts.chargebar")
+  include("joseph_scripts.card_enchants.chariot")
+
+  include("joseph_scripts.card_enchants.reverse_chariot")
   include("joseph_scripts.card_enchants.reverse_lovers")
   include("joseph_scripts.card_enchants.reverse_stars")
   include("joseph_scripts.card_enchants.reverse_emperor")

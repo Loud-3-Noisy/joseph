@@ -124,10 +124,10 @@ function BaseCardEffects:RemoveCardEffect(player, card)
         [Card.CARD_LOVERS] = function()
             -- Code for CARD_LOVERS
         end,
-        [Card.CARD_CHARIOT] = function()
-            -- Code for CARD_CHARIOT
-            utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_TAURUS)
-        end,
+        -- [Card.CARD_CHARIOT] = function()
+        --     -- Code for CARD_CHARIOT
+        --     utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_TAURUS)
+        -- end,
         [Card.CARD_JUSTICE] = function()
             -- Code for CARD_JUSTICE
         end,
@@ -210,10 +210,10 @@ function BaseCardEffects:AddInnateCollectibles(player, card)
             -- Code for CARD_EMPEROR
             player:AddInnateCollectible(CollectibleType.COLLECTIBLE_THERES_OPTIONS, 1)
         end,
-        [Card.CARD_CHARIOT] = function()
-            -- Code for CARD_CHARIOT
-            player:AddInnateCollectible(CollectibleType.COLLECTIBLE_TAURUS, 1)
-        end,
+        -- [Card.CARD_CHARIOT] = function()
+        --     -- Code for CARD_CHARIOT
+        --     player:AddInnateCollectible(CollectibleType.COLLECTIBLE_TAURUS, 1)
+        -- end,
         [Card.CARD_HERMIT] = function()
             -- Code for CARD_HERMIT
             player:AddInnateCollectible(CollectibleType.COLLECTIBLE_MEMBER_CARD, 1)
@@ -340,7 +340,7 @@ function BaseCardEffects:ReapplyCardEffects()
 
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
-        
+
         if player:HasCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS, false, true) then
             anyPlayerHasMoreOptions = true
         end

@@ -24,17 +24,29 @@ end)
 
 ---Acts as a replacement for Entity:GetData()
 ---@param entity Entity
----@param identifier string
+---@param identifier string | nil
 ---@return any
 function utilityFunctions:GetData(entity, identifier)
-  return TSIL.Entities.GetEntityData(
-      JosephMod,
+  local data = TSIL.Entities.GetEntityData(
+    JosephMod,
       entity,
-      identifier
+      identifier or ""
   )
+
+  if not data then
+      data = {}
+      TSIL.Entities.SetEntityData(
+        JosephMod,
+          entity,
+          identifier or "",
+          data
+      )
+  end
+
+  return data
 end
 
----Acts as a replacement for Entity:GetData()
+---Acts as a replacement for Entity:SetData()
 ---@param entity Entity
 ---@param identifier string
 ---@param data any
@@ -54,7 +66,7 @@ function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
     TSIL.SaveManager.AddPersistentVariable(
       JosephMod,
       vars[i],
-      {},
+      {{}, {}, {}, {}},
       TSIL.Enums.VariablePersistenceMode.RESET_RUN,
       false
     )

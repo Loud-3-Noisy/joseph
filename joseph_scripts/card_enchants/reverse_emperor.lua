@@ -62,9 +62,12 @@ function ReverseEmperor:touchPortal(entity)
         local player = v:ToPlayer() ---@cast player EntityPlayer
         if not player then return end
 
-        if utility:GetData(entity, "Used") == true then return end
-        utility:SetData(entity, "Used", true)
-        utility:SetData(player, "DisableDamage", true)
+        local data = utility:GetData(entity, "ReverseEmperor")
+        if data.Used == true then return end
+        data.Used = true
+        
+        local playerData = utility:GetData(player, "DisableDamage")
+        playerData.DisableDamageActive = true
 
         -- local diff = (entity.Position + Vector(0, -10)) - player.Position
         -- player.Velocity = diff:Resized(math.min(diff:Length() * 0.1, 17.5))
@@ -79,7 +82,6 @@ function ReverseEmperor:touchPortal(entity)
         TSIL.Utils.Functions.RunInFramesTemporary(function ()
             ReverseEmperor:GoToExtraBossRoom(player)
             TSIL.Pause.Unpause()
-            utility:SetData(entity, "False", true)
         end, 15)
         --Isaac.RenderText("Hi", 50, 80, 1, 1, 1, 1)
     end
@@ -101,7 +103,8 @@ function ReverseEmperor:GoToExtraBossRoom(player)
         --player:SetColor(Color(1, 1, 1, 0), 3, 99, false, false)
         player.Visible = false
         player:StopExtraAnimation()
-        utility:SetData(player, "DisableDamage", false)
+        local playerData = utility:GetData(player, "DisableDamage")
+        playerData.DisableDamageActive = false
     end
 
     SFXManager():Stop(SoundEffect.SOUND_HELL_PORTAL1)
@@ -112,13 +115,13 @@ end
 
 ---@param entity Entity
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, function (_, entity)
-    if not utility:GetData(entity, "DisableDamage") then return end
+    if not utility:GetData(entity, "DisableDamage").DisableDamageActive == true then return end
     return false
 end)
 
 ---@param player EntityPlayer
 JosephMod:AddCallback(ModCallbacks.MC_PRE_PLAYER_COLLISION, function (_, player)
-    if not utility:GetData(player, "DisableDamage") then return end
+    if not utility:GetData(player, "DisableDamage").DisableDamageActive == true then return end
     return true
 end)
 
