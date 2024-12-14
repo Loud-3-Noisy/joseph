@@ -495,7 +495,14 @@ end
 function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, ActiveSlot)
     if player:GetPlayerType() ~= josephType then return end
 
-    local randomCard = RNG:RandomInt(22) + 1
+    local randomCard
+    if RNG:RandomFloat() < 0.12 then
+        --reverse 56-77
+        randomCard = RNG:RandomInt(22) + 56
+    else
+        randomCard = RNG:RandomInt(22) + 1
+    end
+
     player:AnimateCard(randomCard, "UseItem")
     player:AddCard(randomCard)
 
