@@ -116,6 +116,116 @@ function utilityFunctions:addTearMultiplier(player, multiplier)
   player.MaxFireDelay = JosephMod.utility:toMaxFireDelay(tearsPerSecond)
 end
 
+---Function to add a tears up that respects vanilla tear multipliers (Stolen from CHAPI)
+---@param player EntityPlayer
+---@return number
+function utilityFunctions:GetTearMultiplier(player)
+  local playerType = player:GetPlayerType()
+
+  local multi = 1
+  
+  if playerType == PlayerType.PLAYER_THEFORGOTTEN or playerType == PlayerType.PLAYER_THEFORGOTTEN_B then
+      multi = multi * 0.5
+  end
+  if playerType == PlayerType.PLAYER_EVE_B then
+      multi = multi * 0.66
+  end
+  if playerType == PlayerType.PLAYER_AZAZEL_B or player:HasCollectible(CollectibleType.COLLECTIBLE_BRIMSTONE) then
+      multi = multi * 0.33
+  elseif playerType == PlayerType.PLAYER_AZAZEL then
+      multi = multi * 0.267
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_DR_FETUS) then
+      multi = multi * 0.4
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_EVES_MASCARA) then
+      multi = multi * 0.66
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_IPECAC) then
+      multi = multi * 0.33
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG) then
+      multi = multi / 4.3
+  end
+  
+  if not player:HasCollectible(CollectibleType.COLLECTIBLE_20_20) then
+      if player:HasCollectible(CollectibleType.COLLECTIBLE_MUTANT_SPIDER) or 
+          player:HasCollectible(CollectibleType.COLLECTIBLE_POLYPHEMUS) 
+      then
+          multi = multi * 0.42
+      elseif player:HasCollectible(CollectibleType.COLLECTIBLE_INNER_EYE) or
+              player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_HANGED_MAN)
+      then
+          multi = multi * 0.51
+      end
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
+      multi = multi * 5.5
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_TECHNOLOGY_2) then
+      multi = multi * 0.66
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_ALMOND_MILK) then
+      multi = multi * 4
+  end
+  
+  if player:HasCollectible(CollectibleType.COLLECTIBLE_BERSERK) then
+      multi = multi * 0.5
+  end
+  
+  if player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_CHARIOT) then
+      multi = multi * 4
+  end
+  
+  -- if player:GetData().CustomHealthAPIOtherData then
+  --     local odata = player:GetData().CustomHealthAPIOtherData
+  --     if (odata.InHallowAura or 0) > 0 or 
+  --         (odata.InHallowDipAura or 0) > 0 or 
+  --         (odata.InBethlehemAura or 0) > 0 or
+  --         (odata.InHallowSpellAura or 0) > 0
+  --     then
+  --         multi = multi * 2.5
+  --     end
+      
+  --     if player:HasCollectible(CollectibleType.COLLECTIBLE_EPIPHORA) then
+  --         local fireDirection = player:GetFireDirection()
+  --         if fireDirection == Direction.NO_DIRECTION or
+  --             (odata.PreviousEpiphoraDirection ~= Direction.NO_DIRECTION and fireDirection ~= odata.PreviousEpiphoraDirection)
+  --         then
+  --             odata.EpiphoraStart = Game():GetFrameCount()
+  --         elseif Game():GetFrameCount() - (odata.EpiphoraStart or 0) >= 270 then
+  --             multi = multi * 2
+  --         elseif Game():GetFrameCount() - (odata.EpiphoraStart or 0) >= 180 then
+  --             multi = multi * 1.66
+  --         elseif Game():GetFrameCount() - (odata.EpiphoraStart or 0) >= 90 then
+  --             multi = multi * 1.33
+  --         end
+  --         odata.PreviousEpiphoraDirection = fireDirection
+  --     end
+  -- end
+  
+  -- hallowed ground creep = *2.5 (this is hell to compute)
+  -- fuck the d8 in particular
+
+
+  return multi
+end
+
+
+
+function utilityFunctions:AddTears(player, tears)
+  local TPS = utilityFunctions:toTearsPerSecond(player.MaxFireDelay)
+  local newTPS = TPS + tears * utilityFunctions:GetTearMultiplier(player)
+  player.MaxFireDelay = utilityFunctions:toMaxFireDelay(newTPS)
+end
+
 function utilityFunctions:HUDOffset(x, y, anchor)
     local notches = math.floor(Options.HUDOffset * 10 + 0.5)
     local xoffset = (notches*2)

@@ -9,7 +9,10 @@ local enums = JosephMod.enums
 ---@param card Card
 ---@param slot CardSlot
 function ReverseEmpress:initReverseEmpress(player, card, slot)
-    player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+    --player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+    player:UseCard(Card.CARD_REVERSE_EMPRESS, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
+    local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+    effect.Cooldown = 2147483646
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseEmpress.initReverseEmpress, Card.CARD_REVERSE_EMPRESS)
 
@@ -19,6 +22,10 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseEmpress.in
 ---@param slot CardSlot
 function ReverseEmpress:removeReverseEmpress(player, card, slot)
     player:GetEffects():RemoveNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+    local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+    if effect then
+        effect.Cooldown = 1
+    end
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseEmpress.removeReverseEmpress, Card.CARD_REVERSE_EMPRESS)
 
@@ -26,12 +33,20 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseEmpress
 function ReverseEmpress:ReapplyReverseHighPriestess()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
-        if utility:HasEnchantment(player, Card.CARD_REVERSE_EMPRESS) and player:GetEffects():GetNullEffectNum(NullItemID.ID_REVERSE_EMPRESS) < 1 then
-            player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+        if utility:HasEnchantment(player, Card.CARD_REVERSE_EMPRESS) and player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_EMPRESS) then
+            local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_EMPRESS)
+            effect.Cooldown = 2147483646
         end
     end
 end
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, ReverseEmpress.ReapplyReverseHighPriestess)
+
+
+function ReverseEmpress:ReduceFireRate(player, flag)
+    if not utility:HasEnchantment(player, Card.CARD_REVERSE_EMPRESS) then return end
+    utility:AddTears(player, -0.3)
+end
+JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, ReverseEmpress.ReduceFireRate)
 
 
 -- JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_LEVEL_REORDERED, function ()

@@ -26,11 +26,6 @@ TSIL.SaveManager.AddPersistentPlayerVariable(
 --       false
 --     )
 
--- function JosephChar:Debug()
---     Isaac.RenderText(TSIL.SaveManager.GetPersistentVariable(JosephMod, "GlowingHourglassTest"), 50, 80, 1, 1, 1, 1)
-
--- end
--- JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, JosephChar.Debug)
 
 
 -- function JosephChar:Increment()

@@ -10,6 +10,8 @@ local enums = JosephMod.enums
 ---@param slot CardSlot
 function ReverseHighPreistess:initReverseHighPreistess(player, card, slot)
     player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+    local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+    effect.Cooldown = 2147483646
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseHighPreistess.initReverseHighPreistess, Card.CARD_REVERSE_HIGH_PRIESTESS)
 
@@ -19,6 +21,10 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseHighPreist
 ---@param slot CardSlot
 function ReverseHighPreistess:removeReverseHighPreistess(player, card, slot)
     player:GetEffects():RemoveNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+    local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+    if effect then
+        effect.Cooldown = 1
+    end
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseHighPreistess.removeReverseHighPreistess, Card.CARD_REVERSE_HIGH_PRIESTESS)
 
@@ -26,8 +32,9 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseHighPre
 function ReverseHighPreistess:ReapplyReverseHighPriestess()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
-        if utility:HasEnchantment(player, Card.CARD_REVERSE_HIGH_PRIESTESS) and player:GetEffects():GetNullEffectNum(NullItemID.ID_REVERSE_HIGH_PRIESTESS) < 1 then
-            player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+        if utility:HasEnchantment(player, Card.CARD_REVERSE_HIGH_PRIESTESS) and player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS) then
+            local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+            effect.Cooldown = 2147483646
         end
     end
 end

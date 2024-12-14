@@ -28,3 +28,17 @@ else
       Isaac.RenderScaledText(warning, pos, pos, scale, scale, 1, 0, 0, 1)
   end)
 end
+
+-- JosephMod.Debug = false
+-- --JosephMod.Render = "hi"
+
+-- if JosephMod.Debug == true then
+--   function JosephMod:Debug()
+--       local effect = Isaac.GetPlayer():GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
+--       if effect then
+--         Isaac.RenderText(tostring(effect.Cooldown), 50, 80, 1, 1, 1, 1)
+--       end
+--   end
+-- JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, JosephMod.Debug)
+
+-- end
