@@ -128,6 +128,6 @@ function ReverseChariot:PlayerRender(player)
 
     data.Chargebar = data.Chargebar or JosephMod.Chargebar()
 
-    data.Chargebar:TryLoad("gfx/ui/chariot_chargebar.anm2")
+    data.Chargebar:TryLoad("gfx/ui/reverse_chariot_chargebar.anm2")
     data.Chargebar:Render(Isaac.WorldToScreen(player.Position) + chargeBarOffset)
 end
