@@ -75,10 +75,12 @@ function BaseCardEffects:InitCardEffect(player, card)
 
     if card == Card.CARD_MOON then
         local allRooms = Game():GetLevel():GetRooms()
+        local found = false
         for idx = 0, allRooms.Size - 1 do
             local room = allRooms:Get(idx)
-            if room.Data.Type == RoomType.ROOM_SECRET or room.Data.Type == RoomType.ROOM_SUPERSECRET then
+            if found == false and room.Data.Type == RoomType.ROOM_SECRET then
                 room.DisplayFlags = RoomDescriptor.DISPLAY_ICON | RoomDescriptor.DISPLAY_BOX
+                found = true
             end
         end
     end
@@ -329,6 +331,17 @@ function BaseCardEffects:EnchantmentEffects(player, enchantedCard, slot)
             JosephMod.BaseCardEffects:spawnPortal(3)
         end
     end
+
+    if enchantedCard == Card.CARD_SUN then
+        if not room:IsClear() then
+            local entities = Isaac.GetRoomEntities()
+            for i, entity in pairs(entities) do
+                if entity:IsVulnerableEnemy() and entity:IsActiveEnemy() then
+                    entity:AddBurn(EntityRef(player), 60, player.Damage)
+                end
+            end
+        end
+    end
 end
 
 local gameContinued = false
@@ -539,16 +552,5 @@ function BaseCardEffects:RemoveShopTrapdoor()
 
 end
 
--- local Font = Font()
--- Font:Load("font/pftempestasevencondensed.fnt")
--- function BaseCardEffects:RenderText(player, offset)
---     local enchantedCard = utility:GetPlayerSave(player, "EnchantedCards")
---     if not enchantedCard or enchantedCard == 0 then return end
---     local text = enchantedCard
---     local color = KColor(0 ,0 ,1 ,1)
---     local pos = Isaac.WorldToScreen(player.Position)
---     Font:DrawString(text, pos.X, pos.Y , color, 0, true)
--- end
--- JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, BaseCardEffects.RenderText)
 
 return BaseCardEffects
