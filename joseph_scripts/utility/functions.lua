@@ -311,4 +311,27 @@ function utilityFunctions:RemoveInnateItem(player, item)
   end
 end
 
+
+-- get nearest entity
+---@param position Vector
+---@param entitytype integer
+---@param entityvariant integer
+---@param entitysubtype integer
+---@return Entity|nil
+function utilityFunctions:GetNearestEntity(position, entitytype, entityvariant, entitysubtype)
+  local nearestEntity = nil;
+  local nearestDistance = math.huge;
+      
+  for _, entity in ipairs(Isaac.FindByType(entitytype, entityvariant or -1, entitysubtype or -1, false, true)) do
+      local distanceSqr = position:DistanceSquared(entity.Position);
+          
+  if distanceSqr < nearestDistance then
+      nearestEntity = entity;
+      nearestDistance = distanceSqr;
+  end
+  end
+      
+  return nearestEntity
+end
+
 return utilityFunctions
