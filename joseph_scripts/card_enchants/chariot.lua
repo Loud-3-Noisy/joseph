@@ -6,7 +6,8 @@ local enums = JosephMod.enums
 local RECOMMENDED_SHIFT_IDX = 35
 local chargeBarOffset = Vector(18,7)
 local chariotActived = {false, false, false, false}
-
+local slipFrames = 0
+local maxSlipFrames = 5
 
 
 
@@ -59,10 +60,20 @@ function Chariot:PlayerUpdate(player)
             data.Charge = 0
         end
     else
-        if player.Velocity:Length() >= player.MoveSpeed*2 then
-            data.Charge = math.min(100, data.Charge + 0.5)
+        if player:GetMovementDirection() ~= -1 then
+            if player.Velocity:Length() >= player.MoveSpeed*2 then
+                slipFrames = math.max(0, slipFrames-1)
+                data.Charge = math.min(100, data.Charge + 0.5)
+            elseif slipFrames < maxSlipFrames then
+                slipFrames = math.min(maxSlipFrames, slipFrames+1)
+                data.Charge = math.min(100, data.Charge + 0.5)
+            else
+                data.Charge = math.max(0, data.Charge - 3)
+            end
+
         else
-            data.Charge = math.max(0, data.Charge - 5)
+            data.Charge = math.max(0, data.Charge - 3)
+            slipFrames = maxSlipFrames
         end
     end
 
