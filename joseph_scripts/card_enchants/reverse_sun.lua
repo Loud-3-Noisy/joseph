@@ -9,7 +9,7 @@ local enums = JosephMod.enums
 ---@param card Card
 ---@param slot CardSlot
 function ReverseSun:initReverseSun(player, card, slot)
-    player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_SUN)
+    player:UseCard(Card.CARD_REVERSE_SUN, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
     local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_SUN)
     effect.Cooldown = 2147483646
 end
@@ -32,21 +32,16 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseSun.rem
 function ReverseSun:ReapplyReverseSun()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
-        if utility:HasEnchantment(player, Card.CARD_REVERSE_SUN) and player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_SUN) then
-            local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_SUN)
-            effect.Cooldown = 2147483646
+        if utility:HasEnchantment(player, Card.CARD_REVERSE_SUN) and not player:GetEffects():HasNullEffect(NullItemID.ID_REVERSE_SUN) then
+            player:UseCard(Card.CARD_REVERSE_SUN, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD | UseFlag.USE_MIMIC)
         end
     end
 end
 JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, ReverseSun.ReapplyReverseSun)
 
 
--- JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_LEVEL_REORDERED, function ()
---     if gameContinued then 
---         gameContinued = false
---         return
---     end
---     JosephMod.Schedule(1, function ()
---         JosephMod.BaseCardEffects:ReapplyCardEffects()
---     end,{})
--- end)
+JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_LEVEL_REORDERED, function ()
+    JosephMod.Schedule(1, function ()
+        ReverseSun:ReapplyReverseSun()
+    end,{})
+end)
