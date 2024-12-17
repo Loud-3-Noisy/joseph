@@ -19,6 +19,7 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.reverse_hanged_man")
   include("joseph_scripts.card_enchants.reverse_devil")
   include("joseph_scripts.card_enchants.reverse_sun")
+  include("joseph_scripts.card_enchants.reverse_moon")
 
   include("joseph_scripts.characters.slotmachines")
   --include("joseph_scripts.items.lil_slots")

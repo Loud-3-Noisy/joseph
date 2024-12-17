@@ -42,7 +42,7 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, Reverse
 
 
 function ReverseHangedMan:onEntityDie(entity, amount, flags, source)
-    if not (entity:IsEnemy() and entity:HasMortalDamage()) then return end
+    if not (entity:IsEnemy() and entity:HasMortalDamage() and source.Entity) then return end
     local player = TSIL.Players.GetPlayerFromEntity(source.Entity)
     if not (player and utility:HasEnchantment(player, Card.CARD_REVERSE_HANGED_MAN)) then return end
 

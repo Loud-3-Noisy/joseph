@@ -47,12 +47,42 @@ enums.Slots = {
 ---@enum JosephCallbacks
 enums.Callbacks = {
 
-    --JOSEPH_PRE_ENCHANT_ADD = "JOSEPH_PRE_ENCHANT_ADD",
+    --Called whenever the player enchants a card for the first time
+    --Params:
+    --
+    -- * player - EntityPlayer
+    -- * card - Card
+    -- * slot - enums.CardSlot
+    --
+    --Optional args:
+    --
+    -- * card - Card
     JOSEPH_POST_ENCHANT_ADD = "JOSEPH_POST_ENCHANT_ADD",
 
-    --JOSEPH_PRE_ENCHANT_REMOVE = "JOSEPH_PRE_ENCHANT_REMOVE",
+
+    --Called when the player loses an enchant
+    --Params:
+    --
+    -- * player - EntityPlayer
+    -- * card - Card
+    -- * slot - enums.CardSlot
+    --
+    --Optional args:
+    --
+    -- * card - Card
     JOSEPH_POST_ENCHANT_REMOVE = "JOSEPH_POST_ENCHANT_REMOVE",
 
+
+    --Called when continuing a run, used for readding innate collectibles
+    --Params:
+    --
+    -- * player - EntityPlayer
+    -- * card - Card
+    -- * slot - enums.CardSlot
+    --
+    --Optional args:
+    --
+    -- * card - Card
     JOSEPH_GAME_START_ENCHANT_REFRESH = "JOSEPH_GAME_START_ENCHANT_REFRESH"
 }
 
