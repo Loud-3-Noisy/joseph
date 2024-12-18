@@ -284,6 +284,25 @@ function utilityFunctions:GetEnchantmentCount(player, enchantment)
 end
 
 
+function utilityFunctions:GetTotalEnchantmentCount(enchantment)
+  local totalEnchants = 0
+  for i = 0, Game():GetNumPlayers() - 1 do
+
+    local player = Isaac.GetPlayer(i)
+    local playerEnchants = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)
+
+    for key, value in pairs(playerEnchants) do
+
+      if value == enchantment then
+        totalEnchants = totalEnchants + 1
+      end
+    end
+  end
+
+  return totalEnchants
+end
+
+
 function utilityFunctions:HasEnchantment(player, enchantment)
   local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards") or {}
   local hasEnchantment = false
