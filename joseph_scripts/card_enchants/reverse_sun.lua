@@ -29,6 +29,13 @@ end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseSun.removeReverseSun, Card.CARD_REVERSE_SUN)
 
 
+function ReverseSun:ReduceDamage(player, flag)
+    if not utility:HasEnchantment(player, Card.CARD_REVERSE_SUN) or flag ~= CacheFlag.CACHE_DAMAGE then return end
+    utility:AddDamage(player, -0.5)
+end
+JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, ReverseSun.ReduceDamage)
+
+
 function ReverseSun:ReapplyReverseSun()
     for i = 0, Game():GetNumPlayers()-1 do
         local player = Game():GetPlayer(i)
