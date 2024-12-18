@@ -151,9 +151,10 @@ end
 
 
 function ReverseHermit:touchPickup(pickup, collider)
+    if pickup:IsShopItem() then return end
     local player = collider:ToPlayer()
     if not (player and utility:HasEnchantment(player, Card.CARD_REVERSE_HERMIT)) then return end
-    
+
     local pickupValue = ReverseHermit:GetPickupValue(pickup.Variant, pickup.SubType)
     if pickupValue == 0 then return end
 

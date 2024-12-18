@@ -43,13 +43,13 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, Reverse
 
 function ReverseHangedMan:onEntityDie(entity, amount, flags, source)
     if not (entity:IsEnemy() and entity:HasMortalDamage() and source.Entity) then return end
+
     local player = TSIL.Players.GetPlayerFromEntity(source.Entity)
     if not (player and utility:HasEnchantment(player, Card.CARD_REVERSE_HANGED_MAN)) then return end
 
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
         local pickup = (utility:GetNearestEntity(entity.Position, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN)):ToPickup()
-
-        if not (pickup and pickup.Position:DistanceSquared(entity.Position) < 40 ) then return end
+        if not (pickup and pickup.Position:DistanceSquared(entity.Position) < 100 ) then return end
         pickup.Timeout = 60
         pickup.Velocity = 3*RandomVector()
     end, 3)

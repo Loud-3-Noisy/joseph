@@ -28,11 +28,27 @@ X Troll Bomb 5.40.3
 X Mega Troll Bomb 5.40.5
 
 10 Giga Bomb 5.40.7
-5 Bomb 5.40.8
 
 X Throwable Bomb 5.41.0
 X Poop Nugget 5.42.0
 X Big Poop Nugget 5.42.1
+
+
+7 Grab Bag 5.69.1
+7 Black Sack 5.69.2
+
+
+5 Pill 5.70.0
+
+5 Card 5.300.0
+
+
+5 Lil' Battery 5.90.1
+5 Micro Battery 5.90.2
+5 Mega Battery 5.90.3
+5 Golden Battery 5.90.4
+
+15 (2 nickels) Collectible 5.100.0
 
 
 
