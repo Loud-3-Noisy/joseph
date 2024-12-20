@@ -46,19 +46,6 @@ function utilityFunctions:GetData(entity, identifier)
   return data
 end
 
----Acts as a replacement for Entity:SetData()
----@param entity Entity
----@param identifier string
----@param data any
-function utilityFunctions:SetData(entity, identifier, data)
-  TSIL.Entities.SetEntityData(
-      JosephMod,
-      entity,
-      identifier,
-      data
-  )
-end
-
 
 function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
   if vars == nil then return end

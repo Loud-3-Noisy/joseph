@@ -54,7 +54,7 @@ function ReverseHangedMan:onEntityDie(entity, amount, flags, source)
         pickup.Velocity = 3*RandomVector()
     end, 3)
 end
-JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, ReverseHangedMan.onEntityDie)
+JosephMod:AddCallback(ModCallbacks.MC_POST_ENTITY_TAKE_DMG, ReverseHangedMan.onEntityDie)
 
 
 -- JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_LEVEL_REORDERED, function ()

@@ -11,12 +11,14 @@ function ReverseJustice:RoomClear(rng, spawnPos)
     local room = Game():GetRoom()
     local roomType = room:GetType()
     local roomDesc = level:GetCurrentRoomDesc()
+    local roomConfigRoom = roomDesc.Data
 
     if not utility:AnyPlayerHasEnchantment(Card.CARD_REVERSE_JUSTICE) then return end
 
     local spawnedChest = false
 
     if roomType == RoomType.ROOM_BOSS or level:GetCurrentRoomIndex() == GridRooms.ROOM_EXTRA_BOSS_IDX then return end
+    if roomConfigRoom.StageID == 35 and roomType == RoomType.ROOM_DUNGEON then return end
     local enchantCount = utility:GetTotalEnchantmentCount(Card.CARD_REVERSE_JUSTICE)
     for i = 0, enchantCount - 1 do
         if (rng:RandomFloat() <= CHEST_REPLACE_CHANCE or firstTimeReverseJustice == true) then
