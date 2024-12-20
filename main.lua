@@ -24,6 +24,7 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.reverse_hermit")
   include("joseph_scripts.card_enchants.reverse_justice")
   include("joseph_scripts.card_enchants.reverse_hierophant")
+  include("joseph_scripts.card_enchants.reverse_temperance")
 
 
   include("joseph_scripts.characters.slotmachines")

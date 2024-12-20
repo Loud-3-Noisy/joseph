@@ -21,7 +21,7 @@ end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseMoon.removeReverseMoon, Card.CARD_REVERSE_MOON)
 
 
-function ReverseMoon:checkSpawnPortal(rng)
+function ReverseMoon:roomClear(rng)
     if not utility:AnyPlayerHasEnchantment(Card.CARD_REVERSE_MOON) then return end
     local level = Game():GetLevel()
     local descriptor = level:GetCurrentRoomDesc()
@@ -42,4 +42,4 @@ function ReverseMoon:checkSpawnPortal(rng)
         level:MakeRedRoomDoor(level:GetCurrentRoomIndex() , doorToOpen[1]) 
     end
 end
-JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseMoon.checkSpawnPortal)
+JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseMoon.roomClear)
