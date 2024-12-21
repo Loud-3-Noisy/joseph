@@ -46,19 +46,6 @@ function utilityFunctions:GetData(entity, identifier)
   return data
 end
 
----Acts as a replacement for Entity:SetData()
----@param entity Entity
----@param identifier string
----@param data any
-function utilityFunctions:SetData(entity, identifier, data)
-  TSIL.Entities.SetEntityData(
-      JosephMod,
-      entity,
-      identifier,
-      data
-  )
-end
-
 
 function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
   if vars == nil then return end
@@ -281,6 +268,25 @@ function utilityFunctions:GetEnchantmentCount(player, enchantment)
   end
 
   return enchantmentCount
+end
+
+
+function utilityFunctions:GetTotalEnchantmentCount(enchantment)
+  local totalEnchants = 0
+  for i = 0, Game():GetNumPlayers() - 1 do
+
+    local player = Isaac.GetPlayer(i)
+    local playerEnchants = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)
+
+    for key, value in pairs(playerEnchants) do
+
+      if value == enchantment then
+        totalEnchants = totalEnchants + 1
+      end
+    end
+  end
+
+  return totalEnchants
 end
 
 

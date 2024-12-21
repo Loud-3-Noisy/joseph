@@ -43,8 +43,8 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_NEW_ROOM_REORDERED, Reverse
 
 
 function ReverseEmpress:ReduceFireRate(player, flag)
-    if not utility:HasEnchantment(player, Card.CARD_REVERSE_EMPRESS) then return end
-    utility:AddTears(player, -0.3)
+    if not utility:HasEnchantment(player, Card.CARD_REVERSE_EMPRESS) or flag ~= CacheFlag.CACHE_FIREDELAY then return end
+    utility:AddTears(player, -0.5)
 end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, ReverseEmpress.ReduceFireRate)
 

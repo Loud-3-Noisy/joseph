@@ -1,0 +1,55 @@
+3 Heart 5.10.1
+1 Half Heart 5.10.2
+5 Soul Heart 5.10.3
+10 (1 nickel) Eternal Heart 5.10.4
+6 Double Heart 5.10.5
+6 Black Heart 5.10.6
+10 (1 nickel) Gold Heart 5.10.7
+2 Half Soul Heart 5.10.8
+3 Scared Heart 5.10.9
+3 Blended Heart 5.10.10
+6 Bone Heart 5.10.11
+2 Rotten Heart 5.10.12
+
+
+5 Key 5.30.1
+10 (1 Nickel) Golden Key 5.30.2
+10 (1 Nickel) Key Ring 5.30.3
+10 (1 Nickel) Charged Key 5.30.4
+
+
+5 Trinket 5.350.0
+
+
+5 Bomb 5.40.1
+10 Double Bomb 5.40.2
+X Troll Bomb 5.40.3
+10 Golden Bomb 5.40.4
+X Mega Troll Bomb 5.40.5
+
+10 Giga Bomb 5.40.7
+
+X Throwable Bomb 5.41.0
+X Poop Nugget 5.42.0
+X Big Poop Nugget 5.42.1
+
+
+7 Grab Bag 5.69.1
+7 Black Sack 5.69.2
+
+
+5 Pill 5.70.0
+
+5 Card 5.300.0
+
+
+5 Lil' Battery 5.90.1
+5 Micro Battery 5.90.2
+5 Mega Battery 5.90.3
+5 Golden Battery 5.90.4
+
+15 (2 nickels) Collectible 5.100.0
+
+
+
+

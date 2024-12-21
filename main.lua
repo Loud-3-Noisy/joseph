@@ -16,10 +16,17 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.reverse_stars")
   include("joseph_scripts.card_enchants.reverse_emperor")
   include("joseph_scripts.card_enchants.reverse_magician")
+  include("joseph_scripts.card_enchants.reverse_death")
   include("joseph_scripts.card_enchants.reverse_hanged_man")
   include("joseph_scripts.card_enchants.reverse_devil")
   include("joseph_scripts.card_enchants.reverse_sun")
   include("joseph_scripts.card_enchants.reverse_moon")
+  include("joseph_scripts.card_enchants.reverse_hermit")
+  include("joseph_scripts.card_enchants.reverse_justice")
+  include("joseph_scripts.card_enchants.reverse_hierophant")
+  include("joseph_scripts.card_enchants.reverse_temperance")
+  include("joseph_scripts.card_enchants.reverse_judgement")
+
 
   include("joseph_scripts.characters.slotmachines")
   --include("joseph_scripts.items.lil_slots")

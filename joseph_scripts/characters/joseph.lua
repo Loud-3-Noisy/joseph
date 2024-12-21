@@ -256,7 +256,7 @@ function JosephChar:pickupBirthright(CollectibleType, Charge, FirstTime, Slot, V
 
     if not utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_INNATE) then
         local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_INNATE)
-        JosephChar:DisenchantCard(player, oldCard, enums.CardSlot.JOSEPH_INNATE)
+        JosephChar:DisenchantCard(player, enums.CardSlot.JOSEPH_INNATE)
         JosephChar:EnchantCard(player, oldCard, enums.CardSlot.JOSEPH_BIRTHRIGHT)
     end
 end
@@ -269,7 +269,7 @@ function JosephChar:removeBirthright(player, _)
 
     if not utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
         local oldCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.JOSEPH_BIRTHRIGHT)
-        JosephChar:DisenchantCard(player, oldCard, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
+        JosephChar:DisenchantCard(player, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, JosephChar.removeBirthright, 619)
@@ -288,26 +288,28 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
     SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
 
     if not utility:IsEnchantmentSlotEmpty(player, slot) then
-        local oldCard = utility:GetEnchantedCardInPlayerSlot(player, slot)
-        JosephChar:DisenchantCard(player, oldCard, slot)
+        JosephChar:DisenchantCard(player, slot, false)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
     JosephMod.BaseCardEffects:InitCardEffect(player, card)
     Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, slot)
 end
 
+
 ---@param player EntityPlayer
----@param card Card
 ---@param slot CardSlot 
 ---@param playEffect boolean | nil play the on hit disenchant perfection effect
-function JosephChar:DisenchantCard(player, card, slot, playEffect)
+function JosephChar:DisenchantCard(player, slot, playEffect)
+    local enchantedCard = utility:GetEnchantedCardInPlayerSlot(player, slot)
     utility:SetEnchantedCardInPlayerSlot(player, slot, 0)
-    JosephMod.BaseCardEffects:RemoveCardEffect(player, card)
-    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, card, player, card, slot)
+    if enchantedCard and enchantedCard ~= 0 then
+        JosephMod.BaseCardEffects:RemoveCardEffect(player, enchantedCard)
+        Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, enchantedCard, player, enchantedCard, slot)
+    end
 
-    if playEffect and playEffect == true then
+    if playEffect and playEffect == true and enchantedCard and enchantedCard ~= 0 then
         SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
-        JosephChar:PlayDisenchantAnimation(player, card)
+        JosephChar:PlayDisenchantAnimation(player, enchantedCard)
     end
 end
 
@@ -424,7 +426,7 @@ function JosephChar:OnHit(entity, amount, flags, source, countDown)
 
     local randomFloat = rng:RandomFloat()
     if randomFloat < (enums.CardDisenchantChances[enchantedCard] or 0.33) then
-        JosephChar:DisenchantCard(player, enchantedCard, enums.CardSlot.JOSEPH_INNATE, true)
+        JosephChar:DisenchantCard(player, enums.CardSlot.JOSEPH_INNATE, true)
     end
     TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
 
@@ -504,5 +506,18 @@ function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, Activ
     return true
 end
 JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_ITEM, CallbackPriority.LATE, JosephChar.UseDeckOfCards, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
+
+local isJoseph = false
+function JosephChar:ChangeCharacter(player, flag)
+    if flag == CacheFlag.CACHE_COLOR then
+        if player:GetPlayerType() == josephType then isJoseph = true end
+        if isJoseph == true and player:GetPlayerType() ~= josephType then
+            isJoseph = false
+            JosephChar:DisenchantCard(player, enums.CardSlot.JOSEPH_INNATE, true)
+            JosephChar:DisenchantCard(player, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
+        end
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, JosephChar.ChangeCharacter)
 
 return JosephChar
