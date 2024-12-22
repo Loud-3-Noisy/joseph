@@ -31,6 +31,8 @@ if REPENTOGON then
   include("joseph_scripts.characters.slotmachines")
   --include("joseph_scripts.items.lil_slots")
 
+  include("joseph_scripts.compat.EID")
+
 else
   JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, function()
       local pos = 50
