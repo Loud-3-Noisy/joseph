@@ -3,7 +3,7 @@ if REPENTOGON then
   require("JOSEPH_TSIL.TSIL").Init("JOSEPH_TSIL")
 
   include("joseph_scripts.enums")
-  JosephMod.utility = include('joseph_scripts.utility.functions')
+  JosephMod.utility = include('joseph_scripts.utility.utilityFunctions')
   JosephMod.BaseCardEffects = include('joseph_scripts.card_enchants.base_card_effects')
   JosephMod.josephCharacter = include("joseph_scripts.characters.joseph")
   JosephMod.Chargebar = include("joseph_scripts.chargebar")

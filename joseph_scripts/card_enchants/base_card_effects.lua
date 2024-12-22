@@ -417,27 +417,40 @@ function BaseCardEffects:RoomClearEffectPerPlayer(player, enchantedCard, rng, sp
 
     if roomType == RoomType.ROOM_BOSS then return end
 
-    if enchantedCard == Card.CARD_LOVERS and (rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE or firstTimeLovers == true) then
-        firstTimeLovers = false
-        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
-        local pos = room:FindFreePickupSpawnPosition(spawnPos)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 1, pos, Vector(0, 0), nil)
-    end
-
-    if enchantedCard == Card.CARD_HIEROPHANT and (rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE or firstTimeHeirophant == true) then
-        firstTimeHeirophant = false
-        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
-        local pos = room:FindFreePickupSpawnPosition(spawnPos)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 3, pos, Vector(0, 0), nil)
-    end
-
-    if enchantedCard == Card.CARD_JUSTICE and (rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE or firstTimeJustice == true) then
-        firstTimeJustice = false
-        SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
-        for i=10, 40, 10 do
-            if rng:RandomFloat() <= 0.80 then
+    if enchantedCard == Card.CARD_LOVERS then
+        for i=0, utility:GetEnchantmentCount(player, Card.CARD_LOVERS)-1, 1 do
+            if (rng:RandomFloat() <= RED_HEART_REPLACE_CHANCE or firstTimeLovers == true) then
                 local pos = room:FindFreePickupSpawnPosition(spawnPos)
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, i, 0, pos, Vector(0, 0), nil)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, 1, pos, Vector(0, 0), nil)
+                SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                firstTimeLovers = false
+            end
+        end
+    end
+
+    if enchantedCard == Card.CARD_HIEROPHANT then
+        for i=0, utility:GetEnchantmentCount(player, Card.CARD_HIEROPHANT)-1, 1 do
+            if (rng:RandomFloat() <= SOUL_HEART_REPLACE_CHANCE or firstTimeHeirophant == true) then
+                local pos = room:FindFreePickupSpawnPosition(spawnPos)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL, pos, Vector(0, 0), nil)
+                SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                firstTimeHeirophant = false
+            end
+        end
+    end
+
+    if enchantedCard == Card.CARD_JUSTICE then
+
+        for i=0, utility:GetEnchantmentCount(player, Card.CARD_JUSTICE)-1, 1 do
+            if (rng:RandomFloat() <= JUSTICE_DROP_REPLACE_CHANCE or firstTimeJustice == true) then
+                for j=10, 40, 10 do
+                    if rng:RandomFloat() <= 0.80 then
+                        local pos = room:FindFreePickupSpawnPosition(spawnPos)
+                        Isaac.Spawn(EntityType.ENTITY_PICKUP, j, 0, pos, Vector(0, 0), nil)
+                    end
+                end
+                SFXManager():Play(SoundEffect.SOUND_THUMBSUP)
+                firstTimeJustice = false
             end
         end
     end
@@ -453,6 +466,7 @@ function BaseCardEffects:RoomClearEffect(rng, spawnPos)
     local roomType = room:GetType()
     local anyPlayerHasTheresOptions = false
     local choicePedestalCount = 0
+
     if utility:AnyPlayerHasEnchantment(Card.CARD_FOOL) then
         JosephMod.BaseCardEffects:spawnPortal(3)
     end

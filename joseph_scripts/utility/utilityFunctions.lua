@@ -340,4 +340,40 @@ function utilityFunctions:GetNearestEntity(position, entitytype, entityvariant, 
   return nearestEntity
 end
 
+
+
+---Returns the regular or greed version of an ItemPoolType
+---@param poolType ItemPoolType
+---@return ItemPoolType
+local function GetProperPool(poolType)
+  local isGreedMode = Game():IsGreedMode()
+
+  if not isGreedMode then
+      return poolType
+  end
+
+  if poolType == ItemPoolType.POOL_TREASURE then
+      return ItemPoolType.POOL_GREED_TREASURE
+
+  elseif poolType == ItemPoolType.POOL_DEVIL then
+      return ItemPoolType.POOL_GREED_DEVIL
+
+  else
+      return poolType
+  end
+end
+
+function utilityFunctions:GetCollectible(rng)
+  local itemPool = Game():GetItemPool()
+  local roomType = Game():GetRoom():GetType()
+  local seed = rng:GetSeed()
+  local poolType = itemPool:GetPoolForRoom(roomType, seed)
+
+  if poolType == ItemPoolType.POOL_NULL then
+    poolType = ItemPoolType.POOL_TREASURE
+  end
+  
+  return itemPool:GetCollectible(poolType, true)
+end
+
 return utilityFunctions
