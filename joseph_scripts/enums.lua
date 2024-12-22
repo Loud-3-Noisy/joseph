@@ -143,9 +143,36 @@ enums.CardAnims[Card.CARD_REVERSE_JUDGEMENT] = "42_Judgement"
 enums.CardAnims[Card.CARD_REVERSE_WORLD] = "43_TheWorld"
 
 
-enums.CardDisenchantChances = {
+enums.ReverseCardAchievmentIDs = {}
 
-}
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_FOOL] = Achievement.REVERSED_FOOL
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_MAGICIAN] = Achievement.REVERSED_THE_MAGICIAN
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_HIGH_PRIESTESS] = Achievement.REVERSED_HIGH_PRIESTESS
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_EMPRESS] = Achievement.REVERSED_EMPRESS
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_EMPEROR] = Achievement.REVERSED_EMPEROR
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_HIEROPHANT] = Achievement.REVERSED_HIEROPHANT
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_LOVERS] = Achievement.REVERSED_LOVERS
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_CHARIOT] = Achievement.REVERSED_CHARIOT
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_JUSTICE] = Achievement.REVERSED_JUSTICE
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_HERMIT] = Achievement.REVERSED_HERMIT
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = Achievement.REVERSED_WHEEL_OF_FORTUNE
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_STRENGTH] = Achievement.REVERSED_STRENGTH
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_HANGED_MAN] = Achievement.REVERSED_HANGED_MAN
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_DEATH] = Achievement.REVERSED_DEATH
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_TEMPERANCE] = Achievement.REVERSED_TEMPERANCE
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_DEVIL] = Achievement.REVERSED_DEVIL
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_TOWER] = Achievement.REVERSED_TOWER
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_STARS] = Achievement.REVERSED_STARS
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_MOON] = Achievement.REVERSED_SUN_AND_MOON
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_SUN] = Achievement.REVERSED_SUN_AND_MOON
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_JUDGEMENT] = Achievement.REVERSED_JUDGEMENT
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_WORLD] = Achievement.REVERSED_WORLD
+
+
+
+
+
+enums.CardDisenchantChances = {}
 
 enums.CardDisenchantChances[Card.CARD_FOOL] = 0.33
 enums.CardDisenchantChances[Card.CARD_MAGICIAN] = 0.90

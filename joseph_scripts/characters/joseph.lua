@@ -493,9 +493,18 @@ function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, Activ
     if player:GetPlayerType() ~= josephType then return end
 
     local randomCard
-    if RNG:RandomFloat() < 0.12 then
-        --reverse 56-77
-        randomCard = RNG:RandomInt(22) + 56
+    if RNG:RandomFloat() < 1 then
+        local reverseCardFound = false
+        local attempts = 10
+        while reverseCardFound == false and attempts > 0 do
+            --reverse 56-77
+            randomCard = RNG:RandomInt(22) + 56
+            if Isaac.GetPersistentGameData():Unlocked(enums.ReverseCardAchievmentIDs[randomCard]) then reverseCardFound = true end
+            attempts = attempts - 1
+        end
+        if reverseCardFound == false then
+            randomCard = RNG:RandomInt(22) + 1
+        end
     else
         randomCard = RNG:RandomInt(22) + 1
     end
