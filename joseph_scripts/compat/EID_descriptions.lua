@@ -82,17 +82,17 @@ descriptions.Enchants = {
     },
     [Card.CARD_EMPRESS] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent Whore of Babylon state, with reduced stats."
         }
     },
     [Card.CARD_EMPEROR] = {
         en_us = {
-            description = "Placeholder"
+            description = "Grants the effects of There's Options"
         }
     },
     [Card.CARD_HIEROPHANT] = {
         en_us = {
-            description = "Placeholder"
+            description = "You do this one Kattack"
         }
     },
     [Card.CARD_LOVERS] = {
@@ -102,187 +102,187 @@ descriptions.Enchants = {
     },
     [Card.CARD_CHARIOT] = {
         en_us = {
-            description = "Placeholder"
+            description = "Upon room entry, continuously move for 10 seconds to become invincible"
         }
     },
     [Card.CARD_JUSTICE] = {
         en_us = {
-            description = "Placeholder"
+            description = "You do this one Kattack"
         }
     },
     [Card.CARD_HERMIT] = {
         en_us = {
-            description = "Placeholder"
+            description = "Shop items are 50% off"
         }
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
         en_us = {
-            description = "Placeholder"
+            description = "Spawns a Lil Slot Machine Familiar or a Lil Fortune Teller"
         }
     },
     [Card.CARD_STRENGTH] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent all stat up, but not as strong as normal Strength."
         }
     },
     [Card.CARD_HANGED_MAN] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent Flight"
         }
     },
     [Card.CARD_DEATH] = {
         en_us = {
-            description = "Placeholder"
+            description = "Spawns a Dry Baby"
         }
     },
     [Card.CARD_TEMPERANCE] = {
         en_us = {
-            description = "Placeholder"
+            description = "Spawns a Lil Blood Machine"
         }
     },
     [Card.CARD_DEVIL] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent Beilial state, but with reduced stats"
         }
     },
     [Card.CARD_TOWER] = {
         en_us = {
-            description = "Placeholder"
+            description = "Curse of the Tower lol"
         }
     },
     [Card.CARD_STARS] = {
         en_us = {
-            description = "Placeholder"
+            description = "Grants the effects of More Options"
         }
     },
     [Card.CARD_MOON] = {
         en_us = {
-            description = "Placeholder"
+            description = "Grants the effects of Luna"
         }
     },
     [Card.CARD_SUN] = {
         en_us = {
-            description = "Placeholder"
+            description = "Grants the effects of Sol + All enemies are inflicted with burn status"
         }
     },
     [Card.CARD_JUDGEMENT] = {
         en_us = {
-            description = "Placeholder"
+            description = "Spawns a Bum Friend or a Dark Bum"
         }
     },
         [Card.CARD_WORLD] = {
         en_us = {
-            description = "Placeholder"
+            description = "It's the World, but permanent..."
         }
     },
     [Card.CARD_REVERSE_FOOL] = {
         en_us = {
-            description = "Placeholder"
+            description = "Getting hit drops 3-5 pickups, with a 40% chance to drop the quarter if you have over 25 coins (or the other item drops reverse fool can drop)"
         }
     },
     [Card.CARD_REVERSE_MAGICIAN] = {
         en_us = {
-            description = "Placeholder"
+            description = "Grants the effect of The Soul"
         }
     },
     [Card.CARD_REVERSE_HIGH_PRIESTESS] = {
         en_us = {
-            description = "Placeholder"
+            description = "Lol lmao"
         }
     },
     [Card.CARD_REVERSE_EMPRESS] = {
         en_us = {
-            description = "Placeholder"
+            description = "Trans your gender"
         }
     },
     [Card.CARD_REVERSE_EMPEROR] = {
         en_us = {
-            description = "Placeholder"
+            description = "A Portal to another boss appears after defeating the boss of the floor, stays open until you enter it"
         }
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
         en_us = {
-            description = "Placeholder"
+            description = "1/7 chance to spawn a bone heart on room clear."
         }
     },
     [Card.CARD_REVERSE_LOVERS] = {
         en_us = {
-            description = "Placeholder"
+            description = "Items are sometimes replaced with a Single Use Magic Skin"
         }
     },
     [Card.CARD_REVERSE_CHARIOT] = {
         en_us = {
-            description = "Placeholder"
+            description = "Upon room entry, stand still for 4 sconds to become statue"
         }
     },
     [Card.CARD_REVERSE_JUSTICE] = {
         en_us = {
-            description = "Placeholder"
+            description = "1/4 chance to replace room clear reward with a gold chest"
         }
     },
     [Card.CARD_REVERSE_HERMIT] = {
         en_us = {
-            description = "Placeholder"
+            description = "Anything you touch that isn't coins, becomes coins"
         }
     },
     [Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = {
         en_us = {
-            description = "Placeholder"
+            description = "Probobly something better than it's normal effect?"
         }
     },
     [Card.CARD_REVERSE_STRENGTH] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent reverse strength but you also get a 0.75x damage multiplier"
         }
     },
     [Card.CARD_REVERSE_HANGED_MAN] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent reverse hanged man but the dropped coins are disappearing and slight tears down"
         }
     },
     [Card.CARD_REVERSE_DEATH] = {
         en_us = {
-            description = "Placeholder"
+            description = "Enemies have a chance to spawn bone orbitals, spurs, and friendly bonies on death"
         }
     },
     [Card.CARD_REVERSE_TEMPERANCE] = {
         en_us = {
-            description = "Placeholder"
+            description = "1/5 Chance to take a random pill on room entry. Gives effect of Little baggy"
         }
     },
     [Card.CARD_REVERSE_DEVIL] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent Reverse Devil"
         }
     },
     [Card.CARD_REVERSE_TOWER] = {
         en_us = {
-            description = "Placeholder"
+            description = "Nothing yet"
         }
     },
     [Card.CARD_REVERSE_STARS] = {
         en_us = {
-            description = "Placeholder"
+            description = "All newly generated item pedestals are doubled, but getting hit instantly disenchants the card, deals 3 full hearts of non-lethal damage, and activates a D4 effect"
         }
     },
     [Card.CARD_REVERSE_MOON] = {
         en_us = {
-            description = "Placeholder"
+            description = "On Room clear, spawns a red room if possible on an random adjacent door. 50% chacne to spawn on instead if already in a red room."
         }
     },
     [Card.CARD_REVERSE_SUN] = {
         en_us = {
-            description = "Placeholder"
+            description = "Permanent Reverse Sun but -0.5 damage (+1 total)"
         }
     },
     [Card.CARD_REVERSE_JUDGEMENT] = {
         en_us = {
-            description = "Placeholder"
+            description = "Nothing yet"
         }
     },
     [Card.CARD_REVERSE_WORLD] = {
         en_us = {
-            description = "Placeholder"
+            description = "Nothing yet"
         }
     },
 
