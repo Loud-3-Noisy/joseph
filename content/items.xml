@@ -7,5 +7,7 @@
 
     <active id="4" name="Magic Skin " description="All your desires fulfilled" gfx="collectibles_642_magicskin.png" hidden="true" tags="noeden" quality="2" />
 
+    <active id="5" name="Card Sleeve" description="Preserve the future" maxcharges="6" gfx="collectibles_tarotSleeve.png" tags="" quality="4" />
+
 
 </items>
