@@ -493,7 +493,7 @@ function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, Activ
     if player:GetPlayerType() ~= josephType then return end
 
     local randomCard
-    if RNG:RandomFloat() < 1 then
+    if RNG:RandomFloat() < 0.12 then
         local reverseCardFound = false
         local attempts = 10
         while reverseCardFound == false and attempts > 0 do
