@@ -8,7 +8,7 @@ local enums = JosephMod.enums
 ---@param player EntityPlayer
 ---@param card Card
 ---@param slot CardSlot
-function ReverseDevil:initReverseDevil(player, card, slot)
+function ReverseDevil:initReverseDevil(player, card)
     player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_DEVIL)
     local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_DEVIL)
     effect.Cooldown = 2147483646

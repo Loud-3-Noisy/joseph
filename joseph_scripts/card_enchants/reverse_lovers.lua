@@ -12,8 +12,9 @@ local dontReplace = false
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseLovers:initReverseLovers(player, card, slot)
+---@param firstTime boolean
+function ReverseLovers:initReverseLovers(player, card, firstTime)
+    if firstTime ~= true then return end
     firstTimeMagicSkin = true
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseLovers.initReverseLovers, Card.CARD_REVERSE_LOVERS)

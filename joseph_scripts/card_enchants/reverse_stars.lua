@@ -43,7 +43,7 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, Reverse
 ---@param player EntityPlayer
 ---@param card Card
 ---@param slot CardSlot
-function ReverseStars:removeReverseStars(player, card, slot)
+function ReverseStars:removeReverseStars(player, card)
 
     utility:RemoveInnateItem(player, CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE)
     if player:HasCollectible(CollectibleType.COLLECTIBLE_DAMOCLES_PASSIVE, false, true) then
@@ -87,9 +87,18 @@ function ReverseStars:DamoclesFall(player)
             Isaac.CreateTimer( function ()
                 for _, cardSlot in pairs(enums.CardSlot) do
                     if utility:GetEnchantedCardInPlayerSlot(player, cardSlot) == Card.CARD_REVERSE_STARS then
-                        JosephMod.josephCharacter:DisenchantCard(player, Card.CARD_REVERSE_STARS, cardSlot, true)
+                        utility:SetEnchantedCardInPlayerSlot(player, cardSlot, 0)
+                        SFXManager():Play(SoundEffect.SOUND_THUMBS_DOWN)
+                        JosephMod.josephCharacter:PlayDisenchantAnimation(player, Card.CARD_REVERSE_STARS)
+                        ReverseStars:removeReverseStars(player, Card.CARD_REVERSE_STARS)
                     end
                 end
+                for key, slot in pairs(ActiveSlot) do
+                    if player:GetActiveItem(slot) == Isaac.GetItemIdByName("Card Sleeve") and player:GetActiveItemDesc(slot).VarData == Card.CARD_REVERSE_STARS then
+                        player:GetActiveItemDesc(slot).VarData = 0
+                    end
+                end
+
 
                 player:ResetDamageCooldown()
                 for i = 1, 6 do

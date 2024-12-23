@@ -44,15 +44,20 @@ else
   end)
 end
 
--- JosephMod.Debug = false
+-- JosephMod.Debug = true
 -- --JosephMod.Render = "hi"
 
 -- if JosephMod.Debug == true then
 --   function JosephMod:Debug()
---       local effect = Isaac.GetPlayer():GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
---       if effect then
---         Isaac.RenderText(tostring(effect.Cooldown), 50, 80, 1, 1, 1, 1)
---       end
+--     local enchantedCards = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", Isaac.GetPlayer())
+--     Isaac.RenderText(tostring(enchantedCards[0]), 50, 40, 1, 1, 1, 1)
+--     Isaac.RenderText(tostring(enchantedCards[1]), 50, 60, 1, 1, 1, 1)
+--       Isaac.RenderText(tostring(enchantedCards[2]), 50, 80, 1, 1, 1, 1)
+--       Isaac.RenderText(tostring(enchantedCards[3]), 50, 100, 1, 1, 1, 1)
+--       Isaac.RenderText(tostring(enchantedCards[4]), 50, 120, 1, 1, 1, 1)
+--       Isaac.RenderText(tostring(enchantedCards[5]), 50, 140, 1, 1, 1, 1)
+--       Isaac.RenderText(tostring(enchantedCards[6]), 50, 160, 1, 1, 1, 1)
+
 --   end
 -- JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, JosephMod.Debug)
 

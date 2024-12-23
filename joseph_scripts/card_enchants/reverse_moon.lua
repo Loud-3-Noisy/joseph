@@ -6,8 +6,7 @@ local enums = JosephMod.enums
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseMoon:initReverseMoon(player, card, slot)
+function ReverseMoon:initReverseMoon(player, card)
 
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseMoon.initReverseMoon, Card.CARD_REVERSE_MOON)

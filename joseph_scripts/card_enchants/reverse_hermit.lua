@@ -181,8 +181,7 @@ JosephMod:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, ReverseHermit.touchP
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseHermit:initReverseHermit(player, card, slot)
+function ReverseHermit:initReverseHermit(player, card)
 
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseHermit.initReverseHermit, Card.CARD_REVERSE_HERMIT)

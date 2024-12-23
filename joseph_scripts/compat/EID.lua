@@ -4,6 +4,8 @@ local Enums = JosephMod.enums
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false)
 local Descriptions = include("joseph_scripts.compat.EID_descriptions")
 
+local CARD_SLEEVE = Isaac.GetItemIdByName("Card Sleeve")
+
 
 local icons = Sprite()
 icons:Load("gfx/ui/EID_icon.anm2", true)
@@ -46,9 +48,9 @@ end
     local function shouldDisplayEnchantDescription(descObj)
         if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 300 and Descriptions.Enchants[descObj.ObjSubType] then
             if (descObj.Entity ~= nil) then
-                if PlayerManager.AnyoneIsPlayerType(josephType) or PlayerManager.AnyoneHasCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD) then return true end
+                if PlayerManager.AnyoneIsPlayerType(josephType) or PlayerManager.AnyoneHasCollectible(CARD_SLEEVE) then return true end
             else
-                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == josephType or EID.holdTabPlayer:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD) then return true end
+                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == josephType or EID.holdTabPlayer:ToPlayer():HasCollectible(CARD_SLEEVE) then return true end
             end
         end
     end

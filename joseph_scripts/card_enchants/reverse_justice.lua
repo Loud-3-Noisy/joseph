@@ -40,8 +40,9 @@ JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseJustice.Room
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseJustice:initReverseJustice(player, card, slot)
+---@param firstTime boolean
+function ReverseJustice:initReverseJustice(player, card, firstTime)
+    if firstTime ~= true then return end
     firstTimeReverseJustice = true
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseJustice.initReverseJustice, Card.CARD_REVERSE_JUSTICE)

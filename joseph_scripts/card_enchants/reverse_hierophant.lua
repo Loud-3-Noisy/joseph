@@ -30,8 +30,9 @@ JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, ReverseHierophant.R
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseHierophant:initReverseHierophant(player, card, slot)
+---@param firstTime boolean
+function ReverseHierophant:initReverseHierophant(player, card, firstTime)
+    if firstTime ~= true then return end
     firstTimeReverseHierophant = true
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseHierophant.initReverseHierophant, Card.CARD_REVERSE_HIEROPHANT)

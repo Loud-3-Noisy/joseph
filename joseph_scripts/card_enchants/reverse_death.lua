@@ -194,7 +194,7 @@ local enemyBoneVariants = {
 ---@param player EntityPlayer
 ---@param card Card
 ---@param slot CardSlot
-function ReverseDeath:initReverseDeath(player, card, slot)
+function ReverseDeath:initReverseDeath(player, card)
 
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseDeath.initReverseDeath, Card.CARD_REVERSE_DEATH)

@@ -7,8 +7,7 @@ local enums = JosephMod.enums
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseSun:initReverseSun(player, card, slot)
+function ReverseSun:initReverseSun(player, card)
     player:UseCard(Card.CARD_REVERSE_SUN, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
     local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_SUN)
     effect.Cooldown = 2147483646

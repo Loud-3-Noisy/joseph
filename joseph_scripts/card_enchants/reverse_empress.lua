@@ -7,8 +7,8 @@ local enums = JosephMod.enums
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseEmpress:initReverseEmpress(player, card, slot)
+
+function ReverseEmpress:initReverseEmpress(player, card)
     --player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_EMPRESS)
     player:UseCard(Card.CARD_REVERSE_EMPRESS, UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
     local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_EMPRESS)

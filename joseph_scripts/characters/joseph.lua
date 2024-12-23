@@ -292,7 +292,7 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
     JosephMod.BaseCardEffects:InitCardEffect(player, card)
-    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, slot)
+    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, true)
 end
 
 
@@ -465,11 +465,8 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, JosephChar.DisenchantA
 function JosephChar:CreateRNG(player)
     local rng = RNG()
     rng:SetSeed(player.InitSeed, RECOMMENDED_SHIFT_IDX)
-    print(rng)
     TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
-    print("Saved rng:")
     TSIL.Utils.Functions.RunInFramesTemporary(function ()
-        print(TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "playerRNG", player))
         return TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "playerRNG", player)
     end, 1)
 end

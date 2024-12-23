@@ -32,7 +32,7 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, BaseCardEffects.addCardStats)
 
 
-function BaseCardEffects:InitCardEffect(player, card)
+function BaseCardEffects:InitCardEffect(player, card, firstTime)
 
     JosephMod.BaseCardEffects:AddInnateCollectibles(player, card)
 
@@ -41,15 +41,15 @@ function BaseCardEffects:InitCardEffect(player, card)
         player:UseCard(Card.CARD_EMPRESS, UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOHUD)
     end
 
-    if card == Card.CARD_HIEROPHANT then
+    if card == Card.CARD_HIEROPHANT and firstTime == true then
         firstTimeHeirophant = true
     end
 
-    if card == Card.CARD_LOVERS then
+    if card == Card.CARD_LOVERS and firstTime == true then
         firstTimeLovers = true
     end
 
-    if card == Card.CARD_JUSTICE then
+    if card == Card.CARD_JUSTICE and firstTime == true then
         firstTimeJustice = true
     end
 
@@ -69,11 +69,11 @@ function BaseCardEffects:InitCardEffect(player, card)
         player:UseActiveItem(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, false)
     end
 
-    if card == Card.CARD_WORLD then
+    if card == Card.CARD_WORLD and firstTime == true then
         Game():GetLevel():ShowMap()
     end
 
-    if card == Card.CARD_MOON then
+    if card == Card.CARD_MOON and firstTime == true then
         local allRooms = Game():GetLevel():GetRooms()
         local found = false
         for idx = 0, allRooms.Size - 1 do
@@ -85,7 +85,7 @@ function BaseCardEffects:InitCardEffect(player, card)
         end
     end
 
-    if card == Card.CARD_SUN then
+    if card == Card.CARD_SUN and firstTime == true then
         local allRooms = Game():GetLevel():GetRooms()
         for idx = 0, allRooms.Size - 1 do
             local room = allRooms:Get(idx)
@@ -404,7 +404,7 @@ JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, fun
             for key, enchantedCard in pairs(enchantedCards) do
                 --BaseCardEffects:EnchantmentEffects(player, enchantedCard)
                 BaseCardEffects:AddInnateCollectibles(player, enchantedCard)
-                Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, enchantedCard, player, enchantedCard, key )
+                Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, enchantedCard, player, enchantedCard, false)
             end
         end
     end,{})

@@ -9,8 +9,9 @@ local EmperorPortalSubType = 9
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseEmperor:initReverseEmperor(player, card, slot)
+---@param firstTime boolean
+function ReverseEmperor:initReverseEmperor(player, card, firstTime)
+    if firstTime ~= true then return end
     ReverseEmperor:checkSpawnPortal()
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseEmperor.initReverseEmperor, Card.CARD_REVERSE_EMPEROR)

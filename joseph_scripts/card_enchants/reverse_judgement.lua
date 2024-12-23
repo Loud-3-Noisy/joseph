@@ -6,8 +6,9 @@ local enums = JosephMod.enums
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseJudgement:initReverseJudgement(player, card, slot)
+---@param firstTime boolean
+function ReverseJudgement:initReverseJudgement(player, card, firstTime)
+    if firstTime ~= true then return end
     local itemPool = Game():GetItemPool()
     local roomType = Game():GetRoom():GetType()
 

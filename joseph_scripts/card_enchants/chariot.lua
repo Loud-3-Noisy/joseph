@@ -14,7 +14,7 @@ local maxSlipFrames = 5
 ---@param player EntityPlayer
 ---@param card Card
 ---@param slot CardSlot
-function Chariot:initChariot(player, card, slot)
+function Chariot:initChariot(player, card)
 
 end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, Chariot.initChariot, Card.CARD_CHARIOT)

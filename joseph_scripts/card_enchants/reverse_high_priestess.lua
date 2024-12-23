@@ -7,8 +7,7 @@ local enums = JosephMod.enums
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseHighPriestess:initReverseHighPriestess(player, card, slot)
+function ReverseHighPriestess:initReverseHighPriestess(player, card)
     player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
     local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HIGH_PRIESTESS)
     effect.Cooldown = 2147483646

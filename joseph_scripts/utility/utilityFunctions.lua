@@ -61,13 +61,6 @@ function utilityFunctions:CreateEmptyPlayerSaveDataVars(vars)
 end
 
 
-function utilityFunctions:SetPlayerSaveAtIndex(player, var, newData, index)
-  local dataPerPlayer = TSIL.SaveManager.GetPersistentVariable(JosephMod, var) or {}
-  local playerIndex = TSIL.Players.GetPlayerIndex(player)
-  local data = dataPerPlayer[playerIndex]
-  data[index] = newData
-  dataPerPlayer[playerIndex] = data
-end
 
 function utilityFunctions:GetEnchantedCardsPerPlayer(player)
   return TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)

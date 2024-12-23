@@ -52,7 +52,7 @@ enums.Callbacks = {
     --
     -- * player - EntityPlayer
     -- * card - Card
-    -- * slot - enums.CardSlot
+    -- * firstTime - boolean | nil
     --
     --Optional args:
     --
@@ -78,7 +78,7 @@ enums.Callbacks = {
     --
     -- * player - EntityPlayer
     -- * card - Card
-    -- * slot - enums.CardSlot
+    -- * firstTime - boolean
     --
     --Optional args:
     --

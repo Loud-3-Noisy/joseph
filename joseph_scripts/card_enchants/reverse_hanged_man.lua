@@ -7,8 +7,7 @@ local enums = JosephMod.enums
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseHangedMan:initReverseHangedMan(player, card, slot)
+function ReverseHangedMan:initReverseHangedMan(player, card)
     player:GetEffects():AddNullEffect(NullItemID.ID_REVERSE_HANGED_MAN)
     local effect = player:GetEffects():GetNullEffect(NullItemID.ID_REVERSE_HANGED_MAN)
     effect.Cooldown = 2147483646

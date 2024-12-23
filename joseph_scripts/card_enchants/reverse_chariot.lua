@@ -21,8 +21,7 @@ local movementSpeedMaxThreshold = 0.3
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseChariot:initReverseChariot(player, card, slot)
+function ReverseChariot:initReverseChariot(player, card)
     local playerIndex = TSIL.Players.GetPlayerIndex(player)
     chariotActived[playerIndex] = false
     local data = utility:GetData(player, "ReverseChariotCharge")
