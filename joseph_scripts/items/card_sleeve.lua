@@ -28,6 +28,41 @@ JosephMod:AddCallback(ModCallbacks.MC_USE_ITEM, CardSleeve.UseNewMagicSkin, CARD
 
 
 
+local enchantmentDisplay = Sprite()
+enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
+
+function CardSleeve:RenderEnchantedCard(player, slot, offset, alpha, scale, chargeBarOffset)
+
+    if player:GetActiveItem(slot) ~= CARD_SLEEVE then return end
+
+    local enchantedCard = utility:GetEnchantedCardInPlayerSlot(player, enums.CardSlot.CARD_SLEEVE_MAIN)
+    print(enchantedCard)
+    if enchantedCard and enchantedCard ~= 0 then
+
+        enchantmentDisplay.Color = Color(1, 1, 1, 1)
+        enchantmentDisplay.Scale = Vector(scale, scale)
+        local displayPos = Vector(16, 16)
+
+        local pocketItem = player:GetPocketItem(PillCardSlot.PRIMARY)
+        local isSelectedPocketItem = pocketItem:GetType() == PocketItemType.ACTIVE_ITEM and pocketItem:GetSlot()-1 == ActiveSlot.SLOT_POCKET
+        local isSelectedPocket2Item = pocketItem:GetType() == PocketItemType.ACTIVE_ITEM and pocketItem:GetSlot()-1 == ActiveSlot.SLOT_POCKET2
+
+		if slot == ActiveSlot.SLOT_SECONDARY or (slot == ActiveSlot.SLOT_POCKET and not isSelectedPocketItem) or (slot == ActiveSlot.SLOT_POCKET2 and not isSelectedPocket2Item) then
+			displayPos = displayPos / 2
+		end
+
+
+        enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
+
+
+        enchantmentDisplay:LoadGraphics()
+        enchantmentDisplay:Render(displayPos + offset)
+    end
+
+end
+
+JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYERHUD_RENDER_ACTIVE_ITEM, CardSleeve.RenderEnchantedCard)
+
 
 
 return CardSleeve
