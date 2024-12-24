@@ -9,6 +9,7 @@ if REPENTOGON then
   JosephMod.Chargebar = include("joseph_scripts.chargebar")
   include("joseph_scripts.card_enchants.chariot")
 
+  include("joseph_scripts.card_enchants.reverse_fool")
   include("joseph_scripts.card_enchants.reverse_empress")
   include("joseph_scripts.card_enchants.reverse_chariot")
   include("joseph_scripts.card_enchants.reverse_high_priestess")
@@ -26,6 +27,7 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.reverse_hierophant")
   include("joseph_scripts.card_enchants.reverse_temperance")
   include("joseph_scripts.card_enchants.reverse_judgement")
+
 
 
   include("joseph_scripts.characters.slotmachines")
