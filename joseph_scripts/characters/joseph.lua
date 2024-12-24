@@ -55,6 +55,7 @@ local RECOMMENDED_SHIFT_IDX = 35
 local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local chargebarPos = Vector(-30, -52)
+local REVERSE_TAROT_CHANCE = 0.12
 
 
 local cardDisplayPosPerPlayer = {
@@ -499,7 +500,7 @@ function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, Activ
     if player:GetPlayerType() ~= josephType then return end
 
     local randomCard
-    if RNG:RandomFloat() < 0.12 then
+    if RNG:RandomFloat() < REVERSE_TAROT_CHANCE then
         local reverseCardFound = false
         local attempts = 10
         while reverseCardFound == false and attempts > 0 do
