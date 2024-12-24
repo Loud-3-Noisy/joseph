@@ -281,6 +281,7 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, JosephCh
 ---@param slot CardSlot 
 ---@param removeCard boolean | nil
 function JosephChar:EnchantCard(player, card, slot, removeCard)
+    local firstTime = true
     if removeCard and removeCard == true then
         JosephChar:RemoveHeldCard(player, card)
     end
@@ -291,8 +292,11 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
         JosephChar:DisenchantCard(player, slot, false)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
-    JosephMod.BaseCardEffects:InitCardEffect(player, card)
-    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, true)
+
+    if slot == enums.CardSlot.JOSEPH_BIRTHRIGHT then firstTime = false end
+
+    JosephMod.BaseCardEffects:InitCardEffect(player, card, firstTime)
+    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, firstTime)
 end
 
 

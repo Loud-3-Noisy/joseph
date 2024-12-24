@@ -32,6 +32,9 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, BaseCardEffects.addCardStats)
 
 
+---@param player EntityPlayer
+---@param card Card
+---@param firstTime boolean | nil
 function BaseCardEffects:InitCardEffect(player, card, firstTime)
 
     JosephMod.BaseCardEffects:AddInnateCollectibles(player, card)
