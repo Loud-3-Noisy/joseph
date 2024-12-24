@@ -27,6 +27,8 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.reverse_hierophant")
   include("joseph_scripts.card_enchants.reverse_temperance")
   include("joseph_scripts.card_enchants.reverse_judgement")
+  include("joseph_scripts.card_enchants.reverse_strength")
+
 
 
 

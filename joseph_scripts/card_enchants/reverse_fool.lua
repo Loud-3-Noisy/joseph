@@ -10,15 +10,15 @@ local fool = Card.CARD_REVERSE_FOOL
 function ReverseFool:initReverseFool(player, card)
 
 end
-JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseFool.initReverseFool, Card.CARD_REVERSE_MAGICIAN)
-JosephMod:AddCallback(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, ReverseFool.initReverseFool, Card.CARD_REVERSE_MAGICIAN)
+JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseFool.initReverseFool, fool)
+JosephMod:AddCallback(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, ReverseFool.initReverseFool, fool)
 
 ---@param player EntityPlayer
 ---@param card Card
 ---@param slot CardSlot
 function ReverseFool:removeReverseFool(player, card, slot)
 end
-JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseFool.removeReverseFool, Card.CARD_REVERSE_MAGICIAN)
+JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseFool.removeReverseFool, fool)
 
 
 function ReverseFool:OnHit(entity, amount, flags, source, countDown)
