@@ -45,7 +45,7 @@ local CardChargeBar = {}
 local StartedUsingCard = {}
 local FramesHeld = {}
 local EarlyCancel = {}
-local Card = {}
+local CardUsed = {}
 local ManualUse = {}
 
 local ENCHANTMENT_GLINT_FREQ = 100 --ticks to complete full glint cycle
@@ -55,6 +55,7 @@ local RECOMMENDED_SHIFT_IDX = 35
 local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
 local chargebarPos = Vector(-30, -52)
+local REVERSE_TAROT_CHANCE = 0.12
 
 
 local cardDisplayPosPerPlayer = {
@@ -166,10 +167,10 @@ function JosephChar:trackFramesHeld(player)
 
 
     --if card isnt in main slot anymore then cancel
-    if player:GetCard(0) ~= Card[playerIndex] then
+    if player:GetCard(0) ~= CardUsed[playerIndex] then
         StartedUsingCard[playerIndex] = false
         FramesHeld[playerIndex] = 0
-        Card[playerIndex] = nil
+        CardUsed[playerIndex] = nil
         return
     end
 
@@ -185,16 +186,21 @@ function JosephChar:trackFramesHeld(player)
     if StartedUsingCard[playerIndex] == false and FramesHeld[playerIndex] < 20 then
         FramesHeld[playerIndex] = 0
         ManualUse[playerIndex] = true
+
+        if CardUsed[playerIndex] == Card.CARD_REVERSE_FOOL then
+            JosephChar:RemoveHeldCard(player, CardUsed[playerIndex]) 
+        end
+
         if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
-            player:UseCard(Card[playerIndex])
-            player:UseCard(Card[playerIndex], UseFlag.USE_CARBATTERY)
+            player:UseCard(CardUsed[playerIndex])
+            player:UseCard(CardUsed[playerIndex], UseFlag.USE_CARBATTERY)
         else
-            player:UseCard(Card[playerIndex])
+            player:UseCard(CardUsed[playerIndex])
         end
 
         ManualUse[playerIndex] = false
-        JosephChar:RemoveHeldCard(player, Card[playerIndex])
-        Card[playerIndex] = nil
+        JosephChar:RemoveHeldCard(player, CardUsed[playerIndex])
+        CardUsed[playerIndex] = nil
     end
 
     --play chargebar disappear animation if let go early
@@ -202,12 +208,12 @@ function JosephChar:trackFramesHeld(player)
         EarlyCancel[playerIndex] = 1
         FramesHeld[playerIndex] = 0
         ManualUse[playerIndex] = false
-        Card[playerIndex] = nil
+        CardUsed[playerIndex] = nil
     end
 
     --give enchantment if held longer than 100 frames
     if FramesHeld[playerIndex] > 100 then
-        local card = Card[playerIndex]
+        local card = CardUsed[playerIndex]
 
         if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and
         utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
@@ -219,7 +225,7 @@ function JosephChar:trackFramesHeld(player)
         StartedUsingCard[playerIndex] = false
         FramesHeld[playerIndex] = 0
         ManualUse[playerIndex] = false
-        Card[playerIndex] = nil
+        CardUsed[playerIndex] = nil
     end
 
 end
@@ -241,7 +247,7 @@ function JosephChar:onCardUse(card, player, useflags)
     if ManualUse[playerIndex] ~= true then
         FramesHeld[playerIndex] = 0
         StartedUsingCard[playerIndex] = true
-        Card[playerIndex] = card
+        CardUsed[playerIndex] = card
         EarlyCancel[playerIndex] = 0
         player:AddCard(card)
         return true
@@ -281,6 +287,7 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, JosephCh
 ---@param slot CardSlot 
 ---@param removeCard boolean | nil
 function JosephChar:EnchantCard(player, card, slot, removeCard)
+    local firstTime = true
     if removeCard and removeCard == true then
         JosephChar:RemoveHeldCard(player, card)
     end
@@ -291,8 +298,11 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
         JosephChar:DisenchantCard(player, slot, false)
     end
     utility:SetEnchantedCardInPlayerSlot(player, slot, card)
-    JosephMod.BaseCardEffects:InitCardEffect(player, card)
-    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, true)
+
+    if slot == enums.CardSlot.JOSEPH_BIRTHRIGHT then firstTime = false end
+
+    JosephMod.BaseCardEffects:InitCardEffect(player, card, firstTime)
+    Isaac.RunCallbackWithParam(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, card, player, card, firstTime)
 end
 
 
@@ -490,7 +500,7 @@ function JosephChar:UseDeckOfCards(CollectibleType, RNG, player, UseFlags, Activ
     if player:GetPlayerType() ~= josephType then return end
 
     local randomCard
-    if RNG:RandomFloat() < 0.12 then
+    if RNG:RandomFloat() < REVERSE_TAROT_CHANCE then
         local reverseCardFound = false
         local attempts = 10
         while reverseCardFound == false and attempts > 0 do

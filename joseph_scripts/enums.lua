@@ -146,7 +146,7 @@ enums.CardAnims[Card.CARD_REVERSE_WORLD] = "43_TheWorld"
 enums.ReverseCardAchievmentIDs = {}
 
 enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_FOOL] = Achievement.REVERSED_FOOL
-enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_MAGICIAN] = Achievement.REVERSED_THE_MAGICIAN
+enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_MAGICIAN] = Achievement.REVERSED_MAGICIAN
 enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_HIGH_PRIESTESS] = Achievement.REVERSED_HIGH_PRIESTESS
 enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_EMPRESS] = Achievement.REVERSED_EMPRESS
 enums.ReverseCardAchievmentIDs[Card.CARD_REVERSE_EMPEROR] = Achievement.REVERSED_EMPEROR
@@ -197,7 +197,7 @@ enums.CardDisenchantChances[Card.CARD_SUN] = 0.25
 enums.CardDisenchantChances[Card.CARD_JUDGEMENT] = 0.25
 enums.CardDisenchantChances[Card.CARD_WORLD] = 0.25
 
-enums.CardDisenchantChances[Card.CARD_REVERSE_FOOL] = 0.1
+enums.CardDisenchantChances[Card.CARD_REVERSE_FOOL] = 0.05
 enums.CardDisenchantChances[Card.CARD_REVERSE_MAGICIAN] = 0.75
 enums.CardDisenchantChances[Card.CARD_REVERSE_HIGH_PRIESTESS] = 0.25
 enums.CardDisenchantChances[Card.CARD_REVERSE_EMPRESS] = 0.75

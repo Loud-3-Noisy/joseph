@@ -12,14 +12,27 @@ function CardSleeve:UseCardSleeve(item, rng, player, flags, slot, varData)
     if player == nil then return end
 
     local heldCard = player:GetCard(PillCardSlot.PRIMARY)
+    local pocket = false
+
+    if slot == ActiveSlot.SLOT_POCKET then
+        heldCard = player:GetCard(PillCardSlot.SECONDARY)
+        pocket = true
+    end
+
     if not heldCard or heldCard == 0 or not enums.CardAnims[heldCard] then 
         return {Discharge = false, ShowAnim = true}
     end
 
+
     local oldCard = player:GetActiveItemDesc(slot).VarData
 
     CardSleeve:EnchantCard(player, heldCard, oldCard)
-    player:RemovePocketItem(PillCardSlot.PRIMARY)
+    if pocket then
+        player:RemovePocketItem(PillCardSlot.SECONDARY)
+    else
+        player:RemovePocketItem(PillCardSlot.PRIMARY)
+    end
+    
     player:GetActiveItemDesc(slot).VarData = heldCard
 
     return {

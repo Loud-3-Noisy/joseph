@@ -32,6 +32,9 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, BaseCardEffects.addCardStats)
 
 
+---@param player EntityPlayer
+---@param card Card
+---@param firstTime boolean | nil
 function BaseCardEffects:InitCardEffect(player, card, firstTime)
 
     JosephMod.BaseCardEffects:AddInnateCollectibles(player, card)
@@ -489,7 +492,7 @@ function BaseCardEffects:RoomClearEffect(rng, spawnPos)
         choicePedestalCount = choicePedestalCount + 1
     end
     
-    if utility:AnyPlayerHasEnchantment(Card.CARD_EMPEROR) and roomType == RoomType.ROOM_BOSS then
+    if utility:AnyPlayerHasEnchantment(Card.CARD_EMPEROR) and roomType == RoomType.ROOM_BOSS and Level():GetStage() <= LevelStage.STAGE4_2 then
         for i = 0, choicePedestalCount - 2 do
             local choiceA = Isaac.Spawn(EntityType.ENTITY_PICKUP, 100, 0, room:FindFreePickupSpawnPosition(room:GetGridPosition(65), 0, true, false), Vector(0, 0), nil)
             choiceA:ToPickup().OptionsPickupIndex = 1
