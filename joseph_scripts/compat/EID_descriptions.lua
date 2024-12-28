@@ -112,7 +112,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_HERMIT] = {
         en_us = {
-            description = "Shop items are 50% off"
+            description = "Spawns a trapdoor in shops to an underground shop"
         }
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
