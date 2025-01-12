@@ -11,6 +11,7 @@
         costume="87"
         costumeSuffix="joseph"
 		birthright="Protected Future"
+		achievement="Joseph"
 	/>
 	<player name="Joseph" bSkinParent="Joseph"
         skin="character_joseph.png"
