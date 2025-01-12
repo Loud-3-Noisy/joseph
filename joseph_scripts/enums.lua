@@ -220,4 +220,13 @@ enums.CardDisenchantChances[Card.CARD_REVERSE_SUN] = 0.75
 enums.CardDisenchantChances[Card.CARD_REVERSE_JUDGEMENT] = 0.75
 enums.CardDisenchantChances[Card.CARD_REVERSE_WORLD] = 0.33
 
+
+
+enums.Achievements = {
+    JOSEPH = Isaac.GetAchievementIdByName("Joseph"),
+    JOSEPH_B = Isaac.GetAchievementIdByName("Tainted Joseph"),
+    CARD_SLEEVE = Isaac.GetAchievementIdByName("Card Sleeve"),
+    OTHER_SHIT = "Blah"
+}
+
 JosephMod.enums = enums

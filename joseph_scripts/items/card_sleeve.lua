@@ -2,7 +2,6 @@ local CardSleeve = {}
 
 local enums = JosephMod.enums
 local utility = JosephMod.utility
-local JosephChar = JosephMod.josephCharacter
 
 local CARD_SLEEVE = Isaac.GetItemIdByName("Card Sleeve")
 
