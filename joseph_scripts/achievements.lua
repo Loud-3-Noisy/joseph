@@ -60,6 +60,18 @@ function JosephAchievements:UseCard(card, player, flags)
 end
 JosephMod:AddCallback(ModCallbacks.MC_USE_CARD, JosephAchievements.UseCard)
 
+function JosephAchievements:LoadFile(saveSlot, isSlotSelected)
+    if isSlotSelected ~= true then return end
+    local gameData = Isaac.GetPersistentGameData()
+    if gameData:Unlocked(enums.Achievements.JOSEPH) then return end
+
+    if gameData:IsBossKilled(BossType.DELIRIUM) or gameData:IsBossKilled(BossType.MOTHER) then
+        gameData:TryUnlock(enums.Achievements.JOSEPH)
+    end
+
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_SAVESLOT_LOAD, JosephAchievements.LoadFile)
+
 
 
 
