@@ -37,6 +37,7 @@ if REPENTOGON then
   include("joseph_scripts.characters.slotmachines")
   --include("joseph_scripts.items.lil_slots")
   include("joseph_scripts.items.card_sleeve")
+  include("joseph_scripts.items.calendar")
 
   include("joseph_scripts.compat.EID")
 

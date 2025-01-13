@@ -55,6 +55,7 @@ enums.Achievements = {
     JOSEPH = Isaac.GetAchievementIdByName("Joseph"),
     JOSEPH_B = Isaac.GetAchievementIdByName("Tainted Joseph"),
     CARD_SLEEVE = Isaac.GetAchievementIdByName("Card Sleeve"), --Delirium
+    CALENDAR = Isaac.GetAchievementIdByName("Calendar"), --Hush
     OTHER_SHIT = "Blah"
 }
 

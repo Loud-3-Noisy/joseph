@@ -9,5 +9,7 @@
 
     <active id="5" name="Card Sleeve" description="Preserve the future" maxcharges="6" gfx="collectibles_tarotSleeve.png" achievement="Card Sleeve" tags="" quality="4" />
 
+    <passive id="6" name="Calendar" description="Watch the date" gfx="collectibles_calendar.png" achievement="Calendar" cache="firedelay damage speed" tags="" quality="2" />
+
 
 </items>
