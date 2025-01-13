@@ -36,15 +36,10 @@ TSIL.SaveManager.AddPersistentVariable(
 
 function JosephAchievements:unlock(unlock, force)
 	local gameData = Isaac.GetPersistentGameData()
-    print("4")
 	if not force then
-        print("5")
 		if not Game():AchievementUnlocksDisallowed() then
-            print("6")
 			if not gameData:Unlocked(unlock) then
-                print("7")
 				gameData:TryUnlock(unlock)
-                Isaac.GetPersistentGameData():TryUnlock(Isaac.GetAchievementIdByName("Card Sleeve"))
 			end
 		end
 	else
@@ -63,9 +58,6 @@ end
 
 function JosephAchievements:UseCard(card, player, flags)
     local gameData = Isaac.GetPersistentGameData()
-    print(gameData:Unlocked(enums.Achievements.CARD_SLEEVE))
-    Isaac.GetPersistentGameData():TryUnlock(Isaac.GetAchievementIdByName("Card Sleeve"))
-    Isaac.GetPersistentGameData():TryUnlock(Isaac.GetAchievementIdByName("Joseph"))
     if gameData:Unlocked(enums.Achievements.JOSEPH) then return end
 
     if not (card >= Card.CARD_FOOL and card <= Card.CARD_WORLD) then return end
@@ -96,11 +88,9 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_SAVESLOT_LOAD, JosephAchievements.Loa
 
 
 function JosephAchievements:UnlockEvent(mark)
-    print(mark)
     local players = PlayerManager.GetPlayers()
     for key, player in ipairs(players) do
         if player:GetPlayerType() == enums.PlayerType.PLAYER_JOSEPH and not player.Parent then
-            print(1)
             local marks = {
                 -- [CompletionType.MOMS_HEART] = nil,
                 -- [CompletionType.ISAAC] = communityRemix.Achievement.THE_APPLE,
@@ -119,9 +109,7 @@ function JosephAchievements:UnlockEvent(mark)
             if mark == CompletionType.ULTRA_GREEDIER then -- make damn sure greedier unlocks greed too
                 -- communityRemix.unlock(marks[CompletionType.ULTRA_GREED])
             end
-            print("2")
             if marks[mark] then
-                print("3")
                 JosephAchievements:unlock(marks[mark])
             end
         end
