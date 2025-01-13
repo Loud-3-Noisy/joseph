@@ -1,5 +1,10 @@
 local enums = {}
 
+
+enums.PlayerType = {
+    PLAYER_JOSEPH = Isaac.GetPlayerTypeByName("Joseph")
+}
+
 enums.Collectibles = {
     LIL_SLOT_MACHINE = Isaac.GetItemIdByName("Lil Slot Machine"),
     LIL_FORTUNE_TELLER = Isaac.GetItemIdByName("Lil Fortune Teller"),
@@ -44,6 +49,16 @@ enums.Costumes = {
 enums.Slots = {
 
 }
+
+
+enums.Achievements = {
+    JOSEPH = Isaac.GetAchievementIdByName("Joseph"),
+    JOSEPH_B = Isaac.GetAchievementIdByName("Tainted Joseph"),
+    CARD_SLEEVE = Isaac.GetAchievementIdByName("Card Sleeve"), --Delirium
+    OTHER_SHIT = "Blah"
+}
+
+
 ---@enum JosephCallbacks
 enums.Callbacks = {
 
@@ -220,13 +235,5 @@ enums.CardDisenchantChances[Card.CARD_REVERSE_SUN] = 0.75
 enums.CardDisenchantChances[Card.CARD_REVERSE_JUDGEMENT] = 0.75
 enums.CardDisenchantChances[Card.CARD_REVERSE_WORLD] = 0.33
 
-
-
-enums.Achievements = {
-    JOSEPH = Isaac.GetAchievementIdByName("Joseph"),
-    JOSEPH_B = Isaac.GetAchievementIdByName("Tainted Joseph"),
-    CARD_SLEEVE = Isaac.GetAchievementIdByName("Card Sleeve"),
-    OTHER_SHIT = "Blah"
-}
 
 JosephMod.enums = enums

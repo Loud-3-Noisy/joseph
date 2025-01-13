@@ -5,6 +5,6 @@
 	<achievement name="Tainted Joseph" text='' gfx="achievement_joseph.png" />
 	
 	<!-- Joseph Unlocks -->
-	<achievement name="Card Sleeve" text='Joseph Delirium' gfx="achievement_cardSleeve.png" />
+	<achievement name="Card Sleeve" text='Joseph Delirium' gfx="achievement_cardsleeve.png" />
 	
 </achievements>

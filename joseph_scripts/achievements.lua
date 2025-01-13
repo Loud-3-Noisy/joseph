@@ -34,6 +34,24 @@ TSIL.SaveManager.AddPersistentVariable(
       false
 )
 
+function JosephAchievements:unlock(unlock, force)
+	local gameData = Isaac.GetPersistentGameData()
+    print("4")
+	if not force then
+        print("5")
+		if not Game():AchievementUnlocksDisallowed() then
+            print("6")
+			if not gameData:Unlocked(unlock) then
+                print("7")
+				gameData:TryUnlock(unlock)
+                Isaac.GetPersistentGameData():TryUnlock(Isaac.GetAchievementIdByName("Card Sleeve"))
+			end
+		end
+	else
+		gameData:TryUnlock(unlock)
+	end
+end
+
 local function allTrue(table)
     for i = 1, 22, 1 do
         print(i)
@@ -45,6 +63,9 @@ end
 
 function JosephAchievements:UseCard(card, player, flags)
     local gameData = Isaac.GetPersistentGameData()
+    print(gameData:Unlocked(enums.Achievements.CARD_SLEEVE))
+    Isaac.GetPersistentGameData():TryUnlock(Isaac.GetAchievementIdByName("Card Sleeve"))
+    Isaac.GetPersistentGameData():TryUnlock(Isaac.GetAchievementIdByName("Joseph"))
     if gameData:Unlocked(enums.Achievements.JOSEPH) then return end
 
     if not (card >= Card.CARD_FOOL and card <= Card.CARD_WORLD) then return end
@@ -60,6 +81,7 @@ function JosephAchievements:UseCard(card, player, flags)
 end
 JosephMod:AddCallback(ModCallbacks.MC_USE_CARD, JosephAchievements.UseCard)
 
+
 function JosephAchievements:LoadFile(saveSlot, isSlotSelected)
     if isSlotSelected ~= true then return end
     local gameData = Isaac.GetPersistentGameData()
@@ -71,6 +93,41 @@ function JosephAchievements:LoadFile(saveSlot, isSlotSelected)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_SAVESLOT_LOAD, JosephAchievements.LoadFile)
+
+
+function JosephAchievements:UnlockEvent(mark)
+    print(mark)
+    local players = PlayerManager.GetPlayers()
+    for key, player in ipairs(players) do
+        if player:GetPlayerType() == enums.PlayerType.PLAYER_JOSEPH and not player.Parent then
+            print(1)
+            local marks = {
+                -- [CompletionType.MOMS_HEART] = nil,
+                -- [CompletionType.ISAAC] = communityRemix.Achievement.THE_APPLE,
+                -- [CompletionType.SATAN] = communityRemix.Achievement.MORTAL_COIL,
+                -- [CompletionType.BOSS_RUSH] = communityRemix.Achievement.HEARTACHE,
+                -- [CompletionType.BLUE_BABY] = communityRemix.Achievement.FIG_LEAF,
+                -- [CompletionType.LAMB] = communityRemix.Achievement.SINNERS_SCARS,
+                -- [CompletionType.MEGA_SATAN] = nil,
+                -- [CompletionType.ULTRA_GREED] = communityRemix.Achievement.BLOOD_MONEY,
+                -- [CompletionType.ULTRA_GREEDIER] = communityRemix.Achievement.SNAKE_EYES,
+                [CompletionType.DELIRIUM] = enums.Achievements.CARD_SLEEVE,
+                -- [CompletionType.MOTHER] = communityRemix.Achievement.ADAMS_RIB,
+                -- [CompletionType.BEAST] = communityRemix.Achievement.BEAST_OF_PROPHECY,
+                -- [CompletionType.HUSH] = communityRemix.Achievement.BLOODY_FEATHER,
+            }
+            if mark == CompletionType.ULTRA_GREEDIER then -- make damn sure greedier unlocks greed too
+                -- communityRemix.unlock(marks[CompletionType.ULTRA_GREED])
+            end
+            print("2")
+            if marks[mark] then
+                print("3")
+                JosephAchievements:unlock(marks[mark])
+            end
+        end
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_COMPLETION_EVENT, JosephAchievements.UnlockEvent)
 
 
 
