@@ -4,13 +4,12 @@ local enums = JosephMod.enums
 local utility = JosephMod.utility
 
 local CALENDAR = Isaac.GetItemIdByName("Calendar")
-local weekday = os.date("*t").wday --1 is sunday, 2 is monday and so on
+local weekday --1 is sunday, 2 is monday and so on
 
 
 
 function Calendar:UpdateCache(player, flag)
     if flag == CacheFlag.CACHE_DAMAGE then
-        print(weekday)
         if player:HasCollectible(CALENDAR) and (weekday == 1 or weekday == 3) then
             player.Damage = player.Damage + (1 * player:GetCollectibleNum(CALENDAR))
         end
@@ -26,6 +25,7 @@ function Calendar:UpdateCache(player, flag)
 end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, Calendar.UpdateCache)
 
+
 function Calendar:AddCalendar(_, _, firstTime, _, _, player)
     if not firstTime then return end
     if weekday == 5 or weekday == 6 then
@@ -35,3 +35,13 @@ function Calendar:AddCalendar(_, _, firstTime, _, _, player)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, Calendar.AddCalendar, CALENDAR)
+
+
+function Calendar:PreAddCalendar(_, _, firstTime, _, _, player)
+    if not firstTime then return end
+    if weekday == nil then
+        weekday = os.date("*t").wday
+    end
+
+end
+JosephMod:AddCallback(ModCallbacks.MC_PRE_ADD_COLLECTIBLE, Calendar.PreAddCalendar, CALENDAR)
