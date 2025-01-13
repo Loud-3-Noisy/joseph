@@ -6,5 +6,6 @@
 	
 	<!-- Joseph Unlocks -->
 	<achievement name="Card Sleeve" text='Joseph Delirium' gfx="achievement_cardsleeve.png" />
+	<achievement name="Calendar" text='Joseph Hush' gfx="achievement_calendar.png" />
 	
 </achievements>
