@@ -104,7 +104,7 @@ function JosephAchievements:UnlockEvent(mark)
                 [CompletionType.DELIRIUM] = enums.Achievements.CARD_SLEEVE,
                 -- [CompletionType.MOTHER] = communityRemix.Achievement.ADAMS_RIB,
                 -- [CompletionType.BEAST] = communityRemix.Achievement.BEAST_OF_PROPHECY,
-                -- [CompletionType.HUSH] = communityRemix.Achievement.BLOODY_FEATHER,
+                [CompletionType.HUSH] = enums.Achievements.CALENDAR,
             }
             if mark == CompletionType.ULTRA_GREEDIER then -- make damn sure greedier unlocks greed too
                 -- communityRemix.unlock(marks[CompletionType.ULTRA_GREED])
