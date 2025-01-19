@@ -227,7 +227,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = {
         en_us = {
-            description = "Probobly something better than it's normal effect?"
+            description = "While Enchanted, newly generated floors will contain dice rooms"
         }
     },
     [Card.CARD_REVERSE_STRENGTH] = {
@@ -277,7 +277,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_JUDGEMENT] = {
         en_us = {
-            description = "Nothing yet"
+            description = "Busted"
         }
     },
     [Card.CARD_REVERSE_WORLD] = {
