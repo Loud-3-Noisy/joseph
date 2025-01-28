@@ -49,8 +49,6 @@ end
 
 local function allTrue(table)
     for i = 1, 22, 1 do
-        print(i)
-        print(table[i])
         if table[i] ~= true then return false end
     end
     return true
