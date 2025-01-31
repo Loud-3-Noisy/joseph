@@ -72,7 +72,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_MAGICIAN] = {
         en_us = {
-            description = "Permanent homing tears"
+            description = "Permanent Homing Tears, but no range up"
         }
     },
     [Card.CARD_HIGH_PRIESTESS] = {
@@ -82,7 +82,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_EMPRESS] = {
         en_us = {
-            description = "Permanent Whore of Babylon state, with reduced stats."
+            description = "Permanent Whore of Babylon state, with reduced stats"
         }
     },
     [Card.CARD_EMPEROR] = {
@@ -92,12 +92,12 @@ descriptions.Enchants = {
     },
     [Card.CARD_HIEROPHANT] = {
         en_us = {
-            description = "You do this one Kattack"
+            description = "13% chance to spawn a bonus Soul Heart on room clear, first room is guaranteed"
         }
     },
     [Card.CARD_LOVERS] = {
         en_us = {
-            description = "20% chance to spawn a bonus red heart on room clear"
+            description = "20% chance to spawn a bonus Red Heart on room clear, first room is guaranteed"
         }
     },
     [Card.CARD_CHARIOT] = {
@@ -107,7 +107,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_JUSTICE] = {
         en_us = {
-            description = "You do this one Kattack"
+            description = "14% chance to proc Justice effect on room clear, first room is guaranteed"
         }
     },
     [Card.CARD_HERMIT] = {
@@ -202,7 +202,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
         en_us = {
-            description = "1/7 chance to spawn a bone heart on room clear."
+            description = "14% chance to spawn a bone heart on room clear, first room is guaranteed"
         }
     },
     [Card.CARD_REVERSE_LOVERS] = {
@@ -217,7 +217,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_JUSTICE] = {
         en_us = {
-            description = "1/4 chance to replace room clear reward with a gold chest"
+            description = "25% chance to replace room clear reward with a gold chest"
         }
     },
     [Card.CARD_REVERSE_HERMIT] = {
@@ -247,7 +247,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_TEMPERANCE] = {
         en_us = {
-            description = "1/5 Chance to take a random pill on room entry. Gives effect of Little baggy"
+            description = "20% Chance to take a random pill on room entry. Gives effect of Little baggy"
         }
     },
     [Card.CARD_REVERSE_DEVIL] = {
@@ -267,7 +267,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_MOON] = {
         en_us = {
-            description = "On Room clear, spawns a red room if possible on an random adjacent door. 50% chacne to spawn on instead if already in a red room."
+            description = "On Room clear, spawns a red room if possible on an random adjacent wall. 50% chance to spawn one instead if already in a red room."
         }
     },
     [Card.CARD_REVERSE_SUN] = {
