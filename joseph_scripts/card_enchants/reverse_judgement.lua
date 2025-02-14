@@ -35,10 +35,15 @@ end
 JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseJudgement.removeReverseJudgement, Card.CARD_REVERSE_JUDGEMENT)
 
 
-
+---@param item EntityPickup
 function ReverseJudgement:ItemSpawn(item)
     local data = utility:GetData(item, "spawned")
     if data.FirstSpawn == true then return end
+    if item.Touched then return end
+    if not(Game():GetRoom():IsFirstVisit() or Game():GetRoom():GetFrameCount() > -1) then return end
+
+    print(item.SubType)
+    
     data.FirstSpawn = true
     for i = 0, Game():GetNumPlayers() - 1 do
         local player = Isaac.GetPlayer(i)
