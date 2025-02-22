@@ -38,6 +38,7 @@ if REPENTOGON then
   --include("joseph_scripts.items.lil_slots")
   include("joseph_scripts.items.card_sleeve")
   include("joseph_scripts.items.calendar")
+  include("joseph_scripts.items.trinkets.cuppa_joe")
 
   include("joseph_scripts.compat.EID")
 

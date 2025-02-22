@@ -31,7 +31,7 @@ function ReverseFool:OnHit(entity, amount, flags, source, countDown)
     local rng = player:GetCardRNG(fool)
 
     local maxPickupsToDrop = rng:RandomInt(4) + 2
-    print("To drop: " .. maxPickupsToDrop)
+    --print("To drop: " .. maxPickupsToDrop)
 
     local coinCount = player:GetNumCoins()
     local bombCount = player:GetNumBombs()
@@ -139,7 +139,7 @@ function ReverseFool:OnHit(entity, amount, flags, source, countDown)
     end
     attempts = attempts + 1
 
-    print("Dropped: " .. pickupsDropped)
+    --print("Dropped: " .. pickupsDropped)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, ReverseFool.OnHit, EntityType.ENTITY_PLAYER)
