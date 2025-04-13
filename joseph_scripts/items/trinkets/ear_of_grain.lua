@@ -71,7 +71,6 @@ function EarGrain:FamineDie(famine)
 
     local faminesKilled = TSIL.SaveManager.GetPersistentVariable(JosephMod, "FaminesKilledPerFloor")
     if faminesKilled == {} then faminesKilled = 0 end
-    print(faminesKilled)
     faminesKilled = faminesKilled + 1
     TSIL.SaveManager.SetPersistentVariable(JosephMod, "FaminesKilledPerFloor", faminesKilled)
 
