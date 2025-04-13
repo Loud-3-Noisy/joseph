@@ -30,6 +30,7 @@ if REPENTOGON then
   include("joseph_scripts.card_enchants.reverse_temperance")
   include("joseph_scripts.card_enchants.reverse_judgement")
   include("joseph_scripts.card_enchants.reverse_strength")
+  include("joseph_scripts.card_enchants.reverse_wheel_of_fortune")
 
 
 
@@ -39,6 +40,7 @@ if REPENTOGON then
   include("joseph_scripts.items.card_sleeve")
   include("joseph_scripts.items.calendar")
   include("joseph_scripts.items.trinkets.cuppa_joe")
+  include("joseph_scripts.items.trinkets.ear_of_grain")
 
   include("joseph_scripts.compat.EID")
 

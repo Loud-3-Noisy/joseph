@@ -369,4 +369,27 @@ function utilityFunctions:GetCollectible(rng)
   return itemPool:GetCollectible(poolType, true)
 end
 
+
+function utilityFunctions:IsFinalBossRoom()
+  local room = Game():GetRoom()
+  local bossID = room:GetBossID()
+
+  if bossID == BossType.MOM or
+  bossID == BossType.MOMS_HEART or
+  bossID == BossType.IT_LIVES or
+  bossID == BossType.SATAN or
+  bossID == BossType.ISAAC or
+  bossID == BossType.BLUE_BABY or
+  bossID == BossType.LAMB or
+  bossID == BossType.MEGA_SATAN or
+  bossID == BossType.HUSH or
+  bossID == BossType.DELIRIUM or
+  bossID == BossType.MOTHER or
+  bossID == BossType.DOGMA or
+  bossID == BossType.BEAST then
+    return true
+  end
+  return false
+end
+
 return utilityFunctions

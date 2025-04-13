@@ -13,7 +13,8 @@ enums.Collectibles = {
 }
 
 enums.Trinkets = {
-    CUPPA_JOE = Isaac.GetTrinketIdByName("Cup of Joe")
+    CUPPA_JOE = Isaac.GetTrinketIdByName("Cup of Joe"),
+    EAR_OF_GRAIN = Isaac.GetTrinketIdByName("Ear of Grain")
 }
 
 enums.Cards = {

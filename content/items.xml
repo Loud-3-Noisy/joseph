@@ -9,6 +9,7 @@
 
     <!-- Trinkets -->
     <trinket name="Cup of Joe" description="Cawfeeya" gfx="trinket_silvercup.png" />
-    
+    <trinket name="Ear of Grain" description="Famine Approaches" gfx="trinket_earOfGrain.png" />
+
 
 </items>
