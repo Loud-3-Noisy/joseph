@@ -21,6 +21,11 @@ function EarGrain:EnterBossRoom()
     if room:GetType() ~= RoomType.ROOM_BOSS then return end
     if util:IsFinalBossRoom() then return end
     if room:IsClear() then return end
+
+    local faminesKilled = TSIL.SaveManager.GetPersistentVariable(JosephMod, "FaminesKilledPerFloor")
+    if faminesKilled == {} then faminesKilled = 0 end
+    if faminesKilled >= PlayerManager.GetTotalTrinketMultiplier(earOfGrain) then return end
+
     if PlayerManager.AnyoneHasTrinket(earOfGrain) then
         famineReady = true
     end
