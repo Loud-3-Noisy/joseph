@@ -3,128 +3,151 @@ local CuppaJoe = {}
 local enums = JosephMod.enums
 local coffeya = enums.Trinkets.CUPPA_JOE
 
-local originalDamage = 0
-local originalFireDelay = 0
-local originalRange = 0
-local originalShotSpeed = 0
-local originalSpeed = 0
-local originalLuck = 0
 
+TSIL.SaveManager.AddPersistentVariable(
+    JosephMod,
+    "CuppaJoeSpawned",
+    0,
+    TSIL.Enums.VariablePersistenceMode.RESET_RUN,
+    false
+)
 
 TSIL.SaveManager.AddPersistentPlayerVariable(
     JosephMod,
-    "CuppaJoeStatUp",
-    {
-        [1] = 0, --Damage
-        [2] = 0, --FireDelay
-        [3] = 0, --ShotSpeed
-        [4] = 0, --Range
-        [5] = 0, --Speed
-        [6] = 0, --Luck
-    },
+    "CuppaJoeItem",
+    nil,
     TSIL.Enums.VariablePersistenceMode.RESET_RUN,
     false
 )
 
 
-local checkStats = false
----@param player EntityPlayer
-function CuppaJoe:PreItemPickup(item, charge, firstTime, slot, varData, player)
-    if not player:HasTrinket(coffeya) then return end
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(item)
-    local itemCache = itemConfig.CacheFlags
-    if itemCache == 0 then return end
-    local statCacheFlags = CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_SHOTSPEED | CacheFlag.CACHE_RANGE | CacheFlag.CACHE_SPEED | CacheFlag.CACHE_LUCK
 
-    if not (itemCache & statCacheFlags > 0) then return end
-    
-    originalDamage = player.Damage
-    originalFireDelay = player.MaxFireDelay
-    originalShotSpeed = player.ShotSpeed
-    originalRange = player.TearRange
-    originalSpeed = player.MoveSpeed
-    originalLuck = player.Luck
-    checkStats = true
+---@param player EntityPlayer
+function CuppaJoe:AddInnateCupItem(player, item)
+    TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "CuppaJoeItem", player, item)
+    player:AddInnateCollectible(item, 1)
 end
-JosephMod:AddCallback(ModCallbacks.MC_PRE_ADD_COLLECTIBLE, CuppaJoe.PreItemPickup)
 
-
-
----@param player EntityPlayer
-function CuppaJoe:PostItemPickup(item, charge, firstTime, slot, varData, player)
-    if not player:HasTrinket(coffeya) then return end
-    if checkStats == false then return end
-    checkStats = false
-
-    local coffeyaStatUps = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "CuppaJoeStatUp", player)
-
-    local damageDiff = player.Damage - originalDamage
-    local fireDelayDiff = player.MaxFireDelay - originalFireDelay
-    local rangeDiff = player.TearRange - originalRange
-    local shotSpeedDiff = player.ShotSpeed - originalShotSpeed
-    local speedDiff = player.MoveSpeed - originalSpeed
-    local luckDiff = player.Luck - originalLuck
-
-    -- print(damageDiff)
-    -- print(fireDelayDiff)
-    -- print(rangeDiff)
-    -- print(shotSpeedDiff)
-    -- print(speedDiff)
-    -- print(luckDiff)
-    
-
-    if damageDiff + fireDelayDiff + rangeDiff + shotSpeedDiff + speedDiff + luckDiff == 0 then return end
-
-    coffeyaStatUps[1] = coffeyaStatUps[1] + damageDiff
-    coffeyaStatUps[2] = coffeyaStatUps[2] + fireDelayDiff
-    coffeyaStatUps[3] = coffeyaStatUps[3] + shotSpeedDiff
-    coffeyaStatUps[4] = coffeyaStatUps[4] + rangeDiff
-    coffeyaStatUps[5] = coffeyaStatUps[5] + speedDiff
-    coffeyaStatUps[6] = coffeyaStatUps[6] + luckDiff
-
-
-    TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "CuppaJoeStatUp", player, coffeyaStatUps)
-    checkStats = false
-
-    originalDamage = 0
-    originalFireDelay = 0
-    originalRange = 0
-    originalShotSpeed = 0
-    originalSpeed = 0
-    originalLuck = 0
-
-    player:TryRemoveTrinket(coffeya)
-    player:AddCacheFlags(CacheFlag.CACHE_ALL, true)
-
+function CuppaJoe:RemoveInnateCupItem(player)
+    local oldItem = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "CuppaJoeItem", player)
+    if oldItem then
+        player:AddInnateCollectible(oldItem, -1)
+        TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "CuppaJoeItem", player, nil)
+    end
 end
-JosephMod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, CuppaJoe.PostItemPickup)
-
 
 
 ---@param player EntityPlayer
----@cache CacheFlag
-function CuppaJoe:AddStats(player, cache)
-    local joeStatUps = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "CuppaJoeStatUp", player)
+function CuppaJoe:PickupCup(player, trinketType, firstTime)
+    local lastItem = CuppaJoe:GetLastPassive(player)
+    if lastItem then
+        CuppaJoe:RemoveInnateCupItem(player)
+        CuppaJoe:AddInnateCupItem(player, lastItem)
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_TRINKET_ADDED, CuppaJoe.PickupCup, coffeya)
 
-    if cache == CacheFlag.CACHE_DAMAGE then
-        player.Damage = player.Damage + joeStatUps[1]
 
-    elseif cache == CacheFlag.CACHE_FIREDELAY then
-        player.MaxFireDelay = player.MaxFireDelay + joeStatUps[2]
+---@param player EntityPlayer
+function CuppaJoe:DropCup(player, trinketType)
+    if player:HasTrinket(coffeya) then return end
 
-    elseif cache == CacheFlag.CACHE_SHOTSPEED then
-        player.ShotSpeed = player.ShotSpeed + joeStatUps[3]
+    CuppaJoe:RemoveInnateCupItem(player)
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_TRINKET_REMOVED, CuppaJoe.DropCup, coffeya)
 
-    elseif cache == CacheFlag.CACHE_RANGE then
-        player.TearRange = player.TearRange + joeStatUps[4]
 
-    elseif cache == CacheFlag.CACHE_SPEED then
-        player.MoveSpeed = player.MoveSpeed + joeStatUps[5]
+---@param player EntityPlayer
+function CuppaJoe:PickupItem(_, _, _, _, _, player)
+    if not player:HasTrinket(coffeya) then return end
+    local lastItem = CuppaJoe:GetLastPassive(player)
+    if lastItem then
+        CuppaJoe:RemoveInnateCupItem(player)
+        CuppaJoe:AddInnateCupItem(player, lastItem)
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, CuppaJoe.PickupItem)
 
-    elseif cache == CacheFlag.CACHE_LUCK then
-        player.Luck = player.Luck + joeStatUps[6]
+
+---@param player EntityPlayer
+function CuppaJoe:RemovedItem(player, item)
+    if not player:HasTrinket(coffeya) then return end
+
+    local oldItem = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "CuppaJoeItem", player)
+    if oldItem == item then
+        CuppaJoe:RemoveInnateCupItem(player)
+        Isaac.CreateTimer(function()
+            local lastItem = CuppaJoe:GetLastPassive(player)
+            if lastItem then
+                CuppaJoe:AddInnateCupItem(player, lastItem)
+            end
+        end, 1, 1, true)
 
     end
-
 end
-JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, CuppaJoe.AddStats)
+JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, CuppaJoe.RemovedItem)
+
+
+function CuppaJoe:FindFirstPlayerWithEmptyTrinketSlot()
+    for _, player in ipairs(PlayerManager.GetPlayers()) do
+        if player:GetTrinket(0) == 0 then return player end    
+        if player:GetMaxTrinkets() > 1 and player:GetTrinket(1) == 0 then return player end
+    end
+    return nil
+end
+
+
+local cofeeyaSpawned = false
+function CuppaJoe:GetTrinket(trinketType)
+    if trinketType ~= coffeya then return end
+    cofeeyaSpawned = true
+end
+JosephMod:AddCallback(ModCallbacks.MC_GET_TRINKET, CuppaJoe.GetTrinket)
+
+
+function CuppaJoe:PickupInit(pickup)
+    if pickup.SubType ~= coffeya then return end
+    if not cofeeyaSpawned then return end
+    cofeeyaSpawned = false
+
+    pickup:Remove()
+    local cupSpawned = TSIL.SaveManager.GetPersistentVariable(JosephMod, "CuppaJoeSpawned")
+    cupSpawned = cupSpawned + 1
+    TSIL.SaveManager.SetPersistentVariable(JosephMod, "CuppaJoeSpawned", cupSpawned)
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, CuppaJoe.PickupInit, PickupVariant.PICKUP_TRINKET)
+
+
+function CuppaJoe:NewRoom()
+    local cupSpawned = TSIL.SaveManager.GetPersistentVariable(JosephMod, "CuppaJoeSpawned")
+    if cupSpawned <= 0 then return end
+
+    cupSpawned = cupSpawned - 1
+    TSIL.SaveManager.SetPersistentVariable(JosephMod, "CuppaJoeSpawned", cupSpawned)
+
+    local player = CuppaJoe:FindFirstPlayerWithEmptyTrinketSlot()
+    if player then
+        player:AddTrinket(coffeya)
+    end
+end
+JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, CuppaJoe.NewRoom)
+
+
+---@param player EntityPlayer
+function CuppaJoe:GetLastPassive(player)
+    local history = player:GetHistory():GetCollectiblesHistory()
+    local config
+    Isaac.GetPlayer():GetHistory():GetCollectiblesHistory()[1]:GetItemID()
+    for i = #history, 1, -1 do
+        if not history[i]:IsTrinket() then
+            local id = history[i]:GetItemID()
+
+            config = config or Isaac.GetItemConfig()
+
+            if config:GetCollectible(id).Type ~= ItemType.ITEM_ACTIVE then
+                return id
+            end
+        end
+    end
+    return nil
+end
