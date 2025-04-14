@@ -5,64 +5,79 @@ local enums = JosephMod.enums
 
 local game = Game()
 
--- Adds another treasure room to the floor at a random valid location.
-function ReverseWheelOfFortune:AddAnotherDiceRoomToTheFloorAtARandomValidLocation()
-    local level = game:GetLevel()
+local ALLOW_MULTIPLE_DOORS = true
+local ALLOW_SPECIAL_NEIGHBORS = false
 
-    local dimension = -1  -- current dimension
+local ONLY_NEIGHBOR_BLACKLIST = {
+    [RoomType.ROOM_SECRET] = true,
+    [RoomType.ROOM_SUPERSECRET] = true,
+    [RoomType.ROOM_ULTRASECRET] = true,
+}
+
+
+function ReverseWheelOfFortune:AddDiceRoom()
+    local level = Game():GetLevel()
+    local dimension = Dimension.CURRENT
     local seed = level:GetDungeonPlacementSeed()
+    local diff = 0
 
-    -- Fetch a random RoomConfig for a new treasure room.
-    local roomConfig = RoomConfigHolder.GetRandomRoom(seed, true, StbType.SPECIAL_ROOMS, RoomType.ROOM_DICE, RoomShape.ROOMSHAPE_1x1)
+    local roomConfig = RoomConfigHolder.GetRandomRoom(
+        seed,
+        true,
+        StbType.SPECIAL_ROOMS,
+        RoomType.ROOM_DICE,
+        RoomShape.ROOMSHAPE_1x1
+    )
 
-    -- Disallow placements with multiple doors, or placements that connect to other special rooms.
-    local allowMultipleDoors = false
-    local allowSpecialNeighbors = false
+    if roomConfig then
+        local options = level:FindValidRoomPlacementLocations(roomConfig, dimension, ALLOW_MULTIPLE_DOORS, ALLOW_SPECIAL_NEIGHBORS)
 
-    -- Fetch all valid locations.
-    local options = level:FindValidRoomPlacementLocations(roomConfig, dimension, allowMultipleDoors, allowSpecialNeighbors)
+        for _, gridIndex in pairs(options) do
+            local neighbors = level:GetNeighboringRooms(gridIndex, roomConfig.Shape, dimension)
+            local hasValidNeighbor
 
-    for _, gridIndex in pairs(options) do
-        -- You may have additional conditions or priorities when it comes to where you would prefer to place your room.
-        -- For the purposes of this example we arbitarily forbid the new room from being connected to the starting room,
-        -- and otherwise just place the room at the first place we check.
-
-        -- Get the RoomDescriptors of all rooms that would be neighboring the room if placed here.
-        local neighbors = level:GetNeighboringRooms(gridIndex, roomConfig.Shape, dimension)
-
-        local connectsToStartingRoom = false
-
-        for doorSlot, neighborDesc in pairs(neighbors) do
-            if neighborDesc.GridIndex == level:GetStartingRoomIndex() then
-                connectsToStartingRoom = true
+            for _, desc in pairs(neighbors) do
+                if desc.Data and not ONLY_NEIGHBOR_BLACKLIST[desc.Data.Type] then
+                    hasValidNeighbor = true
+                    break
+                end
             end
-        end
 
-        if not connectsToStartingRoom then
-            -- Try to place the room.
-            local room = level:TryPlaceRoom(roomConfig, gridIndex, dimension, seed, allowMultipleDoors, allowSpecialNeighbors)
-            if room then
-                -- The room was placed successfully!
-                return
+            if hasValidNeighbor then
+                ---@diagnostic disable-next-line: param-type-mismatch
+                local room = level:TryPlaceRoom(roomConfig, gridIndex, dimension, seed, ALLOW_MULTIPLE_DOORS, ALLOW_SPECIAL_NEIGHBORS)
+
+                if room then
+                    Game():GetLevel():UpdateVisibility()
+                    break
+                end
             end
         end
     end
-end
-
--- ---@param player EntityPlayer
----@param card Card
-function ReverseWheelOfFortune:initReverseWheelOfFortune(player, card, firstTime)
-    if not firstTime then return end
-    ReverseWheelOfFortune:AddAnotherDiceRoomToTheFloorAtARandomValidLocation()
 
 end
-JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseWheelOfFortune.initReverseWheelOfFortune, Card.CARD_REVERSE_WHEEL_OF_FORTUNE)
-JosephMod:AddCallback(enums.Callbacks.JOSEPH_GAME_START_ENCHANT_REFRESH, ReverseWheelOfFortune.initReverseWheelOfFortune, Card.CARD_REVERSE_WHEEL_OF_FORTUNE)
+
+
+function ReverseWheelOfFortune:NewLevel()
+    local num = utility:GetTotalEnchantmentCount(Card.CARD_REVERSE_WHEEL_OF_FORTUNE)
+    if num == 0 then return end
+
+    if Game():GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH) then return end
+
+    for i = 1, num do
+        ReverseWheelOfFortune:AddDiceRoom()
+    end
+end
+JosephMod:AddPriorityCallback(ModCallbacks.MC_POST_NEW_LEVEL, -300, ReverseWheelOfFortune.NewLevel)
+
 
 ---@param player EntityPlayer
 ---@param card Card
----@param slot CardSlot
-function ReverseWheelOfFortune:removeReverseWheelOfFortune(player, card, slot)
+function ReverseWheelOfFortune:initReverseWheelOfFortune(player, card, firstTime)
+    if not firstTime then return end
+    if Game():GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH) then return end
+
+    ReverseWheelOfFortune:AddDiceRoom()
 
 end
-JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseWheelOfFortune.removeReverseWheelOfFortune, Card.CARD_REVERSE_WHEEL_OF_FORTUNE)
+JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_ADD, ReverseWheelOfFortune.initReverseWheelOfFortune, Card.CARD_REVERSE_WHEEL_OF_FORTUNE)

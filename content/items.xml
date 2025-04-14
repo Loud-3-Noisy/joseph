@@ -5,6 +5,7 @@
     <active id="4" name="Magic Skin " description="All your desires fulfilled" gfx="collectibles_642_magicskin.png" hidden="true" tags="noeden" quality="2" />
     <active id="5" name="Card Sleeve" description="Preserve the future" maxcharges="6" gfx="collectibles_tarotSleeve.png" achievement="Card Sleeve" tags="" quality="4" />
     <passive id="6" name="Calendar" description="Watch the date" gfx="collectibles_calendar.png" achievement="Calendar" cache="firedelay damage speed" tags="" quality="2" />
+    <passive id="7" name="Scrawl" description="Endless Draw" gfx="scrawl.png" achievement="Scrawl" tags="" quality="2" />
 
 
     <!-- Trinkets -->
