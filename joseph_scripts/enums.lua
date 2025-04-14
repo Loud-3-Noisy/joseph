@@ -14,7 +14,8 @@ enums.Collectibles = {
 
 enums.Trinkets = {
     CUPPA_JOE = Isaac.GetTrinketIdByName("Cup of Joe"),
-    EAR_OF_GRAIN = Isaac.GetTrinketIdByName("Ear of Grain")
+    EAR_OF_GRAIN = Isaac.GetTrinketIdByName("Ear of Grain"),
+    ACE_OF_HEARTS = Isaac.GetTrinketIdByName("Ace of Hearts"),
 }
 
 enums.Cards = {

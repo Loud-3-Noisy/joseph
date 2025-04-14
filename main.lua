@@ -41,6 +41,7 @@ if REPENTOGON then
   include("joseph_scripts.items.calendar")
   include("joseph_scripts.items.trinkets.cuppa_joe")
   include("joseph_scripts.items.trinkets.ear_of_grain")
+  include("joseph_scripts.items.trinkets.ace_of_hearts")
 
   include("joseph_scripts.compat.EID")
 

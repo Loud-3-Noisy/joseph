@@ -10,6 +10,7 @@
     <!-- Trinkets -->
     <trinket name="Cup of Joe" description="When did you get this?" gfx="trinket_silvercup.png" />
     <trinket name="Ear of Grain" description="Famine Approaches" gfx="trinket_earOfGrain.png" />
+    <trinket name="Ace of Hearts" description="Heart of the Cards" gfx="trinket_aceOfHearts.png" />
 
 
 </items>
