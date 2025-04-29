@@ -1,17 +1,17 @@
 <items gfxroot="gfx/items/" deathanm2="gfx/death_items.anm2" version="1">
-    <familiar id="1" name="Lil Slot Machine" description="Portable Gambling" gfx="lil_slot_machine.png" hidden="true" tags="noeden summonable monstermanual" cache="familiars" quality="1" />
-    <familiar id="2" name="Lil Fortune Teller" description="Portable Gambling 2" gfx="lil_fortune_teller.png" hidden="true" tags="noeden" cache="familiars summonable monstermanual" quality="2" />
+    <familiar id="1" name="Lil Slot Machine" description="Portable gambling" gfx="lil_slot_machine.png" hidden="true" tags="noeden summonable monstermanual" cache="familiars" quality="1" />
+    <familiar id="2" name="Lil Fortune Teller" description="Portable fortune" gfx="lil_fortune_teller.png" hidden="true" tags="noeden" cache="familiars summonable monstermanual" quality="2" />
     <familiar id="3" name="Lil Blood Bank" description="It wants to take your life" gfx="lil_blood_bank.png" hidden="true" tags="noeden" cache="familiars summonable monstermanual" quality="2" />
     <active id="4" name="Magic Skin " description="All your desires fulfilled" gfx="collectibles_642_magicskin.png" hidden="true" tags="noeden" quality="2" />
     <active id="5" name="Card Sleeve" description="Preserve the future" maxcharges="6" gfx="collectibles_tarotSleeve.png" achievement="Card Sleeve" tags="" quality="4" />
     <passive id="6" name="Calendar" description="Watch the date" gfx="collectibles_calendar.png" achievement="Calendar" cache="firedelay damage speed" tags="" quality="2" />
-    <passive id="7" name="Scrawl" description="Endless Draw" gfx="scrawl.png" achievement="Scrawl" tags="" quality="2" />
+    <passive id="7" name="Scrawl" description="Endless draw" gfx="scrawl.png" achievement="Scrawl" tags="" quality="2" />
 
 
     <!-- Trinkets -->
     <trinket name="Cup of Joe" description="When did you get this?" gfx="trinket_silvercup.png" />
-    <trinket name="Ear of Grain" description="Famine Approaches" gfx="trinket_earOfGrain.png" />
-    <trinket name="Ace of Hearts" description="Heart of the Cards" gfx="trinket_aceOfHearts.png" />
+    <trinket name="Ear of Grain" description="Famine approaches" gfx="trinket_earOfGrain.png" />
+    <trinket name="Ace of Hearts" description="Heart of the cards" gfx="trinket_aceOfHearts.png" />
 
 
 </items>
