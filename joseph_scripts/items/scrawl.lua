@@ -77,4 +77,22 @@ end
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_NEW_ROOM_TEMP_EFFECTS, Scrawl.NewRoom)
 
 
+if EID then
+    local function HideCardEIDCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 300 and
+        not Isaac.GetItemConfig():GetCard(descObj.ObjSubType):IsRune() and
+        PlayerManager.AnyoneHasCollectible(SCRAWL) then
+            return true
+        end
+    end
+    local function HideCardEIDCallback(descObj)
+        descObj.Name = "{{ColorError}}Unidentified Card"
+        descObj.Description = ""
+        descObj.Icon = EID.InlineIcons["Card"]
+        return descObj
+    end
+
+    EID:addDescriptionModifier("Scrawl", HideCardEIDCondition, HideCardEIDCallback)
+end
+
 
