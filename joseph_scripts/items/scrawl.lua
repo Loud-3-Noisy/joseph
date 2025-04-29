@@ -18,6 +18,18 @@ function Scrawl:DropCard(player, pickup, slot)
 end
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_DROP_CARD, Scrawl.DropCard)
 
+
+local droppedPill = false
+---@param player EntityPlayer
+---@param pickup EntityPickup
+---@param slot any
+function Scrawl:DropPill(player, pickup, slot)
+    if Isaac.GetItemConfig():GetCard(pickup.SubType):IsRune() then return end
+    if not (player:HasCollectible(SCRAWL) and player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY)) then return end
+    droppedPill = true
+end
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_DROP_PILL, Scrawl.DropPill)
+
 function Scrawl:CardSpawn(pickup)
     Isaac.CreateTimer( function()
         if not droppedCard then return end
@@ -30,6 +42,18 @@ function Scrawl:CardSpawn(pickup)
 end
 mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, Scrawl.CardSpawn, PickupVariant.PICKUP_TAROTCARD)
 
+function Scrawl:PillSpawn(pickup)
+    Isaac.CreateTimer( function()
+        if not droppedPill then return end
+        droppedPill = false
+        pickup:Remove()
+        local poof = Isaac.Spawn(1000, 15, 0, pickup.Position, Vector.Zero, nil)
+        poof.SpriteScale = poof.SpriteScale/1.5
+        SFXManager():Play(SoundEffect.SOUND_SUMMON_POOF, 3, 2, false, 0.5)
+    end, 1, 1, true)
+end
+mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, Scrawl.PillSpawn, PickupVariant.PICKUP_PILL)
+
 
 ---@param player EntityPlayer
 function Scrawl:NewRoom(player)
@@ -37,10 +61,18 @@ function Scrawl:NewRoom(player)
     if not player:HasCollectible(SCRAWL) then return end
     local rng = player:GetCollectibleRNG(SCRAWL)
     local seed = rng:Next()
-    local card = Game():GetItemPool():GetCard(seed, true, false, false)
-    player:AddCard(card)
-    player:AnimateCard(card, "HideItem")
-    SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
+
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY) then
+        local pill = Game():GetItemPool():GetPill(seed)
+        player:AddPill(pill)
+        player:AnimatePill(pill, "HideItem")
+        SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
+    else
+        local card = Game():GetItemPool():GetCard(seed, true, false, false)
+        player:AddCard(card)
+        player:AnimateCard(card, "HideItem")
+        SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
+    end
 end
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_NEW_ROOM_TEMP_EFFECTS, Scrawl.NewRoom)
 
