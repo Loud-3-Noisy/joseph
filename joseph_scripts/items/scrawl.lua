@@ -8,7 +8,11 @@ local SCRAWL = enums.Collectibles.SCRAWL
 
 
 local droppedCard = false
+---@param player EntityPlayer
+---@param pickup EntityPickup
+---@param slot any
 function Scrawl:DropCard(player, pickup, slot)
+    if Isaac.GetItemConfig():GetCard(pickup.SubType):IsRune() then return end
     if not player:HasCollectible(SCRAWL) then return end
     droppedCard = true
 end
@@ -27,12 +31,18 @@ end
 mod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, Scrawl.CardSpawn, PickupVariant.PICKUP_TAROTCARD)
 
 
-local droppedCard = false
+---@param player EntityPlayer
 function Scrawl:NewRoom(player)
+    if Game():GetRoom():IsClear() or not Game():GetRoom():IsFirstVisit() then return end
     if not player:HasCollectible(SCRAWL) then return end
     local rng = player:GetCollectibleRNG(SCRAWL)
     local seed = rng:Next()
     local card = Game():GetItemPool():GetCard(seed, true, false, false)
     player:AddCard(card)
+    player:AnimateCard(card, "HideItem")
+    SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
 end
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_NEW_ROOM_TEMP_EFFECTS, Scrawl.NewRoom)
+
+
+
