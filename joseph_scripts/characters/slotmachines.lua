@@ -209,7 +209,7 @@ local redHeartPickups = {
 		variant = PickupVariant.PICKUP_HEART,
 		subtype = HeartSubType.HEART_DOUBLEPACK
 	}},
-	{reward = 2, value = {
+	{reward = 1, value = {
 		variant = PickupVariant.PICKUP_HEART,
 		subtype = HeartSubType.HEART_HALF
 	}},

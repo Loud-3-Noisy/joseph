@@ -42,6 +42,7 @@ if REPENTOGON then
   include("joseph_scripts.items.card_sleeve")
   include("joseph_scripts.items.calendar")
   include("joseph_scripts.items.scrawl")
+  include("joseph_scripts.items.soul_of_envy")
   include("joseph_scripts.items.trinkets.cuppa_joe")
   include("joseph_scripts.items.trinkets.ear_of_grain")
   include("joseph_scripts.items.trinkets.ace_of_hearts")

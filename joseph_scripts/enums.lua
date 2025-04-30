@@ -10,7 +10,8 @@ enums.Collectibles = {
     LIL_FORTUNE_TELLER = Isaac.GetItemIdByName("Lil Fortune Teller"),
     LIL_BLOOD_BANK = Isaac.GetItemIdByName("Lil Blood Bank"),
     MAGIC_SKIN_SINGLE_USE = Isaac.GetItemIdByName("Magic Skin "),
-    SCRAWL = Isaac.GetItemIdByName("Scrawl")
+    SCRAWL = Isaac.GetItemIdByName("Scrawl"),
+    SOUL_OF_ENVY = Isaac.GetItemIdByName("Soul of Envy"),
 }
 
 enums.Trinkets = {
