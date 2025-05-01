@@ -6,7 +6,8 @@
     <active id="5" name="Card Sleeve" description="Preserve the future" maxcharges="6" gfx="collectibles_tarotSleeve.png" achievement="Card Sleeve" tags="" quality="4" />
     <passive id="6" name="Calendar" description="Check the date" gfx="collectibles_calendar.png" achievement="Calendar" cache="firedelay damage speed" tags="" quality="2" />
     <passive id="7" name="Scrawl" description="Endless draw" gfx="scrawl.png" achievement="Scrawl" tags="" quality="4" />
-    <passive id="8" name="Soul of Envy" description="The poor envies the rich" gfx="soul_of_envy.png" achievement="Soul of Envy" tags="" quality="2" />
+    <passive id="8" name="Poker Mat" description="Luck of the draw" gfx="poker_mat.png" achievement="Poker Mat" tags="" quality="2" />
+    <passive id="9" name="Soul of Envy" description="The poor envies the rich" gfx="soul_of_envy.png" achievement="Soul of Envy" cache="damage" tags="" quality="2" />
 
 
     <!-- Trinkets -->
