@@ -90,18 +90,18 @@ function JosephAchievements:UnlockEvent(mark)
     for key, player in ipairs(players) do
         if player:GetPlayerType() == enums.PlayerType.PLAYER_JOSEPH and not player.Parent then
             local marks = {
-                -- [CompletionType.MOMS_HEART] = nil,
-                -- [CompletionType.ISAAC] = communityRemix.Achievement.THE_APPLE,
-                -- [CompletionType.SATAN] = communityRemix.Achievement.MORTAL_COIL,
-                -- [CompletionType.BOSS_RUSH] = communityRemix.Achievement.HEARTACHE,
-                -- [CompletionType.BLUE_BABY] = communityRemix.Achievement.FIG_LEAF,
-                -- [CompletionType.LAMB] = communityRemix.Achievement.SINNERS_SCARS,
-                -- [CompletionType.MEGA_SATAN] = nil,
-                -- [CompletionType.ULTRA_GREED] = communityRemix.Achievement.BLOOD_MONEY,
-                -- [CompletionType.ULTRA_GREEDIER] = communityRemix.Achievement.SNAKE_EYES,
+                [CompletionType.MOMS_HEART] = nil,
+                [CompletionType.ISAAC] = enums.Achievements.SOUL_OF_ENVY,
+                [CompletionType.SATAN] = enums.Achievements.POKER_MAT,
+                [CompletionType.BOSS_RUSH] = enums.Achievements.CUPPA_JOE,
+                [CompletionType.BLUE_BABY] = enums.Achievements.ACE_OF_HEARTS,
+                [CompletionType.LAMB] = enums.Achievements.SHREDDER,
+                [CompletionType.MEGA_SATAN] = nil,
+                [CompletionType.ULTRA_GREED] = enums.Achievements.LIL_SLOTS,
+                [CompletionType.ULTRA_GREEDIER] = enums.Achievements.LIL_BLOOD,
                 [CompletionType.DELIRIUM] = enums.Achievements.CARD_SLEEVE,
-                -- [CompletionType.MOTHER] = communityRemix.Achievement.ADAMS_RIB,
-                -- [CompletionType.BEAST] = communityRemix.Achievement.BEAST_OF_PROPHECY,
+                [CompletionType.MOTHER] = enums.Achievements.EAR_OF_GRAIN,
+                [CompletionType.BEAST] = enums.Achievements.SCRAWL,
                 [CompletionType.HUSH] = enums.Achievements.CALENDAR,
             }
             if mark == CompletionType.ULTRA_GREEDIER then -- make damn sure greedier unlocks greed too

@@ -1,6 +1,5 @@
 local descriptions = {}
 
-local descriptions = {}
 local enums = JosephMod.enums
 
 --[[
@@ -101,7 +100,7 @@ descriptions.Collectibles = {
 	
 }
 --TRINKET DESCRIPTIONS
-description.Trinkets = {	
+descriptions.Trinkets = {	
 	[enums.Trinkets.CUPPA_JOE] = {
 		en_us = {
 			name = "Cup of Joe",

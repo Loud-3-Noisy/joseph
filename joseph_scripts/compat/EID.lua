@@ -95,26 +95,26 @@ for collectible, translations in pairs(Descriptions.Collectibles) do
     end
 end
 
--- -- Trinkets
--- for trinket, translations in pairs(Descriptions.Trinkets) do
---     for language, description in pairs(translations) do
---         EID:addTrinket(trinket, description.description, description.name, language)
+-- Trinkets
+for trinket, translations in pairs(Descriptions.Trinkets) do
+    for language, description in pairs(translations) do
+        EID:addTrinket(trinket, description.description, description.name, language)
 
---         if description.double then
---             EID:addGoldenTrinketTable(trinket, { fullReplace = true })
+        if description.double then
+            EID:addGoldenTrinketTable(trinket, { fullReplace = true })
 
---             if not EID.descriptions[language].goldenTrinketEffects then
---                 EID.descriptions[language].goldenTrinketEffects = {}
---             end
+            if not EID.descriptions[language].goldenTrinketEffects then
+                EID.descriptions[language].goldenTrinketEffects = {}
+            end
 
---             EID.descriptions[language].goldenTrinketEffects[trinket] = {
---                 description.description,
---                 description.double,
---                 description.triple or description.double
---             }
---         end
---     end
--- end
+            EID.descriptions[language].goldenTrinketEffects[trinket] = {
+                description.description,
+                description.double,
+                description.triple or description.double
+            }
+        end
+    end
+end
 
 -- -- Pickups
 -- for card, translations in pairs(Descriptions.Cards) do
@@ -144,37 +144,6 @@ end
 
 
 
--- -- Special case for Soft Reset
-
--- local PICKUP_NAME = {
---     [PickupVariant.PICKUP_NULL] = {
---         en_us = "Nothing",
---         spa= "Nada"
---     },
---     [PickupVariant.PICKUP_COIN] = {
---         en_us = "coin",
---         spa = "moneda"
---     },
---     [PickupVariant.PICKUP_BOMB] = {
---         en_us = "bomb",
---         spa = "bomba"
---     },
---     [PickupVariant.PICKUP_KEY] = {
---         en_us = "key",
---         spa = "llave"
---     },
---     [PickupVariant.PICKUP_PILL] = {
---         en_us = "A pill",
---         spa = "Una píldora"
---     }
--- }
-
--- --Check if the target is soft reset
--- local function IsSoftReset(obj)
---     return obj.ObjType == EntityType.ENTITY_PICKUP
---         and obj.ObjVariant == PickupVariant.PICKUP_TRINKET
---         and obj.ObjSubType == Enums.Trinkets.SOFT_RESET
--- end
 
 
 -- ---Appends an s to `str` if the amount is not 1.

@@ -10,8 +10,11 @@ enums.Collectibles = {
     LIL_FORTUNE_TELLER = Isaac.GetItemIdByName("Lil Fortune Teller"),
     LIL_BLOOD_BANK = Isaac.GetItemIdByName("Lil Blood Bank"),
     MAGIC_SKIN_SINGLE_USE = Isaac.GetItemIdByName("Magic Skin "),
+    CARD_SLEEVE = Isaac.GetItemIdByName("Card Sleeve"),
+    CALENDAR = Isaac.GetItemIdByName("Calendar"),
     SCRAWL = Isaac.GetItemIdByName("Scrawl"),
     POKER_MAT = Isaac.GetItemIdByName("Poker Mat"),
+    SHREDDER = Isaac.GetItemIdByName("Shredder"),
     SOUL_OF_ENVY = Isaac.GetItemIdByName("Soul of Envy"),
 }
 
@@ -60,9 +63,17 @@ enums.Slots = {
 enums.Achievements = {
     JOSEPH = Isaac.GetAchievementIdByName("Joseph"),
     JOSEPH_B = Isaac.GetAchievementIdByName("Tainted Joseph"),
-    CARD_SLEEVE = Isaac.GetAchievementIdByName("Card Sleeve"), --Delirium
-    CALENDAR = Isaac.GetAchievementIdByName("Calendar"), --Hush
-    OTHER_SHIT = "Blah"
+    CARD_SLEEVE = Isaac.GetAchievementIdByName("Card Sleeve"),  -- Delirium
+    CALENDAR = Isaac.GetAchievementIdByName("Calendar"),        -- Hush
+    SCRAWL = Isaac.GetAchievementIdByName("Scrawl"),            -- The Beast
+    POKER_MAT = Isaac.GetAchievementIdByName("Poker Mat"),      -- Satan
+    SHREDDER = Isaac.GetAchievementIdByName("Shredder"),        -- Lamb
+    SOUL_OF_ENVY = Isaac.GetAchievementIdByName("Soul of Envy"),-- Isaac
+    CUPPA_JOE = Isaac.GetAchievementIdByName("Cup of Joe"),     -- Bossrush
+    EAR_OF_GRAIN = Isaac.GetAchievementIdByName("Ear of Grain"),-- Mother
+    ACE_OF_HEARTS = Isaac.GetAchievementIdByName("Ace of Hearts"),-- ???
+    LIL_SLOTS = Isaac.GetAchievementIdByName("Lil Slotmachine"),-- Greed
+    LIL_BLOOD = Isaac.GetAchievementIdByName("Lil Bloodmachine"),-- Ultra greed
 }
 
 
