@@ -1,5 +1,5 @@
 <items gfxroot="gfx/items/" deathanm2="gfx/death_items.anm2" version="1">
-    <familiar id="1" name="Lil Slot Machine" description="Portable gambling" achievement="Lil Slotmachinet" gfx="lil_slot_machine.png" tags="summonable monstermanual" cache="familiars" quality="0" />
+    <familiar id="1" name="Lil Slot Machine" description="Portable gambling" achievement="Lil Slotmachine" gfx="lil_slot_machine.png" tags="summonable monstermanual" cache="familiars" quality="0" />
     <familiar id="2" name="Lil Fortune Teller" description="Portable fortune" achievement="Lil Slotmachine" gfx="lil_fortune_teller.png" tags="summonable monstermanual" cache="familiars" quality="1" />
     <familiar id="3" name="Lil Blood Bank" description="It wants to take your life" achievement="Lil Bloodmachine" gfx="lil_blood_bank.png" tags="summonable monstermanual" cache="familiars" quality="0" />
     <active id="4" name="Magic Skin " description="All your desires fulfilled" gfx="collectibles_642_magicskin.png" hidden="true" tags="noeden" cache="familiars" quality="2" />
