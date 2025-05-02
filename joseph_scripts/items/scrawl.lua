@@ -24,7 +24,6 @@ local droppedPill = false
 ---@param pickup EntityPickup
 ---@param slot any
 function Scrawl:DropPill(player, pickup, slot)
-    if Isaac.GetItemConfig():GetCard(pickup.SubType):IsRune() then return end
     if not (player:HasCollectible(SCRAWL) and player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY)) then return end
     droppedPill = true
 end
