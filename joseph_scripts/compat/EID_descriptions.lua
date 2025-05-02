@@ -97,6 +97,12 @@ descriptions.Collectibles = {
 			description = "Boosts one of your stats based on what day of the week it is today.",
 		},
 	},
+	[enums.Collectibles.SHREDDER] = {
+		en_us = {
+			name = "Shredder",
+			description = "Upon use, destroys cards in your selected consumable slot, and permenantly removes them for the rest of the run.",
+		},
+	},
 	
 }
 --TRINKET DESCRIPTIONS

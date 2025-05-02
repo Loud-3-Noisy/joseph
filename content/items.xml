@@ -7,7 +7,7 @@
     <passive id="6" name="Calendar" description="Check the date" gfx="collectibles_calendar.png" achievement="Calendar" cache="firedelay damage speed" tags="" quality="2" />
     <passive id="7" name="Scrawl" description="Endless draw" gfx="scrawl.png" achievement="Scrawl" tags="" quality="4" />
     <passive id="8" name="Poker Mat" description="Luck of the draw" gfx="poker_mat.png" achievement="Poker Mat" tags="" quality="2" />
-    <active id="9" name="Shredder" description="Shredded Cards" gfx="shredder.png" achievement="Shredder" tags="" quality="2" />
+    <active id="9" name="Shredder" description="Reusable deck thinner" gfx="shredder.png" achievement="Shredder" tags="" quality="2" />
     <passive id="10" name="Soul of Envy" description="The poor envies the rich" gfx="soul_of_envy.png" achievement="Soul of Envy" cache="damage" tags="" quality="2" />
 
 
