@@ -24,11 +24,13 @@ function mod:RemoveAeon(player)
     local aeonFlags = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "UsedAeon", player)
     if not aeonFlags then return end
     TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "UsedAeon", player, nil)
+    -- player:StopExtraAnimation()
+    -- player:AnimateCard(enums.Cards.THE_AEON, "UseItem")
     if aeonFlags & UseFlag.USE_MIMIC > 0 then
         for key, slot in pairs(ActiveSlot) do
             if player:GetActiveItem(slot) == CollectibleType.COLLECTIBLE_BLANK_CARD then
                 player:GetActiveItemDesc(slot).Charge = 0
-                --Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD).MaxCharges = 4
+                player:GetActiveItemDesc(slot).VarData = 4
                 break
             end
         end
