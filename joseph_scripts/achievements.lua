@@ -66,6 +66,7 @@ function JosephAchievements:UseCard(card, player, flags)
 
     if allTrue(cardsUsed) then
         gameData:TryUnlock(enums.Achievements.JOSEPH)
+        gameData:TryUnlock(enums.Achievements.THE_AEON)
     end
 
 end

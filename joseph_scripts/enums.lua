@@ -25,6 +25,7 @@ enums.Trinkets = {
 }
 
 enums.Cards = {
+    THE_AEON = Isaac.GetCardIdByName("TheAeon")
 }
 
 enums.Familiars = {
@@ -74,6 +75,7 @@ enums.Achievements = {
     ACE_OF_HEARTS = Isaac.GetAchievementIdByName("Ace of Hearts"),-- ???
     LIL_SLOTS = Isaac.GetAchievementIdByName("Lil Slotmachine"),-- Greed
     LIL_BLOOD = Isaac.GetAchievementIdByName("Lil Bloodmachine"),-- Ultra greed
+    THE_AEON = Isaac.GetAchievementIdByName("The Aeon")         -- Unlocked with Joseph
 }
 
 

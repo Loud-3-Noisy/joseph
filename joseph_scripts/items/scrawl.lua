@@ -59,15 +59,17 @@ function Scrawl:NewRoom(player)
     if Game():GetRoom():IsClear() or not Game():GetRoom():IsFirstVisit() then return end
     if not player:HasCollectible(SCRAWL) then return end
     local rng = player:GetCollectibleRNG(SCRAWL)
-    local seed = rng:Next()
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_LITTLE_BAGGY) then
-        local pill = Game():GetItemPool():GetPill(seed)
+        local pill = Game():GetItemPool():GetPill(rng:Next())
         player:AddPill(pill)
         player:AnimatePill(pill, "HideItem")
         SFXManager():Play(SoundEffect.SOUND_SHELLGAME)
     else
-        local card = Game():GetItemPool():GetCard(seed, true, false, false)
+        local card = Game():GetItemPool():GetCard(rng:Next(), true, false, false)
+        if card == Card.CARD_HIEROPHANT then
+            card = Game():GetItemPool():GetCard(rng:Next(), true, false, false)
+        end
         player:AddCard(card)
         player:AnimateCard(card, "HideItem")
         SFXManager():Play(SoundEffect.SOUND_BOOK_PAGE_TURN_12)
