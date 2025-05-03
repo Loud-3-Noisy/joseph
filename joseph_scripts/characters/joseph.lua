@@ -89,6 +89,7 @@ function JosephChar:onPlayerInit(player)
     player:AddCard(randomCard)
 
     TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
+    Game():GetItemPool():RemoveCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
@@ -127,133 +128,133 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, JosephChar.HandleStartingStats)
 
 
-function JosephChar:showChargeBar(player)
-    if player == nil then return end
-    if player:GetPlayerType() ~= josephType then return end
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
+-- function JosephChar:showChargeBar(player)
+--     if player == nil then return end
+--     if player:GetPlayerType() ~= josephType then return end
+--     local playerIndex = TSIL.Players.GetPlayerIndex(player)
     
-    --if not playerData then return end
-    --show chargebar if held for more than 10 frames
-    if StartedUsingCard[playerIndex] == true and FramesHeld[playerIndex] > 10 then
-        if not CardChargeBar[playerIndex] then
-            CardChargeBar[playerIndex] = Sprite()
-            CardChargeBar[playerIndex]:Load("gfx/ui/card_chargebar.anm2",true)
-        end
-        JosephChar:ChargeBarRender(FramesHeld[playerIndex],true,Isaac.WorldToScreen(player.Position+chargebarPos),CardChargeBar[playerIndex])
-    end
+--     --if not playerData then return end
+--     --show chargebar if held for more than 10 frames
+--     if StartedUsingCard[playerIndex] == true and FramesHeld[playerIndex] > 10 then
+--         if not CardChargeBar[playerIndex] then
+--             CardChargeBar[playerIndex] = Sprite()
+--             CardChargeBar[playerIndex]:Load("gfx/ui/card_chargebar.anm2",true)
+--         end
+--         JosephChar:ChargeBarRender(FramesHeld[playerIndex],true,Isaac.WorldToScreen(player.Position+chargebarPos),CardChargeBar[playerIndex])
+--     end
 
-    if EarlyCancel[playerIndex] and EarlyCancel[playerIndex] >= 1 then
-        EarlyCancel[playerIndex] = EarlyCancel[playerIndex] + 1
-        if not CardChargeBar[playerIndex] then
-            CardChargeBar[playerIndex] = Sprite()
-            CardChargeBar[playerIndex]:Load("gfx/ui/card_chargebar.anm2",true)
-        end
-        JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargebarPos),CardChargeBar[playerIndex])
-        if EarlyCancel[playerIndex] > 9 then EarlyCancel[playerIndex] = 0 end
-    end
+--     if EarlyCancel[playerIndex] and EarlyCancel[playerIndex] >= 1 then
+--         EarlyCancel[playerIndex] = EarlyCancel[playerIndex] + 1
+--         if not CardChargeBar[playerIndex] then
+--             CardChargeBar[playerIndex] = Sprite()
+--             CardChargeBar[playerIndex]:Load("gfx/ui/card_chargebar.anm2",true)
+--         end
+--         JosephChar:ChargeBarRender(0,false,Isaac.WorldToScreen(player.Position+chargebarPos),CardChargeBar[playerIndex])
+--         if EarlyCancel[playerIndex] > 9 then EarlyCancel[playerIndex] = 0 end
+--     end
 
-end
-JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, JosephChar.showChargeBar, 0)
-
-
-function JosephChar:trackFramesHeld(player)
-    if player == nil then return end
-    if player:GetPlayerType() ~= josephType then return end
-
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-
-    --if not playerData then return end
-    if not (StartedUsingCard[playerIndex] == true) then return end
+-- end
+-- JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, JosephChar.showChargeBar, 0)
 
 
-    --if card isnt in main slot anymore then cancel
-    if player:GetCard(0) ~= CardUsed[playerIndex] then
-        StartedUsingCard[playerIndex] = false
-        FramesHeld[playerIndex] = 0
-        CardUsed[playerIndex] = nil
-        return
-    end
+-- function JosephChar:trackFramesHeld(player)
+--     if player == nil then return end
+--     if player:GetPlayerType() ~= josephType then return end
 
-    if Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex) then
-        if FramesHeld[playerIndex] == nil then FramesHeld[playerIndex] = 0 end
-        FramesHeld[playerIndex] = FramesHeld[playerIndex] + 1
+--     local playerIndex = TSIL.Players.GetPlayerIndex(player)
 
-    else
-        StartedUsingCard[playerIndex] = false
-    end
+--     --if not playerData then return end
+--     if not (StartedUsingCard[playerIndex] == true) then return end
+
+
+--     --if card isnt in main slot anymore then cancel
+--     if player:GetCard(0) ~= CardUsed[playerIndex] then
+--         StartedUsingCard[playerIndex] = false
+--         FramesHeld[playerIndex] = 0
+--         CardUsed[playerIndex] = nil
+--         return
+--     end
+
+--     if Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex) then
+--         if FramesHeld[playerIndex] == nil then FramesHeld[playerIndex] = 0 end
+--         FramesHeld[playerIndex] = FramesHeld[playerIndex] + 1
+
+--     else
+--         StartedUsingCard[playerIndex] = false
+--     end
     
-    --use the card if player presses for less than 15 frames
-    if StartedUsingCard[playerIndex] == false and FramesHeld[playerIndex] < 20 then
-        FramesHeld[playerIndex] = 0
-        ManualUse[playerIndex] = true
+--     --use the card if player presses for less than 15 frames
+--     if StartedUsingCard[playerIndex] == false and FramesHeld[playerIndex] < 20 then
+--         FramesHeld[playerIndex] = 0
+--         ManualUse[playerIndex] = true
 
-        if CardUsed[playerIndex] == Card.CARD_REVERSE_FOOL then
-            JosephChar:RemoveHeldCard(player, CardUsed[playerIndex]) 
-        end
+--         if CardUsed[playerIndex] == Card.CARD_REVERSE_FOOL then
+--             JosephChar:RemoveHeldCard(player, CardUsed[playerIndex]) 
+--         end
 
-        if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
-            player:UseCard(CardUsed[playerIndex])
-            player:UseCard(CardUsed[playerIndex], UseFlag.USE_CARBATTERY)
-        else
-            player:UseCard(CardUsed[playerIndex])
-        end
+--         if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
+--             player:UseCard(CardUsed[playerIndex])
+--             player:UseCard(CardUsed[playerIndex], UseFlag.USE_CARBATTERY)
+--         else
+--             player:UseCard(CardUsed[playerIndex])
+--         end
 
-        ManualUse[playerIndex] = false
-        JosephChar:RemoveHeldCard(player, CardUsed[playerIndex])
-        CardUsed[playerIndex] = nil
-    end
+--         ManualUse[playerIndex] = false
+--         JosephChar:RemoveHeldCard(player, CardUsed[playerIndex])
+--         CardUsed[playerIndex] = nil
+--     end
 
-    --play chargebar disappear animation if let go early
-    if FramesHeld[playerIndex] > 10 and StartedUsingCard[playerIndex] == false then
-        EarlyCancel[playerIndex] = 1
-        FramesHeld[playerIndex] = 0
-        ManualUse[playerIndex] = false
-        CardUsed[playerIndex] = nil
-    end
+--     --play chargebar disappear animation if let go early
+--     if FramesHeld[playerIndex] > 10 and StartedUsingCard[playerIndex] == false then
+--         EarlyCancel[playerIndex] = 1
+--         FramesHeld[playerIndex] = 0
+--         ManualUse[playerIndex] = false
+--         CardUsed[playerIndex] = nil
+--     end
 
-    --give enchantment if held longer than 100 frames
-    if FramesHeld[playerIndex] > 100 then
-        local card = CardUsed[playerIndex]
+--     --give enchantment if held longer than 100 frames
+--     if FramesHeld[playerIndex] > 100 then
+--         local card = CardUsed[playerIndex]
 
-        if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and
-        utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
-            JosephChar:EnchantCard(player, card, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
-        else
-            JosephChar:EnchantCard(player, card, enums.CardSlot.JOSEPH_INNATE, true)
-        end
+--         if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and
+--         utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
+--             JosephChar:EnchantCard(player, card, enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
+--         else
+--             JosephChar:EnchantCard(player, card, enums.CardSlot.JOSEPH_INNATE, true)
+--         end
         
-        StartedUsingCard[playerIndex] = false
-        FramesHeld[playerIndex] = 0
-        ManualUse[playerIndex] = false
-        CardUsed[playerIndex] = nil
-    end
+--         StartedUsingCard[playerIndex] = false
+--         FramesHeld[playerIndex] = 0
+--         ManualUse[playerIndex] = false
+--         CardUsed[playerIndex] = nil
+--     end
 
-end
-JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, JosephChar.trackFramesHeld, 0)
+-- end
+-- JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, JosephChar.trackFramesHeld, 0)
 
 
-function JosephChar:onCardUse(card, player, useflags)
-    if player == nil then return end
-    local playerType = player:GetPlayerType()
-    if not (playerType == josephType) then return end
+-- function JosephChar:onCardUse(card, player, useflags)
+--     if player == nil then return end
+--     local playerType = player:GetPlayerType()
+--     if not (playerType == josephType) then return end
 
-    local fakeCardUseFlags = UseFlag.USE_NOANIM | UseFlag.USE_MIMIC | UseFlag.USE_NOHUD
+--     local fakeCardUseFlags = UseFlag.USE_NOANIM | UseFlag.USE_MIMIC | UseFlag.USE_NOHUD
 
-    if useflags & fakeCardUseFlags > 0 then return end
-    if enums.CardAnims[card] == nil then return end --Just use non tarot cards normally
+--     if useflags & fakeCardUseFlags > 0 then return end
+--     if enums.CardAnims[card] == nil then return end --Just use non tarot cards normally
 
-    local playerIndex = TSIL.Players.GetPlayerIndex(player)
-    --if not playerData then return end
-    if ManualUse[playerIndex] ~= true then
-        FramesHeld[playerIndex] = 0
-        StartedUsingCard[playerIndex] = true
-        CardUsed[playerIndex] = card
-        EarlyCancel[playerIndex] = 0
-        player:AddCard(card)
-        return true
-    end
-end
-JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_CARD, CallbackPriority.IMPORTANT, JosephChar.onCardUse)
+--     local playerIndex = TSIL.Players.GetPlayerIndex(player)
+--     --if not playerData then return end
+--     if ManualUse[playerIndex] ~= true then
+--         FramesHeld[playerIndex] = 0
+--         StartedUsingCard[playerIndex] = true
+--         CardUsed[playerIndex] = card
+--         EarlyCancel[playerIndex] = 0
+--         player:AddCard(card)
+--         return true
+--     end
+-- end
+-- JosephMod:AddPriorityCallback(ModCallbacks.MC_PRE_USE_CARD, CallbackPriority.IMPORTANT, JosephChar.onCardUse)
 
 
 

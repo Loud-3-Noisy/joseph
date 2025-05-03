@@ -8,9 +8,9 @@ if REPENTOGON then
   JosephMod.josephCharacter = include("joseph_scripts.characters.joseph")
   JosephMod.Chargebar = include("joseph_scripts.chargebar")
   include("joseph_scripts.achievements")
+  include("joseph_scripts.characters.enchanting")
 
   include("joseph_scripts.card_enchants.chariot")
-
   include("joseph_scripts.card_enchants.reverse_fool")
   include("joseph_scripts.card_enchants.reverse_empress")
   include("joseph_scripts.card_enchants.reverse_chariot")
