@@ -52,55 +52,55 @@ descriptions.Collectibles = {
     [enums.Collectibles.LIL_SLOT_MACHINE] = {
         en_us = {
             name = "Lil Slot Machine",
-            description = "Goes around the room collecting coins and dropping pickups every few coins collected.",
+            description = "{{Coin}} Picks up nearby coins#Spawns {{Slotmachine}} Slot Machine drops every 3 coins?",
         },
     },
 	[enums.Collectibles.LIL_FORTUNE_TELLER] = {
 		en_us = {
 			name = "Lil Fortune Teller",
-			description = "Goes around the room collecting coins and dropping pickups every few coins collected.",
+			description = "{{Coin}} Picks up nearby coins#Spawns {{FortuneTeller}} Fortune Teller drops every 5 coins?",
 		},
 	},	
 	[enums.Collectibles.LIL_BLOOD_BANK] = {
 		en_us = {
 			name = "Lil Blood Machine",
-			description = "Goes around the room collecting hearts and drops coins based on the heart's value.",
+			description = "{{Heart}} Picks up nearby Red Hearts#Spawns {{BloodDonationMachine}} Blood Donation Machine drops based on heart value",
 		},
 	},
 	[enums.Collectibles.SCRAWL] = {
 		en_us = {
 			name = "Scrawl",
-			description = "Upon entering a room with enemies, generates a card in a consumable slot. However, cards will now vanish when attempting to drop them on the floor.",
+			description = "{{Card}} Entering a room with enemies Spawns 1 card#{{Card}} Cards will now vanish when attempting to drop them on the floor",
 		},
 	},
 	[enums.Collectibles.POKER_MAT] = {
 		en_us = {
 			name = "Poker Mat",
-			description = "Enhances the effect of various Playing Cards.",
+			description = "{{Card}} Spawns a card #{{RedCard}} Playing card effects are doubled or enhanced",
 		},
 	},
 	[enums.Collectibles.SOUL_OF_ENVY] = {
 		en_us = {
 			name = "Soul of Envy",
-			description = "Boosts your stats for being poor.",
+			description = "↑ +1 damage up for each consumable at a count of 0#the damage up decreases the more pickups Isaac have, returning to +0 at:#{{Blank}} {{Coin}} 15 coins#{{Blank}} {{Bomb}} 5 bombs#{{Blank}} {{Key}} 5 keys",
 		},
 	},
 	[enums.Collectibles.CARD_SLEEVE] = {
 		en_us = {
 			name = "Card Sleeve",
-			description = "We made Joseph into an active item.",
+			description = "{{Card}} Consumes the currently held Tarot Card, enchancting it onto Isaac permanently#{{Card}} Enchanting a new card will remove the previous enchant's effect",
 		},
 	},
 	[enums.Collectibles.CALENDAR] = {
 		en_us = {
 			name = "Calendar",
-			description = "Boosts one of your stats based on what day of the week it is today.",
+			description = "Boosts a stat based on the day of the week:#{{Blank}} Sun: ↑ +1 Damage up#{{Blank}} Mon: ↑ +0.7 Tears up#{{Blank}} Tue: ↑ +1 Damage up#{{Blank}} Wed: ↑ +0.3 Speed up#{{Blank}} Thur: ↑ +1 Health up#{{Blank}} Fri: ↑ +1 Health up#{{Blank}} Sat: ↑ +0.7 Tears up",
 		},
 	},
 	[enums.Collectibles.SHREDDER] = {
 		en_us = {
 			name = "Shredder",
-			description = "Upon use, destroys cards in your selected consumable slot, and permenantly removes them for the rest of the run.",
+			description = "{{Card}} Shreds the currenlty selected card from Isaac's Consumable slot, permanantly removing that card from the pool for the rest of the run, and spawns 5 random pickups",
 		},
 	},
 	
@@ -110,19 +110,19 @@ descriptions.Trinkets = {
 	[enums.Trinkets.CUPPA_JOE] = {
 		en_us = {
 			name = "Cup of Joe",
-			description = "Huh... Wonder where that came from?",
+			description = "Does not spawn normally, instead will randomly appear in an empty trinket slot upon leaving a room it would have spawned in#Copies the effect of the last item you picked up#Changes upon picking up a new item",
 		},
 	},
 	[enums.Trinkets.EAR_OF_GRAIN] = {
 		en_us = {
 			name = "Ear of Grain",
-			description = "Upon entering a Boss Room, spawns Famine. Killing Famine will drop his usual rewards.",
+			description = "Famine appears as an additional boss to fight upon entering a {{BossRoom}} boss room, and drops {{Collectible73}} cube of meat/{{Collectible207}} ball of bandages when killd#Famine's health scales per floor",
 		},
 	},
 	[enums.Trinkets.ACE_OF_HEARTS] = {
 		en_us = {
 			name = "Ace of Hearts",
-			description = "While held, all heart pickups are replaced with Cards.",
+			description = "All {{Heart}} Heart pickups are replaced with {{Card}} Cards.",
 		},
 	},
 	
