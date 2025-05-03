@@ -6,7 +6,7 @@
 	<!-- Joseph Unlocks -->
 	<achievement name="The Aeon" text='Unlock Joseph' gfx="achievement_theAeon.png" />
 	<achievement name="Cup of Joe" text='Joseph Bossrush' gfx="achievement_cupOfJoe.png" />
-	<achievement name="Pokermat" text='Joseph Satan' gfx="achievement_pokermat.png" />
+	<achievement name="Poker Mat" text='Joseph Satan' gfx="achievement_pokermat.png" />
 	<achievement name="Soul of Envy" text='Joseph Isaac' gfx="achievement_soulOfEnvy.png" />
 	<achievement name="Ace of Hearts" text='Joseph ???' gfx="achievement_aceofheartsagain.png" />
 	<achievement name="Shredder" text='Joseph The Lamb' gfx="achievement_shredder.png" />
