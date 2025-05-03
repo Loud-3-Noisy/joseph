@@ -52,13 +52,13 @@ descriptions.Collectibles = {
     [enums.Collectibles.LIL_SLOT_MACHINE] = {
         en_us = {
             name = "Lil Slot Machine",
-            description = "{{Coin}} Picks up nearby coins#Spawns {{Slotmachine}} Slot Machine drops every 3 coins?",
+            description = "{{Coin}} Picks up nearby coins#Spawns {{Slotmachine}} Slot Machine drops every 3 coins",
         },
     },
 	[enums.Collectibles.LIL_FORTUNE_TELLER] = {
 		en_us = {
 			name = "Lil Fortune Teller",
-			description = "{{Coin}} Picks up nearby coins#Spawns {{FortuneTeller}} Fortune Teller drops every 5 coins?",
+			description = "{{Coin}} Picks up nearby coins#Spawns {{FortuneTeller}} Fortune Teller drops every 4 coins",
 		},
 	},	
 	[enums.Collectibles.LIL_BLOOD_BANK] = {
