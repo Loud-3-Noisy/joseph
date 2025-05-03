@@ -20,6 +20,7 @@ mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
     local holding = Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
 
     if not data.Charge then data.Charge = CHARGE_DEFAULT end
+    if not data.FramesNotHolding then data.FramesNotHolding = 0 end
     data.Holding = holding
 
     if not holding or (not enums.CardAnims[player:GetCard(0)]) then
@@ -59,6 +60,9 @@ end)
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function (_, player)
     if player:GetPlayerType() ~= enums.PlayerType.PLAYER_JOSEPH then return end
     local data = utility:GetData(player, "Enchanting")
+
+    -- Isaac.RenderText("Charge: " .. data.Charge, 70, 70, 1, 1, 1, 1)
+    -- Isaac.RenderText("Not Holding: " .. data.FramesNotHolding, 70, 100, 1, 1, 1, 1)
 
     if ((not data.Charge) or (data.Charge < 0)) and (not data.FramesNotHolding or data.FramesNotHolding < 1) then return end
     if not data.ChargeBar then
