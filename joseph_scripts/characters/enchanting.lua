@@ -1,132 +1,121 @@
-local Enchanting = {}
 local mod = JosephMod
 
-local enums = JosephMod.enums
-local utility = JosephMod.utility
+---Duration for pressed action to count as a tap basically
+local WINDOW = 20
+---How long you have to hold to enchant
+local MAX_CHARGE = 30 * 3
+local SPRITE_OFFSET = Vector(-30, -52)
 
-
-local CHARGE_TO_ENCHANT = 50
-local CHARGE_DEFAULT = -7
-local MAX_CHARGE_TO_FORCE_INPUT = 0
-local CHARGEBAR_OFFSET = Vector(0, 12)
-local CHARGEBAR_FADE = 0.1
-local chargebarPos = Vector(-30, -52)
-
-
+---@type table<integer, StupidJosephData>
+local stupidData = {}
 
 ---@param player EntityPlayer
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
-    local data = utility:GetData(player, "Enchanting")
-    local holding = Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
+local function GetData(player)
+    local idx = TSIL.Players.GetPlayerIndex(player)
+    stupidData[idx] = stupidData[idx] or
+    ---@class StupidJosephData
+    ---@field Timer integer
+    ---@field Holding boolean
+    ---@field Override boolean
+    ---@field Ugugugug ChargeBar
+    ---@field Charge integer
+    ---@field Activated boolean
+    {
+        Timer = 0,
+        Holding = false,
+        Override = false,
+        Ugugugug = JosephMod.Chargebar(),
+        Activated = false,
+    }
+    ---@type StupidJosephData
+    return stupidData[idx]
+end
 
-    if not data.Charge then data.Charge = CHARGE_DEFAULT end
-    if not data.FramesNotHolding then data.FramesNotHolding = 0 end
-    data.Holding = holding
+---@param player EntityPlayer
+local function CanHold(player)
+    local card = player:GetCard(0)
+    if card == Card.CARD_NULL then return false end
 
-    if not holding or (not enums.CardAnims[player:GetCard(0)]) then
-        if data.Charge > CHARGE_DEFAULT and data.Charge < MAX_CHARGE_TO_FORCE_INPUT and not data.EnchantingFinished then
-            data.ForceInput = true
-        end
+    return true
+end
 
-        data.Charge = CHARGE_DEFAULT
-        data.EnchantingFinished = false
-        data.FramesNotHolding = math.min(data.FramesNotHolding + 1 or 0, 10)
-    else
-        data.FramesNotHolding = 0
-    end
+---@param player EntityPlayer
+local function CanCharge(player)
+    local card = player:GetCard(0)
+    if card == Card.CARD_NULL then return false end
+
+    local config = Isaac.GetItemConfig():GetCard(card)
+    if not config or not mod.enums.CardAnims[card] then return false end
+
+    return true
+end
+
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function ()
+    stupidData = {}
 end)
 
 ---@param player EntityPlayer
-mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function (_, player)
-    local data = utility:GetData(player, "Enchanting")
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function (_, player)
+    local data = GetData(player)
+    local canHold = CanHold(player)
+    local q = Input.IsActionPressed(ButtonAction.ACTION_PILLCARD, player.ControllerIndex)
+    local holding = q and canHold and not data.Activated
 
-    if data.Holding and not data.EnchantingFinished then
-        data.Charge = (data.Charge + 1) or CHARGE_DEFAULT
+    if not q then
+        data.Activated = false
+    end
 
-        if data.Charge > CHARGE_TO_ENCHANT then
-            data.EnchantingFinished = true
-            data.Charge = CHARGE_DEFAULT
-            if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and
-            utility:IsEnchantmentSlotEmpty(player, enums.CardSlot.JOSEPH_BIRTHRIGHT) then
-                JosephMod.josephCharacter:EnchantCard(player, player:GetCard(0), enums.CardSlot.JOSEPH_BIRTHRIGHT, true)
-            else
-                JosephMod.josephCharacter:EnchantCard(player, player:GetCard(0), enums.CardSlot.JOSEPH_INNATE, true)
+    data.Charge = data.Timer >= WINDOW and CanCharge(player) and (data.Charge or 0) + 1 or 0
+
+    if canHold then
+        data.Override = false
+
+        if (not holding and data.Holding) or data.Charge >= MAX_CHARGE then
+            if data.Timer <= WINDOW then
+                data.Override = true
+            end
+
+            if data.Charge >= MAX_CHARGE then
+                local card = player:GetCard(0)
+
+                mod.josephCharacter:EnchantCard(
+                    player,
+                    card,
+                    player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
+                    and mod.utility:IsEnchantmentSlotEmpty(player, mod.enums.CardSlot.JOSEPH_BIRTHRIGHT)
+                    and mod.enums.CardSlot.JOSEPH_BIRTHRIGHT
+                    or mod.enums.CardSlot.JOSEPH_INNATE,
+                    true
+                )
+
+                data.Activated = true
+                holding = false
             end
         end
+    else
+        data.Override = nil
     end
+
+    data.Timer = holding and data.Timer + 1 or 0
+    data.Holding = holding
+    data.Ugugugug:TryLoad("gfx/ui/card_chargebar.anm2")
+    data.Ugugugug:SetCharge(data.Charge, MAX_CHARGE)
 end)
 
 ---@param player EntityPlayer
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function (_, player)
-    if player:GetPlayerType() ~= enums.PlayerType.PLAYER_JOSEPH then return end
-    local data = utility:GetData(player, "Enchanting")
-
-    -- Isaac.RenderText("Charge: " .. data.Charge, 70, 70, 1, 1, 1, 1)
-    -- Isaac.RenderText("Not Holding: " .. data.FramesNotHolding, 70, 100, 1, 1, 1, 1)
-
-    if ((not data.Charge) or (data.Charge < 0)) and (not data.FramesNotHolding or data.FramesNotHolding < 1) then return end
-    if not data.ChargeBar then
-        local chargeSprite = Sprite()
-        chargeSprite:Load("gfx/ui/card_chargebar.anm2",true)
-        data.ChargeBar = chargeSprite
-    end
-
-    if data.FramesNotHolding < 1 then
-        local chargePercent = math.ceil(math.max(0, data.Charge)/CHARGE_TO_ENCHANT * 100)
-        Enchanting:ChargeBarRender(chargePercent, true, Isaac.WorldToScreen(player.Position+chargebarPos), data.ChargeBar)
-    else
-        Enchanting:ChargeBarRender(data.FramesNotHolding, false, Isaac.WorldToScreen(player.Position+chargebarPos), data.ChargeBar)
-    end
+    local data = GetData(player)
+    data.Ugugugug:Render(Isaac.WorldToScreen(player.Position + SPRITE_OFFSET))
 end)
 
-
 ---@param entity Entity?
----@param action ButtonAction
-mod:AddCallback(ModCallbacks.MC_INPUT_ACTION, function (_, entity, _, action)
-    if action ~= ButtonAction.ACTION_PILLCARD then return end
-    local player = entity and entity:ToPlayer() 
-    if not (player and player:GetPlayerType() == enums.PlayerType.PLAYER_JOSEPH) then return end
+---@param id ButtonAction
+mod:AddCallback(ModCallbacks.MC_INPUT_ACTION, function (_, entity, _, id)
+    if id ~= ButtonAction.ACTION_PILLCARD then return end
 
-    local data = utility:GetData(player, "Enchanting")
-    if data.ForceInput then
-        data.ForceInput = false
-        return true
-    end
-    return false
+    local player = entity and entity:ToPlayer()
+    if not player or player:GetPlayerType() ~= mod.enums.PlayerType.PLAYER_JOSEPH then return end
+
+    return GetData(player).Override
 end, InputHook.IS_ACTION_TRIGGERED)
-
-
-function Enchanting:ChargeBarRender(Meter,IsCharging,pos,sprite) --Function credit: Ginger
-    if not Game():GetHUD ():IsVisible () then return end
-    if not sprite then return end
-    if Meter == nil then Meter = 0 end
-    local charge_percentage = Meter
-    local render_pos = pos
-        if IsCharging == true then
-            if charge_percentage < 99 then
-                sprite:SetFrame("Charging", math.floor(charge_percentage))
-            elseif sprite:IsFinished("Charged") or sprite:IsFinished("StartCharged") then
-                if not sprite:IsPlaying("Charged") then
-                    sprite:Play("Charged", true)
-                end
-            elseif not sprite:IsPlaying("Charged") then
-                if not sprite:IsPlaying("StartCharged") then
-                    sprite:Play("Charged", true)
-                end
-            end
-        elseif not sprite:IsPlaying("Disappear") and not sprite:IsFinished("Disappear") then
-            sprite:Play("Disappear", true)
-        end
-    sprite:Render(render_pos,Vector.Zero, Vector.Zero)
-    sprite:Update()
-end
-
-
-function mod:PlayerInit(player)
-    local data = utility:GetData(player, "Enchanting")
-    data.Charge = CHARGE_DEFAULT
-    local chargeSprite = Sprite()
-    chargeSprite:Load("gfx/ui/card_chargebar.anm2",true)
-    data.ChargeBar = chargeSprite
-end
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, mod.PlayerInit)
+-- kerkle

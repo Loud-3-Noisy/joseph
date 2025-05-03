@@ -90,6 +90,7 @@ function JosephChar:onPlayerInit(player)
 
     TSIL.SaveManager.SetPersistentPlayerVariable(JosephMod, "playerRNG", player, rng)
     Game():GetItemPool():RemoveCollectible(CollectibleType.COLLECTIBLE_STARTER_DECK)
+    
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, JosephChar.onPlayerInit)
 
@@ -290,7 +291,7 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, JosephCh
 function JosephChar:EnchantCard(player, card, slot, removeCard)
     local firstTime = true
     if removeCard and removeCard == true then
-        JosephChar:RemoveHeldCard(player, card)
+        player:RemovePocketItem(0)
     end
     player:AnimateCard(card)
     SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
