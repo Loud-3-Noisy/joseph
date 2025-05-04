@@ -42,7 +42,9 @@ EID:addColor("ColorPurpleGlow", nil, function(color)
 end
 )
 
-local function chanceToDisplay(chance)
+local function chanceToDisplay(card)
+    local chance = enums.CardDisenchantChances[card]
+    if card == Card.CARD_REVERSE_STARS then chance = 1 end
     if chance == 0 then return "ZERO"
     elseif chance <= 0.25 then return "LOW"
     elseif chance <= 0.5 then return "MED"
@@ -66,8 +68,7 @@ end
         local lang = EID:getLanguage()
         local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang].description or Descriptions.Enchants["ENCHANT_HEADER"]["en_us"].description or ""
         local translatedDescription = Descriptions.Enchants[descObj.ObjSubType][lang].description or Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or "Enchant description unavailable"
-        local disenchantChance = enums.CardDisenchantChances[descObj.ObjSubType]
-        local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(disenchantChance)][lang].description or Descriptions.Enchants[chanceToDisplay(disenchantChance)]["en_us"].description or ""
+        local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)][lang].description or Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)]["en_us"].description or ""
 
         EID:appendToDescription(descObj, "#" .. translatedHeader .. "#" .. translatedDescription .. "#" .. translatedDisenchantChance)
         return descObj
