@@ -161,52 +161,52 @@ descriptions.Enchants = {
     },
     [Card.CARD_FOOL] = {
         en_us = {
-            description = "In cleared rooms, spawns a portal that leads to a random unexplored non-special room"
+            description = "Spawns a Portal to an unexplored room when the room is clear of enemies"
         },
     },
     [Card.CARD_MAGICIAN] = {
         en_us = {
-            description = "Permanent Homing Tears, but no range up"
+            description = "Homing Tears"
         },
     },
     [Card.CARD_HIGH_PRIESTESS] = {
         en_us = {
-            description = "50% chance for Mom's foot to stomp down on entering a new room"
+            description = "50% chance for Mom's foot to stomp on an enemy when entering a new room"
         },
     },
     [Card.CARD_EMPRESS] = {
         en_us = {
-            description = "Permanent Whore of Babylon state, with reduced stats"
+            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +1 Damage"
         },
     },
     [Card.CARD_EMPEROR] = {
         en_us = {
-            description = "Grants the effects of There's Options"
+            description = "Allows Isaac to choose between 2 items after beating a boss"
         },
     },
     [Card.CARD_HIEROPHANT] = {
         en_us = {
-            description = "13% chance to spawn a bonus Soul Heart on room clear, first room is guaranteed"
+            description = "{{SoulHeart}} 13% chance to spawn a bonus Soul Heart on room clear, first room is guaranteed"
         },
     },
     [Card.CARD_LOVERS] = {
         en_us = {
-            description = "20% chance to spawn a bonus Red Heart on room clear, first room is guaranteed"
+            description = "{{Heart}} 20% chance to spawn a bonus Red Heart on room clear, first room is guaranteed"
         },
     },
     [Card.CARD_CHARIOT] = {
         en_us = {
-            description = "Upon room entry, continuously move for 10 seconds to become invincible"
+            description = "{{Chargeable}} Activates the normal effect by constantly moving for 10 seconds"
         },
     },
     [Card.CARD_JUSTICE] = {
         en_us = {
-            description = "14% chance to proc Justice effect on room clear, first room is guaranteed"
+            description = "14% chance to proc the above effect on room clear, first room is guaranteed#Not all pickups may spawn"
         },
     },
     [Card.CARD_HERMIT] = {
         en_us = {
-            description = "Spawns a trapdoor in shops to an underground shop"
+            description = "{{Shop}} Opens a trapdoor in every Shop#The trapdoor leads to an underground shop that sells trinkets, runes, cards, special hearts and items from any pool"
         },
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
