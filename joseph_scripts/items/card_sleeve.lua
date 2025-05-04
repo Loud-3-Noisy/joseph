@@ -47,7 +47,7 @@ JosephMod:AddCallback(ModCallbacks.MC_USE_ITEM, CardSleeve.UseCardSleeve, CARD_S
 function CardSleeve:EnchantCard(player, card, oldCard)
 
     player:AnimateCard(card)
-    SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
+    SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1)
 
     local enchantedCards = TSIL.SaveManager.GetPersistentPlayerVariable(JosephMod, "EnchantedCards", player)
     if oldCard then
