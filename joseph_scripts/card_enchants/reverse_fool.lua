@@ -136,8 +136,8 @@ function ReverseFool:OnHit(entity, amount, flags, source, countDown)
             spawnPickup(5, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL)
             bombCount = bombCount - 1
         end
+        attempts = attempts + 1
     end
-    attempts = attempts + 1
 
     --print("Dropped: " .. pickupsDropped)
 
