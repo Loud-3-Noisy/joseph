@@ -136,27 +136,27 @@ descriptions.Enchants = {
     },
     ZERO = {
         en_us = {
-            description = "{{ColorLime}}0%{{CR}} Disenchant Chance "
+            description = "{{Warning}} {{ColorLime}}0%{{CR}} Disenchant Chance "
         },
     },
     LOW = {
         en_us = {
-            description = "{{ColorGreen}}LOW{{CR}} Disenchant Chance"
+            description = "{{Warning}} {{ColorGreen}}LOW{{CR}} Disenchant Chance"
         },
     },
     MED = {
         en_us = {
-            description = "{{ColorYellow}}MEDIUM{{CR}} Disenchant Chance"
+            description = "{{Warning}} {{ColorYellow}}MEDIUM{{CR}} Disenchant Chance"
         },
     },
     HIGH = {
         en_us = {
-            description = "{{ColorRed}}HIGH{{CR}} Disenchant Chance"
+            description = "{{Warning}} {{ColorRed}}HIGH{{CR}} Disenchant Chance"
         },
     },
     HUNDRED = {
         en_us = {
-            description = "{{ColorRed}}100%{{CR}} Disenchant Chance"
+            description = "{{Warning}} {{ColorRed}}100%{{CR}} Disenchant Chance"
         },
     },
     [Card.CARD_FOOL] = {
@@ -176,12 +176,12 @@ descriptions.Enchants = {
     },
     [Card.CARD_EMPRESS] = {
         en_us = {
-            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +1 Damage"
+            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} {{ColorYellow}}+1 Damage"
         },
     },
     [Card.CARD_EMPEROR] = {
         en_us = {
-            description = "Allows Isaac to choose between 2 items after beating a boss"
+            description = "{{BossRoom}} Allows Isaac to choose between 2 items after beating a boss"
         },
     },
     [Card.CARD_HIEROPHANT] = {
@@ -196,12 +196,12 @@ descriptions.Enchants = {
     },
     [Card.CARD_CHARIOT] = {
         en_us = {
-            description = "{{Chargeable}} Activates the normal effect by constantly moving for 10 seconds"
+            description = "{{Chargeable}} Activates the effect of {{Card8}} The Chariot by constantly moving for 10 seconds"
         },
     },
     [Card.CARD_JUSTICE] = {
         en_us = {
-            description = "14% chance to proc the above effect on room clear, first room is guaranteed#Not all pickups may spawn"
+            description = "{{Card9}} 14% chance to proc the effect of Justice on room clear, first room is guaranteed#{{Warning}} Not all pickups may spawn"
         },
     },
     [Card.CARD_HERMIT] = {
@@ -216,7 +216,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_STRENGTH] = {
         en_us = {
-            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +0.3 Damage#↑ {{Damage}} x1.5 Damage multiplier#↑ {{Range}} +5.25 Range#↑ +0.5 Tear height"
+            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +0.3 Damage#↑ {{Damage}} {{ColorYellow}}x1.25 Damage multiplier#↑ {{Range}} +5.25 Range#↑ +0.5 Tear height"
         },
     },
     [Card.CARD_HANGED_MAN] = {
@@ -226,87 +226,87 @@ descriptions.Enchants = {
     },
     [Card.CARD_DEATH] = {
         en_us = {
-            description = "Spawns a Dry Baby"
+            description = "{{Collectible265}} Spawns a Dry Baby"
         },
     },
     [Card.CARD_TEMPERANCE] = {
         en_us = {
-            description = "Spawns a Lil Blood Machine Familiar"
+            description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}}Spawns a Lil Blood Bank Familiar"
         },
     },
     [Card.CARD_DEVIL] = {
         en_us = {
-            description = "Permanent Beilial state, but with reduced stats"
+            description = "↑ {{Damage}} {{ColorYellow}}+1.5 Damage"
         },
     },
     [Card.CARD_TOWER] = {
         en_us = {
-            description = "Curse of the Tower lol"
+            description = "{{Warning}} Taking damage spawns 6 Troll Bombs#The Troll Bombs inherit Isaac's bomb effects"
         },
     },
     [Card.CARD_STARS] = {
         en_us = {
-            description = "Grants the effects of More Options"
+            description = "{{TreasureRoom}} Allows Isaac to choose between 2 items in treasure rooms"
         },
     },
     [Card.CARD_MOON] = {
         en_us = {
-            description = "Grants the effects of Luna"
+            description = "Adds an extra {{SecretRoom}} Secret Room and {{SuperSecretRoom}} Super Secret Room to each floor#Reveals one Secret Room each floor#{{Timer}} Secret Rooms contain a beam of light that grant for the floor:#↑ {{Tears}} +0.5 Fire rate#↑ {{Tears}} Additional +0.5 Fire rate from the first beam per floor#{{HalfSoulHeart}} Half a Soul Heart"
         },
     },
     [Card.CARD_SUN] = {
         en_us = {
-            description = "Grants the effects of Sol + All enemies are inflicted with burn status"
+            description = "{{Burning}} Entering a room burns all enemies#When the floor boss is defeated, receive for the floor:#↑ {{Damage}} +3 Damage#↑ {{Luck}} +1 Luck#{{Card20}} The Sun effect#{{Battery}} Fully recharges the active item#{{CurseBlind}} Removes any curses"
         }
     },
     [Card.CARD_JUDGEMENT] = {
         en_us = {
-            description = "Spawns a Bum Friend or a Dark Bum"
-        },
+            description = "{{Collectible144}} Spawns a Bum Friend Familiar#{{Collectible278}} or a Dark Bum Familiar"
+        },	
     },
         [Card.CARD_WORLD] = {
         en_us = {
-            description = "It's the World, but permanent..."
+            description = "Full mapping effect for each floor (except {{SuperSecretRoom}} Super Secret Room)"
         },
     },
     [Card.CARD_REVERSE_FOOL] = {
         en_us = {
-            description = "Getting hit drops 3-5 pickups, with a 40% chance to drop the quarter if you have over 25 coins (or the other item drops reverse fool can drop)"
+            description = "Taking damage makes Isaac drop 3-5 coins, bombs or keys#The pickups can be replaced with other variants, such as golden keys, nickels, dimes, etc# 40% chance for Coins and bombs to be dropped as {{Collectible74}} The Quarter or {{Collectible19}} Boom! if possible)"
         },
     },
     [Card.CARD_REVERSE_MAGICIAN] = {
         en_us = {
-            description = "Grants the effect of The Soul"
+            description = "Grants an aura that repels enemies and projectiles"
         },
     },
     [Card.CARD_REVERSE_HIGH_PRIESTESS] = {
         en_us = {
-            description = "Lol lmao"
+            description = "{{Card58}} Removes the 60 second time limit from the effect of The Highpriestess? :)"
         },
     },
     [Card.CARD_REVERSE_EMPRESS] = {
         en_us = {
-            description = "Trans your gender"
+            description = "↑ {{Heart}} +2 Health#↑ {{Tears}} {{ColorYellow}}+1 Fire rate#↓ {{Speed}} -0.1 Speed"
         },
     },
     [Card.CARD_REVERSE_EMPEROR] = {
         en_us = {
-            description = "A Portal to another boss appears after defeating the boss of the floor, stays open until you enter it"
+            description = "{{Card60}} A Portal leading to The Emperor? Boss Room appears after defeating the Boss of the floor#stays open until you enter it"
         },
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
         en_us = {
-            description = "14% chance to spawn a bone heart on room clear, first room is guaranteed"
+            description = "{{EmptyBoneHeaet}} 14% chance to spawn a bone heart on room clear, first room is guaranteed"
         },
     },
     [Card.CARD_REVERSE_LOVERS] = {
         en_us = {
-            description = "Items are sometimes replaced with a Single Use Magic Skin"
+            description = "{{Collectible642}} Items are sometimes replaced with a Single Use Magic Skin"
         },
     },
     [Card.CARD_REVERSE_CHARIOT] = {
         en_us = {
-            description = "Upon room entry, stand still for 4 sconds to become statue"
+            description = "{{Chargeable}} Activates the effect of {{Card63}} The Chariot? by standing still for 4 seconds"
         },
     },
     [Card.CARD_REVERSE_JUSTICE] = {
@@ -316,67 +316,67 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_HERMIT] = {
         en_us = {
-            description = "Anything you touch that isn't coins, becomes coins"
+            description = "Touching any non coin pick up will turn them into a number of coins equal to their Shop value"
         },
     },
     [Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = {
         en_us = {
-            description = "Spawns a dice room in a valid location"
+            description = "{{DiceRoom}} Attempts to Spawn a Dice Room in a valid location"
         },
     },
     [Card.CARD_REVERSE_STRENGTH] = {
         en_us = {
-            description = "Permanent reverse strength but you also get a 0.75x damage multiplier"
+            description = "{{Weakness}} Entering a room weakens all enemies for 10 seconds"
         },
     },
     [Card.CARD_REVERSE_HANGED_MAN] = {
         en_us = {
-            description = "Permanent reverse hanged man but the dropped coins are disappearing and slight tears down"
+            description = "↓ {{Speed}} -0.1 Speed#Triple shot#{{Coin}} Killed enemies drop vanishing coins"
         },
     },
     [Card.CARD_REVERSE_DEATH] = {
         en_us = {
-            description = "Enemies have a chance to spawn bone orbitals, spurs, and friendly bonies on death"
+            description = "Enemies have a chance to spawn Bone entities on death"
         },
     },
     [Card.CARD_REVERSE_TEMPERANCE] = {
         en_us = {
-            description = "20% Chance to take a random pill on room entry. Gives effect of Little baggy"
+            description = "{{Pill}} Entering a new room has a 20% Chance to force Isaac to eat a random pill#{{Collectible252}} Gives the effects of Little Baggy"
         },
     },
     [Card.CARD_REVERSE_DEVIL] = {
         en_us = {
-            description = "Permanent Reverse Devil"
+            description = "Grants Flight#{{Collectible390}} Spawns a Seraphim familiar"
         },
     },
     [Card.CARD_REVERSE_TOWER] = {
         en_us = {
-            description = "Triggers Reverse Tower effect upon getting hit"
+            description = "{{Card72}} Taking damage activates the effect of The Tower?"
         },
     },
     [Card.CARD_REVERSE_STARS] = {
         en_us = {
-            description = "All newly generated item pedestals are doubled, but getting hit instantly disenchants the card, deals 3 full hearts of non-lethal damage, and activates a D4 effect"
+            description = "Hangs a golden sword above Isaac's head, which doubles all pedestal items#{{Warning}} After taking any damage, the sword will fall and deal 3 hearts of non-lethal damage to Isaac, rerolling all his passive items#Invincibility effects can prevent the damage, but your items will still be rerolled"
         },
     },
     [Card.CARD_REVERSE_MOON] = {
         en_us = {
-            description = "On Room clear, spawns a red room if possible on an random adjacent wall. 50% chance to spawn one instead if already in a red room."
+            description = "Clearing a room will create a Red Key room if possible#50% chance to occur when in a red room"
         },
     },
     [Card.CARD_REVERSE_SUN] = {
         en_us = {
-            description = "Permanent Reverse Sun but -0.5 damage (+1 total)"
+            description = "#↑ {{Damage}} {{ColorYellow}}+1 Damage#Flight and spectral tears#{{BoneHeart}} Converts heart containers into Bone Hearts (reverts)#{{CurseDarkness}} Curse of Darkness"
         },
     },
     [Card.CARD_REVERSE_JUDGEMENT] = {
         en_us = {
-            description = "Item pedestals will now cycle between two options"
+            description = "Item pedestals will now cycle between 2 random items"
         },
     },
     [Card.CARD_REVERSE_WORLD] = {
         en_us = {
-            description = "Spawns a crawlspace in the starting room"
+            description = "{{LadderRoom}} Spawns a trap door to a crawlspace in the starting room"
         },
     },
 
