@@ -266,33 +266,6 @@ function JosephChar:OnHUDRender()
 JosephMod:AddPriorityCallback(ModCallbacks.MC_HUD_RENDER, CallbackPriority.IMPORTANT, JosephChar.OnHUDRender)
 
 
-
-function JosephChar:ChargeBarRender(Meter,IsCharging,pos,Sprite) --Function credit: Ginger
-    if not Game():GetHUD ():IsVisible () then return end
-    if Meter == nil then Meter = 0 end
-    local charge_percentage = Meter
-    local render_pos = pos
-        if IsCharging == true then
-            if charge_percentage < 99 then
-                Sprite:SetFrame("Charging", math.floor(charge_percentage))
-            elseif Sprite:IsFinished("Charged") or Sprite:IsFinished("StartCharged") then
-                if not Sprite:IsPlaying("Charged") then
-                    Sprite:Play("Charged", true)
-                end
-            elseif not Sprite:IsPlaying("Charged") then
-                if not Sprite:IsPlaying("StartCharged") then
-                    Sprite:Play("Charged", true)
-                end
-            end
-        elseif not Sprite:IsPlaying("Disappear") and not Sprite:IsFinished("Disappear") then
-            Sprite:Play("Disappear", true)
-        end
-    Sprite:Render(render_pos,Vector.Zero, Vector.Zero)
-    Sprite:Update()
-end
-
-
-
 function JosephChar:OnHit(entity, amount, flags, source, countDown)
 
     local player = entity:ToPlayer()

@@ -1,6 +1,6 @@
 if not EID then return end
 
-local Enums = JosephMod.enums
+local enums = JosephMod.enums
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false)
 local Descriptions = include("joseph_scripts.compat.EID_descriptions")
 
@@ -42,24 +42,34 @@ EID:addColor("ColorPurpleGlow", nil, function(color)
 end
 )
 
+local function chanceToDisplay(chance)
+    if chance == 0 then return "ZERO"
+    elseif chance <= 0.25 then return "LOW"
+    elseif chance <= 0.5 then return "MED"
+    elseif chance < 1 then return "HIGH"
+    else return "HUNDRED" end
+end
 
 -- Enchants
 
     local function shouldDisplayEnchantDescription(descObj)
         if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 300 and Descriptions.Enchants[descObj.ObjSubType] then
             if (descObj.Entity ~= nil) then
-                if PlayerManager.AnyoneIsPlayerType(josephType) or PlayerManager.AnyoneHasCollectible(CARD_SLEEVE) then return true end
-            else
-                if EID.holdTabPlayer and EID.holdTabPlayer:ToPlayer():GetPlayerType() == josephType or EID.holdTabPlayer:ToPlayer():HasCollectible(CARD_SLEEVE) then return true end
+                if (PlayerManager.AnyoneIsPlayerType(josephType) or PlayerManager.AnyoneHasCollectible(CARD_SLEEVE)) and
+                not PlayerManager.AnyoneHasCollectible(enums.Collectibles.SCRAWL) then return true end
+            elseif EID.holdTabPlayer then
+                if EID.holdTabPlayer:ToPlayer():GetPlayerType() == josephType or EID.holdTabPlayer:ToPlayer():HasCollectible(CARD_SLEEVE) then return true end
             end
         end
     end
     local function getDescription(descObj)
         local lang = EID:getLanguage()
-        local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang].description or Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or ""
+        local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang].description or Descriptions.Enchants["ENCHANT_HEADER"]["en_us"].description or ""
         local translatedDescription = Descriptions.Enchants[descObj.ObjSubType][lang].description or Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or "Enchant description unavailable"
-        
-        EID:appendToDescription(descObj, "#" .. translatedHeader .. "#" .. translatedDescription)
+        local disenchantChance = enums.CardDisenchantChances[descObj.ObjSubType]
+        local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(disenchantChance)][lang].description or Descriptions.Enchants[chanceToDisplay(disenchantChance)]["en_us"].description or ""
+
+        EID:appendToDescription(descObj, "#" .. translatedHeader .. "#" .. translatedDescription .. "#" .. translatedDisenchantChance)
         return descObj
     end
 
@@ -179,95 +189,3 @@ end
 -- end
 
 
--- ---Gets the description Soft Reset will have according to the pickups that
--- ---will spawn if the player holds Soft Reset.
--- ---@param player EntityPlayer
--- ---@return string
--- local function GetSoftResetDesc(player)
---     local playerType = player:GetPlayerType()
---     local playerConfig = EntityConfig.GetPlayer(playerType)
-
---     local SoftReset = MilkshakeVol2.Trinkets.SoftReset
-
---     --Get the amount of pickups
---     local coins = SoftReset:GetPickups(player, PickupVariant.PICKUP_COIN, function()
---         return playerConfig:GetCoins()
---     end)
---     local bombs = SoftReset:GetPickups(player, PickupVariant.PICKUP_BOMB, function()
---         return playerConfig:GetBombs()
---     end)
---     local keys = SoftReset:GetPickups(player, PickupVariant.PICKUP_KEY, function()
---         return playerConfig:GetKeys()
---     end)
-
---     local pill = SoftReset:GetPickups(player, PickupVariant.PICKUP_PILL, function()
---         return playerConfig:GetPill()
---     end)
---     local card = SoftReset:GetPickups(player, PickupVariant.PICKUP_TAROTCARD, function()
---         return playerConfig:GetCard()
---     end)
---     local trinket = SoftReset:GetPickups(player, PickupVariant.PICKUP_TRINKET, function()
---         return playerConfig:GetTrinket()
---     end)
-
---     --Put each description line together
---     local coinDesc = "#{{Coin}} " .. coins .. " " .. GetPickupName(PickupVariant.PICKUP_COIN)
---     local bombDesc = "#{{Bomb}} " .. bombs .. " " .. GetPickupName(PickupVariant.PICKUP_BOMB)
---     local keyDesc = "#{{Key}} " .. keys .. " " .. GetPickupName(PickupVariant.PICKUP_KEY)
-
---     local pillDesc = ""
---     if pill ~= 0 then
---         pillDesc = "#{{Pill" .. pill .. "}} " .. GetPickupName(PickupVariant.PICKUP_PILL)
---     end
-
---     local cardDesc = ""
---     if card ~= 0 then
---         local cardName = EID:getObjectName(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, card)
---         cardDesc = "#{{Card" .. card .. "}} " .. cardName
---     end
-
---     local trinketDesc = ""
---     if trinket ~= 0 then
---         local trinketName = EID:getObjectName(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET, trinket)
---         trinketDesc = "#{{Trinket" .. trinket .. "}} " .. trinketName
---     end
-
---     coinDesc = MakePlural(coinDesc, coins)
---     bombDesc = MakePlural(bombDesc, bombs)
---     keyDesc = MakePlural(keyDesc, keys)
-
---     local final = ""
-
---     if coins >= 1 then final = final .. coinDesc end
---     if bombs >= 1 then final = final .. bombDesc end
---     if keys >= 1 then final = final .. keyDesc end
-
---     if not (pill == 0) then final = final .. pillDesc end
---     if not (card == 0) then final = final .. cardDesc end
-
---     if not (trinket == 0) then final = final .. trinketDesc end
-
---     final = final:sub(2)
-
---     if final:len() == 0 then
---         final = "{{UnknownHeart}} " .. GetPickupName(PickupVariant.PICKUP_NULL)
---     end
-
---     return final
--- end
-
--- ---Adds the pickups spawned by Soft Reset to the EID description.
--- local function AddPlayerDesc(obj)
---     local player = EID.holdTabPlayer
---     if obj.Entity then
---         player = Game():GetNearestPlayer(obj.Entity.Position)
---     end
-
---     EID:appendToDescription(obj,
---         "#{{Player" .. player:GetPlayerType() .. "}} {{ColorGray}}" .. player:GetName() ..
---         "#" .. GetSoftResetDesc(player:ToPlayer())
---     )
---     return obj
--- end
-
--- EID:addDescriptionModifier("MILKSHAKEVOL2_SoftResetDesc", IsSoftReset, AddPlayerDesc)

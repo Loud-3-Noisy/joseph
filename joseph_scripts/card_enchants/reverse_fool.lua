@@ -24,7 +24,7 @@ JosephMod:AddCallback(enums.Callbacks.JOSEPH_POST_ENCHANT_REMOVE, ReverseFool.re
 function ReverseFool:OnHit(entity, amount, flags, source, countDown)
 
     local player = entity:ToPlayer()
-    local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
+    --local fakeDamageFlags = DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_FAKE
     --if flags & fakeDamageFlags > 0 then return end
 
     if not utility:HasEnchantment(player, fool) then return end
