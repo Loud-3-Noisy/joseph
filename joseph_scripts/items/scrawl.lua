@@ -82,7 +82,8 @@ if EID then
     local function HideCardEIDCondition(descObj)
         if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 300 and
         not Isaac.GetItemConfig():GetCard(descObj.ObjSubType):IsRune() and
-        PlayerManager.AnyoneHasCollectible(SCRAWL) then
+        PlayerManager.AnyoneHasCollectible(SCRAWL) and
+        descObj.Entity ~= nil then
             return true
         end
     end

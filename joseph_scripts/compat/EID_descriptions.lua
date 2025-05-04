@@ -131,7 +131,32 @@ descriptions.Trinkets = {
 descriptions.Enchants = {
     ENCHANT_HEADER = {
         en_us = {
-            description = "{{EnchantIcon}} {{ColorPurpleGlow}}When enchanted: "
+            description = "{{ColorPurpleGlow}}When enchanted: "
+        },
+    },
+    ZERO = {
+        en_us = {
+            description = "{{ColorLime}}0% "
+        },
+    },
+    LOW = {
+        en_us = {
+            description = "{{ColorGreen}}LOW{{CR}} Disenchant Chance"
+        },
+    },
+    MED = {
+        en_us = {
+            description = "{{ColorYellow}}MEDIUM{{CR}} Disenchant Chance"
+        },
+    },
+    HIGH = {
+        en_us = {
+            description = "{{ColorRed}}HIGH{{CR}} Disenchant Chance"
+        },
+    },
+    HUNDRED = {
+        en_us = {
+            description = "{{ColorRed}}100%{{CR}} Disenchant Chance"
         },
     },
     [Card.CARD_FOOL] = {

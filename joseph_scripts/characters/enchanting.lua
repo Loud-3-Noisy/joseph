@@ -104,6 +104,7 @@ end)
 
 ---@param player EntityPlayer
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function (_, player)
+    if player:GetPlayerType() ~= mod.enums.PlayerType.PLAYER_JOSEPH then return end
     local data = GetData(player)
     data.Ugugugug:Render(Isaac.WorldToScreen(player.Position + SPRITE_OFFSET))
 end)
