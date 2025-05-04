@@ -131,12 +131,12 @@ descriptions.Trinkets = {
 descriptions.Enchants = {
     ENCHANT_HEADER = {
         en_us = {
-            description = "{{ColorPurpleGlow}}When enchanted: "
+            description = "{{EnchantIcon}} {{ColorPurpleGlow}}When enchanted: "
         },
     },
     ZERO = {
         en_us = {
-            description = "{{ColorLime}}0% "
+            description = "{{ColorLime}}0%{{CR}} Disenchant Chance "
         },
     },
     LOW = {
