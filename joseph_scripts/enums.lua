@@ -25,7 +25,7 @@ enums.Trinkets = {
 }
 
 enums.Cards = {
-    THE_AEON = Isaac.GetCardIdByName("TheAeon")
+    THE_AEON = Isaac.GetCardIdByName("XX - The Aeon"),
 }
 
 enums.Familiars = {

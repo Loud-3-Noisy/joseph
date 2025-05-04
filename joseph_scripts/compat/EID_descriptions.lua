@@ -106,7 +106,7 @@ descriptions.Collectibles = {
 	
 }
 --TRINKET DESCRIPTIONS
-descriptions.Trinkets = {	
+descriptions.Trinkets = {
 	[enums.Trinkets.CUPPA_JOE] = {
 		en_us = {
 			name = "Cup of Joe",
@@ -126,6 +126,15 @@ descriptions.Trinkets = {
 		},
 	},
 	
+}
+--PICKUP Cards
+descriptions.Cards = {
+	[enums.Cards.THE_AEON] = {
+		en_us = {
+			name = "XX - The Aeon",
+			description = "Brings Isaac back to the previous room and reverses all actions done in the room the card was used in",
+		},
+	},
 }
 --ENCHANT DESCRIPTIONS
 descriptions.Enchants = {
