@@ -294,7 +294,7 @@ function JosephChar:EnchantCard(player, card, slot, removeCard)
         player:RemovePocketItem(0)
     end
     player:AnimateCard(card)
-    SFXManager():Play(SoundEffect.SOUND_POWERUP1, 1)
+    SFXManager():Play(SoundEffect.SOUND_POWERUP_SPEWER, 1)
 
     if not utility:IsEnchantmentSlotEmpty(player, slot) then
         JosephChar:DisenchantCard(player, slot, false)
