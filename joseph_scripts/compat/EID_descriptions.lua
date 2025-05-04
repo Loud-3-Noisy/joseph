@@ -211,12 +211,12 @@ descriptions.Enchants = {
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
         en_us = {
-            description = "Spawns a Lil Slot Machine Familiar or a Lil Fortune Teller Familiar"
+            description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} Spawns a Lil Slot Machine Familiar#{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} or a Lil Fortune Teller Familiar"
         },
     },
     [Card.CARD_STRENGTH] = {
         en_us = {
-            description = "Permanent all stat up, but not as strong as normal Strength."
+            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +0.3 Damage#↑ {{Damage}} x1.5 Damage multiplier#↑ {{Range}} +5.25 Range#↑ +0.5 Tear height"
         },
     },
     [Card.CARD_HANGED_MAN] = {
