@@ -127,12 +127,13 @@ for trinket, translations in pairs(Descriptions.Trinkets) do
     end
 end
 
--- -- Pickups
--- for card, translations in pairs(Descriptions.Cards) do
---     for language, description in pairs(translations) do
---         EID:addCard(card, description.description, description.name, language)
---     end
--- end
+-- Pickups
+for card, translations in pairs(Descriptions.Cards) do
+    print(card .. " " .. translations["en_us"].description)
+    for language, description in pairs(translations) do
+        EID:addCard(card, description.description, description.name, language)
+    end
+end
 
 -- -- Entities
 -- for entity, translations in pairs(Descriptions.Entities) do
