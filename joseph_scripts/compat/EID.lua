@@ -9,8 +9,10 @@ local CARD_SLEEVE = Isaac.GetItemIdByName("Card Sleeve")
 
 local icons = Sprite()
 icons:Load("gfx/ui/EID_icon.anm2", true)
+local TheAeon = Isaac.GetCardIdByName ("XX - The Aeon")
 EID:addIcon("Player"..josephType, "Joseph", 0, 16, 16, 5, 6, icons)
 EID:addIcon("EnchantIcon", "Enchant", 0, 16, 16, 5, 6, icons)
+EID:addIcon("TheAeon" ..TheAeon, "XX - The Aeon", 0, 16, 16, 5, 6, icons)
 
 EID:setModIndicatorName("Joseph ")
 EID:setModIndicatorIcon("Player"..josephType)
