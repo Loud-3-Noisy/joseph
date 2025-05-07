@@ -88,7 +88,7 @@ descriptions.Collectibles = {
 	[enums.Collectibles.CARD_SLEEVE] = {
 		en_us = {
 			name = "Card Sleeve",
-			description = "{{Card}} Consumes the currently held Tarot Card, enchancting it onto Isaac permanently#{{Card}} Enchanting a new card will remove the previous enchant's effect",
+			description = "{{Card}} Consumes the currently held Tarot Card, enchanting it onto Isaac while being held#{{Card}} Enchanting a new card will remove the previous enchant's effect",
 		},
 	},
 	[enums.Collectibles.CALENDAR] = {
