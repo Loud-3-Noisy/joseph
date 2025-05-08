@@ -115,17 +115,19 @@ end
 JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, Calendar.RemoveCalendar, CALENDAR)
 
 
-local function CalendarCondition(descObj)
-    if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CALENDAR then
-        return true
+if EID then
+    local function CalendarCondition(descObj)
+        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CALENDAR then
+            return true
+        end
     end
-end
-local function CalendarDisplay(descObj)
-    local lang = EID:getLanguage()
-    local weekday = os.date("*t").wday
-    local dayDesc = (JosephMod.Descriptions).CalendarDays[weekday][lang] or JosephMod.Descriptions.CalendarDays[weekday]["en_us"] or "wtf"
-    EID:appendToDescription(descObj, "#" .. dayDesc)
-    return descObj
-end
+    local function CalendarDisplay(descObj)
+        local lang = EID:getLanguage()
+        local weekday = os.date("*t").wday
+        local dayDesc = (JosephMod.Descriptions).CalendarDays[weekday][lang] or JosephMod.Descriptions.CalendarDays[weekday]["en_us"] or "wtf"
+        EID:appendToDescription(descObj, "#" .. dayDesc)
+        return descObj
+    end
 
-EID:addDescriptionModifier("CalendarDay", CalendarCondition, CalendarDisplay)
+    EID:addDescriptionModifier("CalendarDay", CalendarCondition, CalendarDisplay)
+end

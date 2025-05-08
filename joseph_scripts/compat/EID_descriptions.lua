@@ -112,7 +112,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.MAGIC_SKIN_SINGLE_USE] = {
 		en_us = {
 			name = "Magic Skin",
-			description = "Spawns an item from the current room's item pool#{{BrokenHeart}} Turns 1 heart container or 1 Bone Heart or 2 Soul Hearts into a Broken Heart#",
+			description = "{{Warning}} SINGLE USE {{Warning}}#Spawns an item from the current room's item pool#{{BrokenHeart}} Turns 1 heart container or 1 Bone Heart or 2 Soul Hearts into a Broken Heart#",
 		},
 	},
 }
