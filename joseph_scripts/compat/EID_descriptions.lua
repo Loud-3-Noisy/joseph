@@ -45,7 +45,7 @@ local enums = JosephMod.enums
     Don't forget to add all the commas!
 ]]
 
-local josephType = Isaac.GetPlayerTypeByName("Joseph", false)
+local josephType = enums.PlayerType.PLAYER_JOSEPH
 
 --COLLECTIBLE DESCRIPTIONS
 descriptions.Collectibles = {

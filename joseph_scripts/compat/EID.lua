@@ -1,7 +1,7 @@
 if not EID then return end
 
 local enums = JosephMod.enums
-local josephType = Isaac.GetPlayerTypeByName("Joseph", false)
+local josephType = enums.PlayerType.PLAYER_JOSEPH
 JosephMod.Descriptions = include("joseph_scripts.compat.EID_descriptions")
 local Descriptions = JosephMod.Descriptions
 

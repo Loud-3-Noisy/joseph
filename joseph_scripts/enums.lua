@@ -2,7 +2,7 @@ local enums = {}
 
 
 enums.PlayerType = {
-    PLAYER_JOSEPH = Isaac.GetPlayerTypeByName("Joseph")
+    PLAYER_JOSEPH = Isaac.GetPlayerTypeByName("Josephf", false)
 }
 
 enums.Collectibles = {
