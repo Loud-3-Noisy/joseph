@@ -1,5 +1,5 @@
 <players root="gfx/characters/costumes/" portraitroot="gfx/ui/stage/" nameimageroot="gfx/ui/boss/"> 
-    <player name="Joseph"
+    <player name="Josephf"
         skin="character_joseph.png"
         nameimage="playername_joseph.png"
         hp="4"
@@ -12,7 +12,7 @@
 		birthright="Protected Future"
 		achievement="Joseph"
 	/>
-	<player name="Joseph" bSkinParent="Joseph"
+	<player name="Josephf" bSkinParent="Josephf"
         skin="character_joseph.png"
         nameimage="playername_joseph.png"
         hp="4"

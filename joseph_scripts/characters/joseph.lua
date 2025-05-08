@@ -53,7 +53,7 @@ local BIRTHRIGHT_CARD_DISPLAY_OFFSET = 22
 local NUMBER_TAROT_CARDS = 22
 local RECOMMENDED_SHIFT_IDX = 35
 local DISENCHANT_ENTITY_ID = Isaac.GetEntityVariantByName("Disenchant Effect")
-local josephType = Isaac.GetPlayerTypeByName("Joseph", false) -- Exactly as in the xml. The second argument is if you want the Tainted variant.
+local josephType = enums.PlayerType.PLAYER_JOSEPH
 local chargebarPos = Vector(-30, -52)
 local REVERSE_TAROT_CHANCE = 0.12
 

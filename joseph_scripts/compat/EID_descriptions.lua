@@ -45,7 +45,7 @@ local enums = JosephMod.enums
     Don't forget to add all the commas!
 ]]
 
-local josephType = Isaac.GetPlayerTypeByName("Joseph", false)
+local josephType = enums.PlayerType.PLAYER_JOSEPH
 
 --COLLECTIBLE DESCRIPTIONS
 descriptions.Collectibles = {
@@ -70,7 +70,7 @@ descriptions.Collectibles = {
 	[enums.Collectibles.SCRAWL] = {
 		en_us = {
 			name = "Scrawl",
-			description = "{{Card}} Entering an uncleared room gives Isaac a random card#{{Card}} Cards vanish when dropping them on the floor",
+			description = "{{Card}} Entering an uncleared room gives Isaac a random card#{{Warning}} Cards vanish when dropping them on the floor",
 		},
 	},
 	[enums.Collectibles.POKER_MAT] = {
@@ -107,6 +107,12 @@ descriptions.Collectibles = {
 		en_us = {
 			name = "Ace of Hearts",
 			description = "All Heart pick ups have a 50% chance to be rerolled into other pickup types#Almost all {{Heart}} Heart pickups are replaced with {{Card}} Cards",
+		},
+	},
+    [enums.Collectibles.MAGIC_SKIN_SINGLE_USE] = {
+		en_us = {
+			name = "Magic Skin",
+			description = "Spawns an item from the current room's item pool#{{BrokenHeart}} Turns 1 heart container or 1 Bone Heart or 2 Soul Hearts into a Broken Heart#",
 		},
 	},
 }
@@ -328,7 +334,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
         en_us = {
-            description = "{{EmptyBoneHeaet}} 14% chance to spawn a bone heart on room clear, first room is guaranteed"
+            description = "{{EmptyBoneHeart}} 14% chance to spawn a bone heart on room clear, first room is guaranteed"
         },
     },
     [Card.CARD_REVERSE_LOVERS] = {
