@@ -69,7 +69,6 @@ function Calendar:AddCalendar(_, _, firstTime, _, _, player)
     if not firstTime then return end
 
     local weekday = os.date("*t").wday
-    weekday = 6
     if weekday == 5 or weekday == 6 then
         player:AddMaxHearts(2)
         player:AddHearts(4)
@@ -114,3 +113,19 @@ function Calendar:RemoveCalendar(player, item)
 
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, Calendar.RemoveCalendar, CALENDAR)
+
+
+local function CalendarCondition(descObj)
+    if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 100 and descObj.ObjSubType == CALENDAR then
+        return true
+    end
+end
+local function CalendarDisplay(descObj)
+    local lang = EID:getLanguage()
+    local weekday = os.date("*t").wday
+    local dayDesc = (JosephMod.Descriptions).CalendarDays[weekday][lang] or JosephMod.Descriptions.CalendarDays[weekday]["en_us"] or "wtf"
+    EID:appendToDescription(descObj, "#" .. dayDesc)
+    return descObj
+end
+
+EID:addDescriptionModifier("CalendarDay", CalendarCondition, CalendarDisplay)

@@ -94,13 +94,13 @@ descriptions.Collectibles = {
 	[enums.Collectibles.CALENDAR] = {
 		en_us = {
 			name = "Calendar",
-			description = "Boosts a stat based on the day of the week:#{{Blank}} Sun: ↑ +1 Damage up#{{Blank}} Mon: ↑ +0.7 Tears up#{{Blank}} Tue: ↑ +1 Damage up#{{Blank}} Wed: ↑ +0.3 Speed up#{{Blank}} Thur: ↑ +1 Health up#{{Blank}} Fri: ↑ +1 Health up#{{Blank}} Sat: ↑ +0.7 Tears up",
+			description = "Increases a stat based on the day of the week:",
 		},
 	},
 	[enums.Collectibles.SHREDDER] = {
 		en_us = {
 			name = "Shredder",
-			description = "{{Card}} Shreds the currently selected card from Isaac's consumable slot, permanently removing that card from the pool for the rest of the run, and spawns 5 random pickups",
+			description = "{{Card}} Shreds the currently selected card from Isaac's consumable slot, spawning 5 random pickups and permanently removing that card from the pool for the rest of the run",
 		},
 	},
     [enums.Collectibles.ACE_OF_HEARTS] = {
@@ -109,7 +109,31 @@ descriptions.Collectibles = {
 			description = "All Heart pick ups have a 50% chance to be rerolled into other pickup types#Almost all {{Heart}} Heart pickups are replaced with {{Card}} Cards",
 		},
 	},
-	
+}
+
+descriptions.CalendarDays = {
+    [1] = {
+        en_us = "#{{ColorSilver}}Sunday:{{CR}} #↑ +1 Damage"
+    },
+    [2] = {
+        en_us = "#{{ColorSilver}}Monday:{{CR}} #↑ +0.7 Tears"
+    },
+    [3] = {
+        en_us = "#{{ColorSilver}}Tuesday:{{CR}} #↑ +1 Damage"
+    },
+    [4] = {
+        en_us = "#{{ColorSilver}}Wednesday:{{CR}} #↑ +0.3 Speed"
+    },
+    [5] = {
+        en_us = "#{{ColorSilver}}Thursday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart"
+    },
+    [6] = {
+        en_us = "#{{ColorSilver}}Friday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart"
+    },
+    [7] = {
+        en_us = "#{{ColorSilver}}Saturday:{{CR}} #↑ +0.7 Tears"
+    },
+    
 }
 --TRINKET DESCRIPTIONS
 descriptions.Trinkets = {

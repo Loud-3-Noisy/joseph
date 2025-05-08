@@ -2,7 +2,8 @@ if not EID then return end
 
 local enums = JosephMod.enums
 local josephType = Isaac.GetPlayerTypeByName("Joseph", false)
-local Descriptions = include("joseph_scripts.compat.EID_descriptions")
+JosephMod.Descriptions = include("joseph_scripts.compat.EID_descriptions")
+local Descriptions = JosephMod.Descriptions
 
 local CARD_SLEEVE = Isaac.GetItemIdByName("Card Sleeve")
 
@@ -56,27 +57,27 @@ end
 
 -- Enchants
 
-    local function shouldDisplayEnchantDescription(descObj)
-        if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 300 and Descriptions.Enchants[descObj.ObjSubType] then
-            if (descObj.Entity ~= nil) then
-                if (PlayerManager.AnyoneIsPlayerType(josephType) or PlayerManager.AnyoneHasCollectible(CARD_SLEEVE)) and
-                not PlayerManager.AnyoneHasCollectible(enums.Collectibles.SCRAWL) then return true end
-            elseif EID.holdTabPlayer then
-                if EID.holdTabPlayer:ToPlayer():GetPlayerType() == josephType or EID.holdTabPlayer:ToPlayer():HasCollectible(CARD_SLEEVE) then return true end
-            end
+local function shouldDisplayEnchantDescription(descObj)
+    if descObj and descObj.ObjType == 5 and descObj.ObjVariant == 300 and Descriptions.Enchants[descObj.ObjSubType] then
+        if (descObj.Entity ~= nil) then
+            if (PlayerManager.AnyoneIsPlayerType(josephType) or PlayerManager.AnyoneHasCollectible(CARD_SLEEVE)) and
+            not PlayerManager.AnyoneHasCollectible(enums.Collectibles.SCRAWL) then return true end
+        elseif EID.holdTabPlayer then
+            if EID.holdTabPlayer:ToPlayer():GetPlayerType() == josephType or EID.holdTabPlayer:ToPlayer():HasCollectible(CARD_SLEEVE) then return true end
         end
     end
-    local function getDescription(descObj)
-        local lang = EID:getLanguage()
-        local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang].description or Descriptions.Enchants["ENCHANT_HEADER"]["en_us"].description or ""
-        local translatedDescription = Descriptions.Enchants[descObj.ObjSubType][lang].description or Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or "Enchant description unavailable"
-        local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)][lang].description or Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)]["en_us"].description or ""
+end
+local function getDescription(descObj)
+    local lang = EID:getLanguage()
+    local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang].description or Descriptions.Enchants["ENCHANT_HEADER"]["en_us"].description or ""
+    local translatedDescription = Descriptions.Enchants[descObj.ObjSubType][lang].description or Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or "Enchant description unavailable"
+    local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)][lang].description or Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)]["en_us"].description or ""
 
-        EID:appendToDescription(descObj, "#" .. translatedHeader .. "#" .. translatedDescription .. "#" .. translatedDisenchantChance)
-        return descObj
-    end
+    EID:appendToDescription(descObj, "#" .. translatedHeader .. "#" .. translatedDescription .. "#" .. translatedDisenchantChance)
+    return descObj
+end
 
-    EID:addDescriptionModifier("CardEnchant", shouldDisplayEnchantDescription, getDescription)
+EID:addDescriptionModifier("CardEnchant", shouldDisplayEnchantDescription, getDescription)
 
 
 
