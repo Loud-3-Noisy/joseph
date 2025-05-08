@@ -70,7 +70,7 @@ descriptions.Collectibles = {
 	[enums.Collectibles.SCRAWL] = {
 		en_us = {
 			name = "Scrawl",
-			description = "{{Card}} Entering a room with enemies Spawns 1 card#{{Card}} Cards will now vanish when attempting to drop them on the floor",
+			description = "{{Card}} Entering an uncleared room gives Isaac a random card#{{Card}} Cards vanish when dropping them on the floor",
 		},
 	},
 	[enums.Collectibles.POKER_MAT] = {
@@ -133,8 +133,8 @@ descriptions.CalendarDays = {
     [7] = {
         en_us = "#{{ColorSilver}}Saturday:{{CR}} #↑ +0.7 Tears"
     },
-    
 }
+
 --TRINKET DESCRIPTIONS
 descriptions.Trinkets = {
 	[enums.Trinkets.CUPPA_JOE] = {
@@ -146,7 +146,7 @@ descriptions.Trinkets = {
 	[enums.Trinkets.EAR_OF_GRAIN] = {
 		en_us = {
 			name = "Ear of Grain",
-			description = "Famine appears as an additional boss to fight upon entering a {{BossRoom}} boss room, and drops {{Collectible73}} cube of meat/{{Collectible207}} ball of bandages when killd#Famine's health scales per floor",
+			description = "Famine appears as an additional boss to fight upon entering a {{BossRoom}} boss room. #Defeating Famine drops a bonus {{Collectible73}} cube of meat/{{Collectible207}} ball of bandages #Famine's health scales per floor",
 		},
 	},
 }
