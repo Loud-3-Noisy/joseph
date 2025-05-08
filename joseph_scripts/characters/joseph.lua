@@ -216,7 +216,6 @@ function JosephChar:showEnchantment(player, i)
                 local playerPostAdjust = Game():GetNearestPlayer(displayPos).Position + Vector(0, -20)
                 local distance = Isaac.WorldToScreen(playerPostAdjust):Distance(displayPos)
                 local transparency = distance/80
-                Isaac.RenderText("Trans: " .. tostring(transparency), 70, 130, 1, 1, 1, 1)
                 enchantmentDisplay.Color.A = math.min(0.8, transparency)
             end
         else
