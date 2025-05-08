@@ -82,10 +82,26 @@ function CuppaJoe:RemovedItem(player, item)
                 CuppaJoe:AddInnateCupItem(player, lastItem)
             end
         end, 1, 1, true)
-
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_TRIGGER_COLLECTIBLE_REMOVED, CuppaJoe.RemovedItem)
+
+
+JosephMod:AddCallback(TSIL.Enums.CustomCallback.POST_GAME_STARTED_REORDERED, function (isContinued)
+    if not isContinued then return end
+
+    JosephMod.Schedule(1, function ()
+        for i = 0, Game():GetNumPlayers() - 1 do
+            local player = Isaac.GetPlayer(i)
+            if player:HasTrinket(coffeya) then
+                local lastItem = CuppaJoe:GetLastPassive(player)
+                if lastItem then
+                    CuppaJoe:AddInnateCupItem(player, lastItem)
+                end
+            end
+        end
+    end,{})
+end)
 
 
 function CuppaJoe:FindFirstPlayerWithEmptyTrinketSlot()
@@ -151,3 +167,5 @@ function CuppaJoe:GetLastPassive(player)
     end
     return nil
 end
+
+JosephMod.CuppaJoe = CuppaJoe
