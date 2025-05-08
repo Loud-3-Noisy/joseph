@@ -10,7 +10,6 @@ local heartsToSpawn = 0
 function AceHearts:HeartSpawn(pickup)
     if not PlayerManager.AnyoneHasCollectible(ace) then return end
     local rng = PlayerManager.FirstCollectibleOwner(ace):GetCollectibleRNG(ace)
-print(heartsToSpawn)
     if heartsToSpawn > 0 then
         heartsToSpawn = heartsToSpawn - 1
         return
@@ -33,7 +32,6 @@ function AceHearts:UseHeartCard(card, player, flags)
     if not PlayerManager.AnyoneHasCollectible(ace) then return end
     if card == Card.CARD_LOVERS or card == Card.CARD_HIEROPHANT or card == Card.CARD_REVERSE_HIEROPHANT then
         heartsToSpawn = 2
-        print("a " .. heartsToSpawn)
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_PRE_USE_CARD, AceHearts.UseHeartCard)
