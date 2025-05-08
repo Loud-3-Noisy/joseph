@@ -32,6 +32,9 @@ function AceHearts:UseHeartCard(card, player, flags)
     if not PlayerManager.AnyoneHasCollectible(ace) then return end
     if card == Card.CARD_LOVERS or card == Card.CARD_HIEROPHANT or card == Card.CARD_REVERSE_HIEROPHANT then
         heartsToSpawn = 2
+        if player:HasCollectible(CollectibleType.COLLECTIBLE_TAROT_CLOTH) then
+            heartsToSpawn = 3
+        end
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_PRE_USE_CARD, AceHearts.UseHeartCard)
