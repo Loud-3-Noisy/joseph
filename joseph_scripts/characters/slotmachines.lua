@@ -293,6 +293,6 @@ AddBumFamiliar(enums.Familiars.LIL_BLOOD_BANK_FAMILIAR, enums.Collectibles.LIL_B
 	{chance = 1, value = {
 		type = EntityType.ENTITY_PICKUP,
 		variant = PickupVariant.PICKUP_TRINKET,
-		subtype = 32
+		subtype = TrinketType.TRINKET_CHILDS_HEART
 	}},
 })
