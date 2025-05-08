@@ -45,9 +45,10 @@ if REPENTOGON then
   include("joseph_scripts.items.poker_mat")
   include("joseph_scripts.items.shredder")
   include("joseph_scripts.items.soul_of_envy")
+  include("joseph_scripts.items.ace_of_hearts")
   include("joseph_scripts.items.trinkets.cuppa_joe")
   include("joseph_scripts.items.trinkets.ear_of_grain")
-  include("joseph_scripts.items.trinkets.ace_of_hearts")
+
   include("joseph_scripts.items.pickups.the_aeon")
   
 

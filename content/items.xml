@@ -9,11 +9,10 @@
     <passive id="8" name="Poker Mat" description="Luck of the draw" gfx="poker_mat.png" achievement="Poker Mat" tags="" quality="2" />
     <active id="9" name="Shredder" description="Reusable deck thinner" gfx="shredder.png" achievement="Shredder" tags="" quality="2" />
     <passive id="10" name="Soul of Envy" description="The poor envies the rich" gfx="soul_of_envy.png" achievement="Soul of Envy" cache="damage" tags="" quality="2" />
-
+    <passive id="11" name="Ace of Hearts" description="Heart of the cards" achievement="Ace of Hearts" gfx="trinket_aceOfHearts.png" />
 
     <!-- Trinkets -->
     <trinket name="Cup of Joe" description="When did you get this?" achievement="Cup of Joe" gfx="trinket_silvercup.png" />
     <trinket name="Ear of Grain" description="Famine approaches" achievement="Ear of Grain" gfx="trinket_earOfGrain.png" />
-    <trinket name="Ace of Hearts" description="Heart of the cards" achievement="Ace of Hearts" gfx="trinket_aceOfHearts.png" />
 
 </items>

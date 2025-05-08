@@ -103,6 +103,12 @@ descriptions.Collectibles = {
 			description = "{{Card}} Shreds the currently selected card from Isaac's consumable slot, permanently removing that card from the pool for the rest of the run, and spawns 5 random pickups",
 		},
 	},
+    [enums.Collectibles.ACE_OF_HEARTS] = {
+		en_us = {
+			name = "Ace of Hearts",
+			description = "All {{Heart}} Heart pickups are replaced with {{Card}} Cards.",
+		},
+	},
 	
 }
 --TRINKET DESCRIPTIONS
@@ -119,13 +125,6 @@ descriptions.Trinkets = {
 			description = "Famine appears as an additional boss to fight upon entering a {{BossRoom}} boss room, and drops {{Collectible73}} cube of meat/{{Collectible207}} ball of bandages when killd#Famine's health scales per floor",
 		},
 	},
-	[enums.Trinkets.ACE_OF_HEARTS] = {
-		en_us = {
-			name = "Ace of Hearts",
-			description = "All {{Heart}} Heart pickups are replaced with {{Card}} Cards.",
-		},
-	},
-	
 }
 --PICKUP Cards
 descriptions.Cards = {
