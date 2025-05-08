@@ -212,10 +212,12 @@ function JosephChar:showEnchantment(player, i)
         if i == 0 then
             enchantmentDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
             enchantmentDisplay:SetFrame("CardFronts", enchantedCard)
-            if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and
-                Game():GetNearestPlayer(displayPos).Position.X - Isaac.ScreenToWorld(displayPos).X < 100 and
-                Game():GetNearestPlayer(displayPos).Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then
-                enchantmentDisplay.Color = Color(1, 1, 1, 0.2) --Transparent if player is near
+            if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 then
+                local playerPostAdjust = Game():GetNearestPlayer(displayPos).Position + Vector(0, -20)
+                local distance = Isaac.WorldToScreen(playerPostAdjust):Distance(displayPos)
+                local transparency = distance/80
+                Isaac.RenderText("Trans: " .. tostring(transparency), 70, 130, 1, 1, 1, 1)
+                enchantmentDisplay.Color.A = math.min(0.8, transparency)
             end
         else
             enchantmentDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
@@ -238,10 +240,12 @@ function JosephChar:showEnchantment(player, i)
         if i == 0 then
             birthrightDisplay:Load("gfx/ui/enchanted_card_displays.anm2",true)
             birthrightDisplay:SetFrame("CardFronts", birthrightCard)
-            if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 and --If in the room bounds
-                Game():GetNearestPlayer(displayPos).Position.X - Isaac.ScreenToWorld(displayPos).X < 110 and
-                Game():GetNearestPlayer(displayPos).Position.Y - Isaac.ScreenToWorld(displayPos).Y < 125 then
-                    birthrightDisplay.Color = Color(1, 1, 1, 0.2) --Transparent if player is near
+            if Isaac.ScreenToWorld(displayPos).X > -22 and Isaac.ScreenToWorld(displayPos).Y > 70 then --If in the room bounds
+            
+                local playerPostAdjust = Game():GetNearestPlayer(displayPos).Position + Vector(0, -20)
+                local distance = Isaac.WorldToScreen(playerPostAdjust):Distance(displayPos)
+                local transparency = distance/80
+                birthrightDisplay.Color.A = math.min(0.8, transparency)
             end
         else
             birthrightDisplay:Load("gfx/ui/ui_cardspills.anm2",true)
