@@ -106,7 +106,7 @@ descriptions.Collectibles = {
     [enums.Collectibles.ACE_OF_HEARTS] = {
 		en_us = {
 			name = "Ace of Hearts",
-			description = "All {{Heart}} Heart pickups are replaced with {{Card}} Cards.",
+			description = "All Heart pick ups have a 50% chance to be rerolled into other pickup types#Almost all {{Heart}} Heart pickups are replaced with {{Card}} Cards",
 		},
 	},
 	
