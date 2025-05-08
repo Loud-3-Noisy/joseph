@@ -283,6 +283,17 @@ function utilityFunctions:GetTotalEnchantmentCount(enchantment)
 end
 
 
+function utilityFunctions:IsPlayingCard(card)
+  if card >= Card.CARD_CLUBS_2 and card <= Card.CARD_JOKER then
+    return true
+  end
+  if card == Card.CARD_RULES then return true end
+  if card == Card.CARD_SUICIDE_KING then return true end
+  if card == Card.CARD_SUICIDE_KING then return true end
+  return false
+end
+
+
 function utilityFunctions:HasEnchantment(player, enchantment)
   local playerEnchantments = TSIL.SaveManager.GetPersistentVariable(JosephMod, "EnchantedCards") or {}
   local hasEnchantment = false

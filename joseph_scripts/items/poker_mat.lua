@@ -97,3 +97,18 @@ function PokerMat:UseCard(card, player, flags)
 
 end
 mod:AddCallback(ModCallbacks.MC_USE_CARD, PokerMat.UseCard)
+
+
+
+
+function PokerMat:GetItem(item, charge, firstTime, slot, varData, player)
+    if not firstTime then return end
+    local card, attempts = 0, 0
+    while not utility:IsPlayingCard(card) and attempts < 100 do
+        card = Game():GetItemPool():GetCard(player:GetCollectibleRNG(POKER_MAT):Next(), true, false, false)
+        attempts = attempts + 1
+    end
+    if not utility:IsPlayingCard(card) then card = Card.CARD_RULES end
+    Isaac.Spawn(5, PickupVariant.PICKUP_TAROTCARD, card, Isaac.GetFreeNearPosition(player.Position, 40), Vector.Zero, player)
+end
+mod:AddCallback(ModCallbacks.MC_POST_ADD_COLLECTIBLE, PokerMat.GetItem, POKER_MAT)
