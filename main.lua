@@ -53,6 +53,7 @@ if REPENTOGON then
   
 
   include("joseph_scripts.compat.EID")
+  include("joseph_scripts.compat.other_mods")
 
 else
   JosephMod:AddCallback(ModCallbacks.MC_POST_RENDER, function()
