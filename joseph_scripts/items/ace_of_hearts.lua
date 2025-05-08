@@ -7,6 +7,7 @@ local utility = JosephMod.utility
 local heartsToSpawn = 0
 
 
+---@param pickup EntityPickup
 function AceHearts:HeartSpawn(pickup)
     if not PlayerManager.AnyoneHasCollectible(ace) then return end
     local rng = PlayerManager.FirstCollectibleOwner(ace):GetCollectibleRNG(ace)
@@ -14,15 +15,13 @@ function AceHearts:HeartSpawn(pickup)
         heartsToSpawn = heartsToSpawn - 1
         return
     end
-    pickup:Remove()
     if rng:RandomFloat() < 0.5 then
-        Isaac.Spawn(5, 0, NullPickupSubType.NO_COLLECTIBLE_TRINKET_CHEST, pickup.Position, pickup.Velocity, pickup.SpawnerEntity)
+        pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_NULL, NullPickupSubType.NO_COLLECTIBLE_TRINKET_CHEST, true, true)
         return
     end
 
     local card = Game():GetItemPool():GetCard(rng:Next(), true, false, false)
-    Isaac.Spawn(5, PickupVariant.PICKUP_TAROTCARD, card, pickup.Position, pickup.Velocity, pickup.SpawnerEntity)
-
+    pickup:Morph(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, card, true, true)
 end
 JosephMod:AddCallback(ModCallbacks.MC_POST_PICKUP_INIT, AceHearts.HeartSpawn, PickupVariant.PICKUP_HEART)
 
