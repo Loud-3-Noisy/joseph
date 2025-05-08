@@ -31,7 +31,11 @@ function mod:UseShredder(item, rng, player, flags)
     local pickupsToSpawn = 5
     for i=1, pickupsToSpawn, 1 do
         Isaac.CreateTimer(function()
-            Isaac.Spawn(5, 0, 1, player.Position, Vector(math.random(-3, 3), math.random(3, 6)), player)
+            if player:HasCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES) then
+                player:AddWisp(SHREDDER, player.Position + Vector(0, -20))
+            else
+                Isaac.Spawn(5, 0, 1, player.Position, Vector(math.random(-3, 3), math.random(3, 6)), player)
+            end
             SFXManager():Play(SoundEffect.SOUND_SLOTSPAWN, 1, 2, false, 1.2)
         end, i*2, 1, true)
     end
@@ -78,3 +82,15 @@ function mod:GetCard(rng, card)
 
 end
 mod:AddCallback(ModCallbacks.MC_GET_CARD, mod.GetCard)
+
+
+---@param entity Entity
+function Shredder:OnWispDeath(entity)
+    if entity.Variant ~= FamiliarVariant.WISP
+    or entity.SubType ~= SHREDDER then
+        return
+    end
+
+    Isaac.Spawn(5, 0, 1, entity.Position, Vector.Zero, entity)
+end
+mod:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, Shredder.OnWispDeath, EntityType.ENTITY_FAMILIAR)
