@@ -140,7 +140,7 @@ descriptions.Trinkets = {
 	[enums.Trinkets.CUPPA_JOE] = {
 		en_us = {
 			name = "Cup of Joe",
-			description = "Does not spawn normally, instead will randomly appear in an empty trinket slot upon leaving a room it would have spawned in#Copies the effect of the last item you picked up#Changes upon picking up a new item",
+			description = "Copies the effect of the last item you picked up#Changes upon picking up a new item",
 		},
 	},
 	[enums.Trinkets.EAR_OF_GRAIN] = {
