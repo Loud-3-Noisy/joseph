@@ -100,7 +100,7 @@ descriptions.Collectibles = {
 	[enums.Collectibles.SHREDDER] = {
 		en_us = {
 			name = "Shredder",
-			description = "{{Card}} Shreds the currenlty selected card from Isaac's Consumable slot, permanantly removing that card from the pool for the rest of the run, and spawns 5 random pickups",
+			description = "{{Card}} Shreds the currently selected card from Isaac's consumable slot, permanently removing that card from the pool for the rest of the run, and spawns 5 random pickups",
 		},
 	},
 	
