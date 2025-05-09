@@ -80,6 +80,7 @@ function JosephAchievements:LoadFile(saveSlot, isSlotSelected)
 
     if gameData:IsBossKilled(BossType.DELIRIUM) or gameData:IsBossKilled(BossType.MOTHER) then
         gameData:TryUnlock(enums.Achievements.JOSEPH)
+        gameData:TryUnlock(enums.Achievements.THE_AEON)
     end
 
 end
