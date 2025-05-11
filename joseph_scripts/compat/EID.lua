@@ -69,9 +69,13 @@ local function shouldDisplayEnchantDescription(descObj)
 end
 local function getDescription(descObj)
     local lang = EID:getLanguage()
-    local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang].description or Descriptions.Enchants["ENCHANT_HEADER"]["en_us"].description or ""
-    local translatedDescription = Descriptions.Enchants[descObj.ObjSubType][lang].description or Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or "Enchant description unavailable"
-    local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)][lang].description or Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)]["en_us"].description or ""
+
+    local translatedHeader = Descriptions.Enchants["ENCHANT_HEADER"][lang] and Descriptions.Enchants["ENCHANT_HEADER"][lang].description 
+    or Descriptions.Enchants["ENCHANT_HEADER"]["en_us"] and Descriptions.Enchants["ENCHANT_HEADER"]["en_us"].description or "When Enchanted:"
+    local translatedDescription = Descriptions.Enchants[descObj.ObjSubType][lang] and Descriptions.Enchants[descObj.ObjSubType][lang].description
+    or Descriptions.Enchants[descObj.ObjSubType]["en_us"] and Descriptions.Enchants[descObj.ObjSubType]["en_us"].description or "Enchant description unavailable"
+    local translatedDisenchantChance = Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)][lang] and Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)][lang].description
+    or Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)]["en_us"] and Descriptions.Enchants[chanceToDisplay(descObj.ObjSubType)]["en_us"].description or ""
 
     EID:appendToDescription(descObj, "#" .. translatedHeader .. "#" .. translatedDescription .. "#" .. translatedDisenchantChance)
     return descObj
