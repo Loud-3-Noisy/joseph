@@ -1,45 +1,49 @@
 <metadata>
 	<name>Joseph</name>
 	<directory>joseph</directory>
-	<description>It's in the Cards! Discover the secrets of the Arcana with Joseph the Cartomancer!
+	<description>[b] It's in the Cards! Discover the secrets of the Arcana with Joseph the Cartomancer! [/b]
 
-	[img]https://i.imgur.com/4rDgUQW.png[/img]
+[img]https://i.imgur.com/4rDgUQW.png[/img]
+[hr][/hr] 
 	
-Joseph is the master of the cards, and can enchant tarot cards onto himself to gain their effects permanantly—as long he doesn't get hit!
-Whether you're starting a fresh save or diving back in, unleash Joseph and discover all 44 unique card enchantments! 
+Joseph is the master of the cards, and can enchant tarot cards onto himself to gain their effects permanantly—as long as he doesn't get hit! Whether you're starting a fresh save or diving back in, unleash Joseph and discover all 44 unique card enchantments! 
 
-[h1] Featuring: [/h1]
+[h1]Featuring:[/h1]
 [list]
 [*] A new unlockable character: Joseph!
 [*] An enchantment effect for every tarot card, 44+ effects in total!
 [*] 12+ Unlocks!
 [*] 10 colorful new Items.
-[*] 2 entralling new Trinkets.
+[*] 2 enthralling new Trinkets.
 [*] A new Tarot Card pulled from a mysterious parallel deck.
 [*] A hidden tainted variant(? (no ?))
+[/list]
 
 
-[h1] Wiki: [/h1]
-Joseph MOD has full documention through [url=https://steamcommunity.com/sharedfiles/filedetails/?id=836319872]External Item Descriptions[/url] and the [url=https://isaacguru.com/mod/joseph]Isaacguru Website[/url], though if you want to enjoy the mod to the fullest, it's recommended to play without EID at first to have fun exploring each unique and individual card enchant! All enchants were created thoughtfully to be intuitive and quick to understand, but as always, feel free to play however you like!
+[h1]Wiki:[/h1]
+Joseph MOD has full documentation through [url=https://steamcommunity.com/sharedfiles/filedetails/?id=836319872]External Item Descriptions[/url] in English and Chinese, and throuhg the [url=https://isaacguru.com/mod/joseph]Isaacguru Website[/url] (under construction*), though if you want to enjoy the mod to the fullest, it's recommended to play without EID at first to have fun exploring each unique and individual card enchant! All enchants were created thoughtfully to be intuitive and quick to understand, but as always, feel free to play however you like!
 
 
-[h1] REPENTOGON [/h1] 
-This MOD wouldn't have been made possible without the hundreds of new modding features provided by [url=https://repentogon.com/]REPENTOGON![/url] As such, you will need to download and install it in order to play Joseph. This means that Joseph MOD is currently incompatible with the Repentance+ DLC until Repentogon is updated for it, however you can still easily disable the dlc in the game's properties to enjoy Joseph at any time!
+[h1]REPENTOGON[/h1] 
+This MOD was made possible by the hundreds of new modding features provided by [url=https://repentogon.com/]REPENTOGON![/url] As such, you will need to download and install it in order to play Joseph. This means that Joseph MOD is currently incompatible with the Repentance+ DLC until Repentogon is updated for it, however you can still easily disable the dlc in the game's properties to enjoy Joseph at any time!
 
 
-[h1] Credits [/h1] 
-This mod was made with care by:
+[h1]Credits[/h1] 
+This mod was made with love by:
+[list]
 [*] [url=https://bsky.app/profile/loud-n-noisy.bsky.social]Loud &amp; Noisy[/url] - Original Idea, Artist, and Spriter
 [*] [url=https://steamcommunity.com/id/Kattack64/myworkshopfiles/]Kattack[/url] - Programmer and Designer
 [*] [url=https://bsky.app/profile/soflilwitch.bsky.social]soflilwitch[/url] - Thumbnail Art
 [*] [url=https://steamcommunity.com/id/merkoneone/myworkshopfiles/]Kerkel[/url] - Coding Help
 [*] Huesinworth and hellfirebeah - Original Item Concepts
 [*] [url=https://www.youtube.com/channel/UCebLyEpaodY3aVC6phaq8MQ]pikaperson[/url] - Trailer Video
+[/list]
 
-And a special thanks to Jozin191, Tiburones202, and Eucalyptus for help playtesting!
+Special thanks to Jozin191, Tiburones202, TheTurtleMelon, Lazy Mattman, and Eucalyptus for help playtesting, King MPHS for compat sprites, and to OucalGarlin for translations!
+
 </description>
 
-	<version>1.0</version>
+	<version>1.1</version>
 	<visibility/>
 </metadata>
 
