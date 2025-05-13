@@ -54,29 +54,49 @@ descriptions.Collectibles = {
             name = "Lil Slot Machine",
             description = "{{Coin}} Picks up nearby coins#Spawns {{Slotmachine}} Slot Machine drops every 3 coins",
         },
+        zh_cn={
+            name="小抽奖机",
+            description="{{Coin}} 自动拾取附近的硬币#{{Slotmachine}} 每拾取3硬币生成抽奖机奖励",
+        },
     },
 	[enums.Collectibles.LIL_FORTUNE_TELLER] = {
 		en_us = {
 			name = "Lil Fortune Teller",
 			description = "{{Coin}} Picks up nearby coins#Spawns {{FortuneTeller}} Fortune Teller drops every 4 coins",
 		},
+        zh_cn={
+            name="小预言机",
+            description="{{Coin}} 自动拾取附近的硬币#{{FortuneTeller}} 每拾取4硬币生成预言机奖励",
+        },
 	},	
 	[enums.Collectibles.LIL_BLOOD_BANK] = {
 		en_us = {
 			name = "Lil Blood Machine",
 			description = "{{Heart}} Picks up nearby Red Hearts#Spawns {{BloodDonationMachine}} Blood Donation Machine drops based on heart value",
 		},
+        zh_cn={
+            name="小献血机",
+            description="{{Heart}} 自动拾取附近的红心#{{BloodDonationMachine}} 每半颗心生成献血机奖励",
+        },
 	},
 	[enums.Collectibles.SCRAWL] = {
 		en_us = {
 			name = "Scrawl",
 			description = "{{Card}} Entering an uncleared room gives Isaac a random card#{{Warning}} Cards vanish when dropping them on the floor",
 		},
+        zh_cn={
+            name="施咒卡",
+            description="{{Card}} 进入未清理的房间获得一张随机卡牌#!!! 试图丢弃这些卡牌会直接将其销毁",
+        },
 	},
 	[enums.Collectibles.POKER_MAT] = {
 		en_us = {
 			name = "Poker Mat",
 			description = "{{Card}} Spawns a card #{{RedCard}} Playing card effects are doubled or enhanced",
+		},
+		zh_cn = {
+			name = "扑克牌垫",
+			description = "{{Card}} 生成一张卡牌#{{RedCard}} 扑克牌效果翻倍或增强",
 		},
 	},
 	[enums.Collectibles.SOUL_OF_ENVY] = {
@@ -84,11 +104,19 @@ descriptions.Collectibles = {
 			name = "Soul of Envy",
 			description = "↑ +1 damage up for each consumable at a count of 0#the damage up decreases the more pickups Isaac have, returning to +0 at:#{{Blank}} {{Coin}} 15 coins#{{Blank}} {{Bomb}} 5 bombs#{{Blank}} {{Key}} 5 keys",
 		},
+		zh_cn = {
+			name = "嫉妒之魂",
+			description = "↑ {{Damage}} 每有一个物资的持有数为0则获得伤害+1#物资越多, 伤害增幅越少, 在达到{{Coin}}15硬币 /  {{Bomb}}5炸弹 / {{Key}}5钥匙时变为+0",
+		},
 	},
 	[enums.Collectibles.CARD_SLEEVE] = {
 		en_us = {
 			name = "Card Sleeve",
 			description = "{{Card}} Consumes the currently held Tarot Card, enchanting it onto Isaac while being held#{{Card}} Enchanting a new card will remove the previous enchant's effect",
+		},
+		zh_cn = {
+			name = "塔罗卡套",
+			description = "{{Card}} 消耗持有的塔罗牌, 并将其与角色融合#{{Card}} 只能拥有一张融合卡牌的力量, 后续的卡牌会覆盖已有的",
 		},
 	},
 	[enums.Collectibles.CALENDAR] = {
@@ -96,11 +124,19 @@ descriptions.Collectibles = {
 			name = "Calendar",
 			description = "Increases a stat based on the day of the week:",
 		},
+		zh_cn = {
+			name = "日历",
+			description = "根据今天是星期几获得属性提升",
+		},
 	},
 	[enums.Collectibles.SHREDDER] = {
 		en_us = {
 			name = "Shredder",
 			description = "{{Card}} Shreds the currently selected card from Isaac's consumable slot, spawning 5 random pickups and permanently removing that card from the pool for the rest of the run",
+		},
+		zh_cn = {
+			name = "碎纸机",
+			description = "{{Card}} 粉碎角色当前副手槽持有的卡牌, 生成5个随机掉落物, 本局内永远不会再出现那张卡",
 		},
 	},
     [enums.Collectibles.ACE_OF_HEARTS] = {
@@ -108,36 +144,51 @@ descriptions.Collectibles = {
 			name = "Ace of Hearts",
 			description = "All Heart pick ups have a 50% chance to be rerolled into other pickup types#Almost all {{Heart}} Heart pickups are replaced with {{Card}} Cards",
 		},
+		zh_cn = {
+			name = "红桃王牌",
+			description = "所有拾取的心有50%的概率被重随为其他掉落物#几乎所有{{Heart}}心掉落物被替换为{{Card}}卡牌",
+		},
 	},
     [enums.Collectibles.MAGIC_SKIN_SINGLE_USE] = {
 		en_us = {
 			name = "Magic Skin",
 			description = "{{Warning}} SINGLE USE {{Warning}}#Spawns an item from the current room's item pool#{{BrokenHeart}} Turns 1 heart container or 1 Bone Heart or 2 Soul Hearts into a Broken Heart#",
 		},
+		en_us = {
+			name = "玄奇驴皮",
+			description = "{{Warning}} 一次性 {{Warning}}#生成当前房间道具池的1个道具#{{BrokenHeart}} 将1心之容器或2魂心转换为1碎心",
+		},
 	},
 }
 
-descriptions.CalendarDays = {
+descriptions.CalendarDays = {--add some icons for stats being added
     [1] = {
-        en_us = "#{{ColorSilver}}Sunday:{{CR}} #↑ +1 Damage"
+        en_us = "#{{ColorSilver}}Sunday:{{CR}} #↑ +1 Damage",
+        zh_cn = "#{{ColorSilver}}周日:{{CR}}#↑ {{Damage}} 伤害+1",
     },
     [2] = {
-        en_us = "#{{ColorSilver}}Monday:{{CR}} #↑ +0.7 Tears"
+        en_us = "#{{ColorSilver}}Monday:{{CR}} #↑ +0.7 Tears",
+        zh_cn = "#{{ColorSilver}}周一:{{CR}} #↑ {{Tears}} 射速+0.7",
     },
     [3] = {
-        en_us = "#{{ColorSilver}}Tuesday:{{CR}} #↑ +1 Damage"
+        en_us = "#{{ColorSilver}}Tuesday:{{CR}} #↑ +1 Damage",
+        zh_cn = "#{{ColorSilver}}周二:{{CR}} #↑ {{Damage}} 伤害+1",
     },
     [4] = {
-        en_us = "#{{ColorSilver}}Wednesday:{{CR}} #↑ +0.3 Speed"
+        en_us = "#{{ColorSilver}}Wednesday:{{CR}} #↑ +0.3 Speed",
+        zh_cn = "#{{ColorSilver}}周三:{{CR}} #↑ {{Speed}} 移速+0.3",
     },
     [5] = {
-        en_us = "#{{ColorSilver}}Thursday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart"
+        en_us = "#{{ColorSilver}}Thursday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart",
+        zh_cn = "#{{ColorSilver}}周四:{{CR}} #↑ {{Heart}} 心之容器+1#{{HealingRed}} 治疗1红心",
     },
     [6] = {
-        en_us = "#{{ColorSilver}}Friday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart"
+        en_us = "#{{ColorSilver}}Friday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart",
+        zh_cn = "#{{ColorSilver}}周五:{{CR}} #↑ {{Heart}} 心之容器+1#{{HealingRed}} 治疗1红心",
     },
     [7] = {
-        en_us = "#{{ColorSilver}}Saturday:{{CR}} #↑ +0.7 Tears"
+        en_us = "#{{ColorSilver}}Saturday:{{CR}} #↑ +0.7 Tears",
+        zh_cn = "#{{ColorSilver}}周六:{{CR}} #↑ {{Tears}} 射速+0.7",
     },
 }
 
@@ -148,11 +199,19 @@ descriptions.Trinkets = {
 			name = "Cup of Joe",
 			description = "Copies the effect of the last item you picked up#Changes upon picking up a new item",
 		},
+		zh_cn = {
+			name = "约瑟夫的茶杯",
+			description = "复制最后一个拾取的道具的效果",
+		},
 	},
 	[enums.Trinkets.EAR_OF_GRAIN] = {
 		en_us = {
 			name = "Ear of Grain",
 			description = "Famine appears as an additional boss to fight upon entering a {{BossRoom}} boss room. #Defeating Famine drops a bonus {{Collectible73}} cube of meat/{{Collectible207}} ball of bandages #Famine's health scales per floor",
+		},
+		zh_cn = {
+			name = "谷物穗",
+			description = "{{BossRoom}} 进入头目房时, 额外与饥荒骑士进行战争#击败饥荒骑士仍会掉落额外的{{Collectible73}} 肉块/{{Collectible207}} 绷带球#饥荒骑士的生命值会动态变化",
 		},
 	},
 }
@@ -163,258 +222,448 @@ descriptions.Cards = {
 			name = "XX - The Aeon",
 			description = "Brings Isaac back to the previous room and reverses all actions done in the room the card was used in",
 		},
+		zh_cn = {
+			name = "XX - 宙",
+			description = "{{Collectible422}} 时间倒流回到上一个房间",
+		},
 	},
 }
+
+--BIRTHRIGHTS (Dur)
+descriptions.Birthrights = {
+    [enums.PlayerType.PLAYER_JOSEPH] = {
+        en_us = {
+            name = "Joseph",
+            description = "Adds an additional permanent card enchant slot." ..
+            "#The currently enchanted card will automatically be placed into this slot.",
+        },
+        zh_cn = {
+            name = "约瑟夫",
+            description = "可以拥有第2张融合卡牌的力量" ..
+            "#立即将当前的融合卡牌放到这个额外槽位中"
+        }
+    }
+}
+
+
+descriptions.Characters = {
+    [enums.PlayerType.PLAYER_JOSEPH] = {
+        en_us = {
+            name = "Joseph",
+            description = "Can carry 2 cards/runes at once"..
+            "#Holding down the use button will consumes the currently held Tarot Card, enchanting it onto Joseph"..
+            "#Enchanting a new card will remove the previous enchant's effect"..
+            "#!!! Taking non-self damage will have chance to remove the enchanted card"
+        },
+        zh_cn = {
+            name = "约瑟夫",
+            description = "#长按使用键以将选定的塔罗牌融合, 持续获得其力量"..
+            "#只能拥有一张融合卡牌的力量, 后续的卡牌会覆盖已有的"..
+            "#!!! 受到惩罚伤害有概率失去融合的塔罗牌"
+        }
+    }
+}
+
 --ENCHANT DESCRIPTIONS
 descriptions.Enchants = {
     ENCHANT_HEADER = {
         en_us = {
             description = "{{EnchantIcon}} {{ColorPurpleGlow}}When enchanted: "
         },
+        zh_cn = {
+            description = "{{EnchantIcon}} {{ColorPurpleGlow}}当融合这张卡时: "
+        },
     },
     ZERO = {
         en_us = {
             description = "{{Warning}} {{ColorLime}}0%{{CR}} Disenchant Chance "
+        },
+        zh_cn = {
+            description = "{{Warning}} {{ColorLime}}绝对不会{{CR}}受击失效"
         },
     },
     LOW = {
         en_us = {
             description = "{{Warning}} {{ColorGreen}}LOW{{CR}} Disenchant Chance"
         },
+        zh_cn = {
+            description = "{{Warning}} {{ColorGreen}}小概率{{CR}}受击失效"
+        },
     },
     MED = {
         en_us = {
             description = "{{Warning}} {{ColorYellow}}MEDIUM{{CR}} Disenchant Chance"
+        },
+        zh_cn = {
+            description = "{{Warning}} {{ColorYellow}}中等概率{{CR}}受击失效"
         },
     },
     HIGH = {
         en_us = {
             description = "{{Warning}} {{ColorRed}}HIGH{{CR}} Disenchant Chance"
         },
+        zh_cn = {
+            description = "{{Warning}} {{ColorRed}}高概率{{CR}}受击失效"
+        },
     },
     HUNDRED = {
         en_us = {
             description = "{{Warning}} {{ColorRed}}100%{{CR}} Disenchant Chance"
+        },
+        zh_cn = {
+            description = "{{Warning}} {{ColorRed}}受击后立即失效{{CR}}"
         },
     },
     [Card.CARD_FOOL] = {
         en_us = {
             description = "Spawns a Portal to an unexplored room when the room is clear of enemies"
         },
+        zh_cn = {
+            description = "清理一个有敌人的房间后, 生成一个前往未探索房间的传送门"
+        },
     },
     [Card.CARD_MAGICIAN] = {
         en_us = {
             description = "Homing Tears"
+        },
+        zh_cn = {
+            description = "获得跟踪泪弹"
         },
     },
     [Card.CARD_HIGH_PRIESTESS] = {
         en_us = {
             description = "50% chance for Mom's foot to stomp on an enemy when entering a new room"
         },
+        zh_cn = {
+            description = "50%的概率在进入房间后触发{{Card3}} 女祭司效果"--50% chance to trigger The High Priestess when entering a new room
+        },
     },
     [Card.CARD_EMPRESS] = {
         en_us = {
             description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} {{ColorYellow}}+1 Damage"
+        },
+        zh_cn = {
+            description = "↑ {{Speed}} 移速+0.3#↑ {{Damage}} {{ColorYellow}}伤害+1"
         },
     },
     [Card.CARD_EMPEROR] = {
         en_us = {
             description = "{{BossRoom}} Allows Isaac to choose between 2 items after beating a boss"
         },
+        zh_cn = {
+            description = "{{BossRoom}} 允许头目房道具二选一"
+        },
     },
     [Card.CARD_HIEROPHANT] = {
         en_us = {
             description = "{{SoulHeart}} 13% chance to spawn a bonus Soul Heart on room clear, first room is guaranteed"
+        },
+        zh_cn = {
+            description = "{{SoulHeart}} 13%的概率在清理房间后额外生成魂心(首次清理必定触发)"
         },
     },
     [Card.CARD_LOVERS] = {
         en_us = {
             description = "{{Heart}} 20% chance to spawn a bonus Red Heart on room clear, first room is guaranteed"
         },
+        zh_cn = {
+            description = "{{Heart}} 20%的概率在清理房间后额外生成红心(首次清理必定触发)"
+        },
     },
     [Card.CARD_CHARIOT] = {
         en_us = {
             description = "{{Chargeable}} Activates the effect of {{Card8}} The Chariot by constantly moving for 10 seconds"
+        },
+        zh_cn = {
+            description = "{{Chargeable}} 持续移动10s后触发{{Card8}} 战车的效果"
         },
     },
     [Card.CARD_JUSTICE] = {
         en_us = {
             description = "{{Card9}} 14% chance to proc the effect of Justice on room clear, first room is guaranteed#{{Warning}} Not all pickups may spawn"
         },
+        zh_cn = {
+            description = "{{Card9}} 14%的概率在清理房间后触发正义的效果(首次清理必定触发)#{{Warning}} 效果可能并不完整"
+        },
     },
     [Card.CARD_HERMIT] = {
         en_us = {
             description = "{{Shop}} Opens a trapdoor in every Shop#The trapdoor leads to an underground shop that sells trinkets, runes, cards, special hearts and items from any pool"
+        },
+        zh_cn = {
+            description = "{{Shop}} 在商店内生成1个通往地下商店的暗门, 售卖饰品, 符文, 卡牌, 特殊心和任意道具池的道具"
         },
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
         en_us = {
             description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} Spawns a Lil Slot Machine Familiar#{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} or a Lil Fortune Teller Familiar"
         },
+        zh_cn = {
+            description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} 生成一个小抽奖机跟班#{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} 也有可能出现小预言机跟班"
+        },
     },
     [Card.CARD_STRENGTH] = {
         en_us = {
             description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +0.3 Damage#↑ {{Damage}} {{ColorYellow}}x1.25 Damage multiplier#↑ {{Range}} +5.25 Range#↑ +0.5 Tear height"
+        },
+        zh_cn = {
+            description = "↑ {{Speed}} 移速+0.3#↑ {{Damage}} 伤害+0.3#↑ {{Damage}} {{ColorYellow}}伤害倍率x1.25#↑ {{Range}} 射程+5.25#↑ 泪弹高度+0.5"
         },
     },
     [Card.CARD_HANGED_MAN] = {
         en_us = {
             description = "Permanent Flight"
         },
+        zh_cn = {
+            description = "永久的飞行"
+        },
     },
     [Card.CARD_DEATH] = {
         en_us = {
             description = "{{Collectible265}} Spawns a Dry Baby"
+        },
+        zh_cn = {
+            description = "{{Collectible265}} 生成一个枯骨宝宝"
         },
     },
     [Card.CARD_TEMPERANCE] = {
         en_us = {
             description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}}Spawns a Lil Blood Bank Familiar"
         },
+        zh_cn = {
+            description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}} 生成一个小献血机跟班"
+        },
     },
     [Card.CARD_DEVIL] = {
         en_us = {
             description = "↑ {{Damage}} {{ColorYellow}}+1.5 Damage"
+        },
+        zh_cn = {
+            description = "↑ {{Damage}} {{ColorYellow}}伤害+1.5"
         },
     },
     [Card.CARD_TOWER] = {
         en_us = {
             description = "{{Warning}} Taking damage spawns 6 Troll Bombs#The Troll Bombs inherit Isaac's bomb effects"
         },
+        zh_cn = {
+            description = "{{Warning}} 受伤时, 生成6个即爆炸弹#该炸弹继承角色的炸弹效果"
+        },
     },
     [Card.CARD_STARS] = {
         en_us = {
             description = "{{TreasureRoom}} Allows Isaac to choose between 2 items in treasure rooms"
+        },
+        zh_cn = {
+            description = "{{TreasureRoom}} 允许宝箱房道具二选一"
         },
     },
     [Card.CARD_MOON] = {
         en_us = {
             description = "Adds an extra {{SecretRoom}} Secret Room and {{SuperSecretRoom}} Super Secret Room to each floor#Reveals one Secret Room each floor#{{Timer}} Secret Rooms contain a beam of light that grant for the floor:#↑ {{Tears}} +0.5 Fire rate#↑ {{Tears}} Additional +0.5 Fire rate from the first beam per floor#{{HalfSoulHeart}} Half a Soul Heart"
         },
+        zh_cn = {
+            description = "每层额外增加1个{{SecretRoom}}隐藏房和{{SuperSecretRoom}}超级隐藏房#每层揭示1个隐藏房#{{Timer}} 隐藏房内有光束, 接触时在本层获得:#↑ {{Tears}} 射速+0.5#↑ {{Tears}} 每层首个光柱额外+0.5射速#{{HalfSoulHeart}} 1半魂心"
+        },
     },
     [Card.CARD_SUN] = {
         en_us = {
             description = "{{Burning}} Entering a room burns all enemies#When the floor boss is defeated, receive for the floor:#↑ {{Damage}} +3 Damage#↑ {{Luck}} +1 Luck#{{Card20}} The Sun effect#{{Battery}} Fully recharges the active item#{{CurseBlind}} Removes any curses"
-        }
+        },
+        zh_cn = {
+            description = "{{Burning}} 进入房间灼烧所有的敌人#击败头目后, 在本层获得:#↑ {{Damage}} 伤害+3#↑ {{Luck}} 幸运+1#{{Card20}} 太阳的效果#{{Battery}} 将主动道具完全充能#{{CurseBlind}} 移除诅咒"
+        },
     },
     [Card.CARD_JUDGEMENT] = {
         en_us = {
             description = "{{Collectible144}} Spawns a Bum Friend Familiar#{{Collectible278}} or a Dark Bum Familiar"
+        },	
+        zh_cn = {
+            description = "{{Collectible144}} 生成一个乞丐朋友跟班#{{Collectible278}} 或一个黑暗乞丐跟班"
         },	
     },
         [Card.CARD_WORLD] = {
         en_us = {
             description = "Full mapping effect for each floor (except {{SuperSecretRoom}} Super Secret Room)"
         },
+        zh_cn = {
+            description = "揭示每层全图并显示房间类型(无法揭示{{SuperSecretRoom}}超级隐藏房的位置)"
+        },
     },
     [Card.CARD_REVERSE_FOOL] = {
         en_us = {
             description = "Taking damage makes Isaac drop 3-5 coins, bombs or keys#The pickups can be replaced with other variants, such as golden keys, nickels, dimes, etc# 40% chance for Coins and bombs to be dropped as {{Collectible74}} The Quarter or {{Collectible19}} Boom! if possible)"
+        },
+        zh_cn = {
+            description = "受到伤害掉落3-5个硬币, 炸弹或钥匙#可能生成变种掉落物#40%的概率尝试掉落{{Collectible74}} 25美分或{{Collectible19}} 砰! 的道具底座"
         },
     },
     [Card.CARD_REVERSE_MAGICIAN] = {
         en_us = {
             description = "Grants an aura that repels enemies and projectiles"
         },
+        zh_cn = {
+            description = "获得一个驱散敌人和敌弹的光环"
+        },
     },
     [Card.CARD_REVERSE_HIGH_PRIESTESS] = {
         en_us = {
             description = "{{Card58}} Removes the 60 second time limit from the effect of The Highpriestess? :)"
+        },
+        zh_cn = {
+            description = "{{Card58}} 无限时间的逆位女祭司  :)嘻嘻"
         },
     },
     [Card.CARD_REVERSE_EMPRESS] = {
         en_us = {
             description = "↑ {{Heart}} +2 Health#↑ {{Tears}} {{ColorYellow}}+1 Fire rate#↓ {{Speed}} -0.1 Speed"
         },
+        zh_cn = {
+            description = "↑ {{Heart}} 临时获得心之容器+2#↑ {{Tears}} {{ColorYellow}}射速修正+1#↓ {{Speed}} 移速-0.1"
+        },
     },
     [Card.CARD_REVERSE_EMPEROR] = {
         en_us = {
             description = "{{Card60}} A Portal leading to The Emperor? Boss Room appears after defeating the Boss of the floor#stays open until you enter it"
+        },
+        zh_cn = {
+            description = "{{Card60}} 击败本层头目后生成一个通往额外头目房的传送门#进入前始终保持开启"
         },
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
         en_us = {
             description = "{{EmptyBoneHeart}} 14% chance to spawn a bone heart on room clear, first room is guaranteed"
         },
+        zh_cn = {
+            description = "{{EmptyBoneHeart}} 14%的概率在清理房间后额外生成骨心(首次清理必定触发)"
+        },
     },
     [Card.CARD_REVERSE_LOVERS] = {
         en_us = {
             description = "{{Collectible642}} Items are sometimes replaced with a Single Use Magic Skin"
+        },
+        zh_cn = {
+            description = "{{Collectible642}} 有概率将道具替换为一次性的玄奇驴皮"
         },
     },
     [Card.CARD_REVERSE_CHARIOT] = {
         en_us = {
             description = "{{Chargeable}} Activates the effect of {{Card63}} The Chariot? by standing still for 4 seconds"
         },
+        zh_cn = {
+            description = "{{Chargeable}} 静止不动4s触发{{Card63}}逆位战车的效果"
+        },
     },
     [Card.CARD_REVERSE_JUSTICE] = {
         en_us = {
             description = "25% chance to replace room clear reward with a gold chest"
+        },
+        zh_cn = {
+            description = "25%的概率将清理房间战利品替换为金箱子"
         },
     },
     [Card.CARD_REVERSE_HERMIT] = {
         en_us = {
             description = "Touching any non coin pick up will turn them into a number of coins equal to their Shop value"
         },
+        zh_cn = {
+            description = "触碰任何非硬币掉落物会将其分解为等价的硬币"
+        },
     },
     [Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = {
         en_us = {
             description = "{{DiceRoom}} Attempts to Spawn a Dice Room in a valid location"
+        },
+        zh_cn = {
+            description = "{{DiceRoom}} 尝试在合适的位置生成骰子房"
         },
     },
     [Card.CARD_REVERSE_STRENGTH] = {
         en_us = {
             description = "{{Weakness}} Entering a room weakens all enemies for 10 seconds"
         },
+        zh_cn = {
+            description = "{{Weakness}} 进入新房间虚弱所有敌人10s"
+        },
     },
     [Card.CARD_REVERSE_HANGED_MAN] = {
         en_us = {
             description = "↓ {{Speed}} -0.1 Speed#Triple shot#{{Coin}} Killed enemies drop vanishing coins"
+        },
+        zh_cn = {
+            description = "↓ {{Speed}} 移速-0.1#三重泪弹#{{Coin}} 击杀的敌人掉落硬币"
         },
     },
     [Card.CARD_REVERSE_DEATH] = {
         en_us = {
             description = "Enemies have a chance to spawn Bone entities on death"
         },
+        zh_cn = {
+            description = "敌人死亡后有概率生成骨头"
+        },
     },
     [Card.CARD_REVERSE_TEMPERANCE] = {
         en_us = {
             description = "{{Pill}} Entering a new room has a 20% Chance to force Isaac to eat a random pill#{{Collectible252}} Gives the effects of Little Baggy"
+        },
+        zh_cn = {
+            description = "{{Pill}} 进入新房间有20%的概率强制服用一个随机药丸#{{Collectible252}} 获得小药袋的效果"
         },
     },
     [Card.CARD_REVERSE_DEVIL] = {
         en_us = {
             description = "Grants Flight#{{Collectible390}} Spawns a Seraphim familiar"
         },
+        zh_cn = {
+            description = "获得飞行#{{Collectible390}} 生成撒拉弗跟班"
+        },
     },
     [Card.CARD_REVERSE_TOWER] = {
         en_us = {
             description = "{{Card72}} Taking damage activates the effect of The Tower?"
+        },
+        zh_cn = {
+            description = "{{Card72}} 受到伤害后触发逆位高塔的效果"
         },
     },
     [Card.CARD_REVERSE_STARS] = {
         en_us = {
             description = "Hangs a golden sword above Isaac's head, which doubles all pedestal items#{{Warning}} After taking any damage, the sword will fall and deal 3 hearts of non-lethal damage to Isaac, rerolling all his passive items#Invincibility effects can prevent the damage, but your items will still be rerolled"
         },
+        zh_cn = {
+            description = "角色的头顶悬挂金剑, 复制所有的底座道具#{{Warning}} 受到任何伤害会导致金剑立即掉落, 造成3颗心额外伤害(不致死), 重随持有的所有被动道具#无敌效果只会保护你不受到额外伤害, 仍会重随道具"
+        },
     },
     [Card.CARD_REVERSE_MOON] = {
         en_us = {
             description = "Clearing a room will create a Red Key room if possible#50% chance to occur when in a red room"
+        },
+        zh_cn = {
+            description = "清理房间后有概率打开一个红房间#在红房间中有50%的概率触发"
         },
     },
     [Card.CARD_REVERSE_SUN] = {
         en_us = {
             description = "#↑ {{Damage}} {{ColorYellow}}+1 Damage#Flight and spectral tears#{{BoneHeart}} Converts heart containers into Bone Hearts (reverts)#{{CurseDarkness}} Curse of Darkness"
         },
+        zh_cn = {
+            description = "#↑ {{Damage}} {{ColorYellow}}伤害+1#飞行和灵体泪弹#{{BoneHeart}} 心之容器变为骨心(可恢复)#{{CurseDarkness}} 黑暗诅咒"
+        },
     },
     [Card.CARD_REVERSE_JUDGEMENT] = {
         en_us = {
             description = "Item pedestals will now cycle between 2 random items"
         },
+        zh_cn = {
+            description = "所有底座道具在2个道具之间切换"
+        },
     },
     [Card.CARD_REVERSE_WORLD] = {
         en_us = {
             description = "{{LadderRoom}} Spawns a trap door to a crawlspace in the starting room"
+        },
+        zh_cn = {
+            description = "{{LadderRoom}} 每层初始房间生成一个暗门"
         },
     },
 

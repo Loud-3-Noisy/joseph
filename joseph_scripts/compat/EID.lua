@@ -19,11 +19,6 @@ EID:setModIndicatorName("Joseph ")
 EID:setModIndicatorIcon("Player"..josephType)
 
 
-EID:addBirthright(josephType,
-    "Adds an additional permanent card enchant slot." ..
-    "#The currently enchanted card will automatically be placed into this slot."
-
-)
 
 EID:addColor("ColorPurpleGlow", nil, function(color)
     local maxAnimTime = 60
@@ -84,6 +79,20 @@ end
 EID:addDescriptionModifier("CardEnchant", shouldDisplayEnchantDescription, getDescription)
 
 
+-- Character
+for character, translations in pairs(Descriptions.Characters) do
+    for language, description in pairs(translations) do
+        EID:addCharacterInfo(character, description.description, description.name, language)
+
+    end
+end
+
+-- Birthrights
+for character, translations in pairs(Descriptions.Birthrights) do
+    for language, description in pairs(translations) do
+        EID:addBirthright(character, description.description, description.name, language)
+    end
+end
 
 -- Collectibles
 for collectible, translations in pairs(Descriptions.Collectibles) do
