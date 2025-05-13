@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-	<name>Joseph</name>
-	<directory>joseph</directory>
-	<description>[b] It's in the Cards! Discover the secrets of the Arcana with Joseph the Cartomancer! [/b]
+    <name>[RGON] Joseph The Cartomancer! (+12 Unlocks)</name>
+    <directory>joseph</directory>
+    <id>3478286292</id>
+    <description>[b] It's in the Cards! Discover the secrets of the Arcana with Joseph the Cartomancer! [/b]
 
 [img]https://i.imgur.com/4rDgUQW.png[/img]
 [hr][/hr] 
@@ -42,8 +44,11 @@ This mod was made with love by:
 Special thanks to Jozin191, Tiburones202, TheTurtleMelon, Lazy Mattman, and Eucalyptus for help playtesting, King MPHS for compat sprites, and to OucalGarlin for translations!
 
 </description>
-
-	<version>1.1</version>
-	<visibility/>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
+    <tag id="Cards"/>
+    <tag id="Player Characters"/>
 </metadata>
-
