@@ -493,10 +493,12 @@ function BaseCardEffects:RoomClearEffect(rng, spawnPos)
     end
     
     if utility:AnyPlayerHasEnchantment(Card.CARD_EMPEROR) and roomType == RoomType.ROOM_BOSS and Game():GetLevel():GetStage() <= LevelStage.STAGE4_2 then
-        for i = 0, choicePedestalCount - 2 do
-            local choiceA = Isaac.Spawn(EntityType.ENTITY_PICKUP, 100, 0, room:FindFreePickupSpawnPosition(room:GetGridPosition(65), 0, true, false), Vector(0, 0), nil)
-            choiceA:ToPickup().OptionsPickupIndex = 1
-        end
+        Isaac.CreateTimer( function()
+            for i = 0, choicePedestalCount - 2 do
+                local choiceA = Isaac.Spawn(EntityType.ENTITY_PICKUP, 100, 0, room:FindFreePickupSpawnPosition(room:GetGridPosition(65), 0, true, false), Vector(0, 0), nil)
+                choiceA:ToPickup().OptionsPickupIndex = 3
+            end
+        end, 1, 1, false)
     end
 end
 JosephMod:AddCallback(ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD, BaseCardEffects.RoomClearEffect)
