@@ -58,6 +58,10 @@ descriptions.Collectibles = {
             name="小抽奖机",
             description="{{Coin}} 自动拾取附近的硬币#{{Slotmachine}} 每拾取3硬币生成抽奖机奖励",
         },
+        ru = {
+            name = "Миниатюрная Слот Машина",
+            description = "{{Coin}} Летает возле персонажа и собирает монеты#Создаёт выплаты {{Slotmachine}} слот машины каждые 3 собранные монеты",
+        },
     },
 	[enums.Collectibles.LIL_FORTUNE_TELLER] = {
 		en_us = {
@@ -68,16 +72,24 @@ descriptions.Collectibles = {
             name="小预言机",
             description="{{Coin}} 自动拾取附近的硬币#{{FortuneTeller}} 每拾取4硬币生成预言机奖励",
         },
+        ru = {
+			name = "Миниатюрный Предсказатель",
+			description = "{{Coin}} Летает возле персонажа и собирает монеты#Создаёт выплаты {{FortuneTeller}} автомата с предсказаниями каждые 4 собранные монеты",
+        }
 	},	
 	[enums.Collectibles.LIL_BLOOD_BANK] = {
 		en_us = {
-			name = "Lil Blood Machine",
+			name = "Lil Blood Bank",
 			description = "{{Heart}} Picks up nearby Red Hearts#Spawns {{BloodDonationMachine}} Blood Donation Machine drops based on heart value",
 		},
         zh_cn={
             name="小献血机",
             description="{{Heart}} 自动拾取附近的红心#{{BloodDonationMachine}} 每半颗心生成献血机奖励",
         },
+        ru = {
+			name = "Миниатюрный Банк Крови",
+			description = "{{Heart}} Летает возле персонажа и собирает красные сердца#Создаёт выплаты {{BloodDonationMachine}} автомата по сдаче крови в зависимости от собранного сердца",
+		},
 	},
 	[enums.Collectibles.SCRAWL] = {
 		en_us = {
@@ -88,6 +100,10 @@ descriptions.Collectibles = {
             name="施咒卡",
             description="{{Card}} 进入未清理的房间获得一张随机卡牌#!!! 试图丢弃这些卡牌会直接将其销毁",
         },
+        ru = {
+			name = "Испещрение",
+			description = "{{Card}} При входе в незачищенную комнату даёт Айзеку случайную карту#{{Warning}} Карты исчезают сразу после выбрасывании их на пол",
+		},
 	},
 	[enums.Collectibles.POKER_MAT] = {
 		en_us = {
@@ -97,6 +113,10 @@ descriptions.Collectibles = {
 		zh_cn = {
 			name = "扑克牌垫",
 			description = "{{Card}} 生成一张卡牌#{{RedCard}} 扑克牌效果翻倍或增强",
+		},
+        ru = {
+			name = "Коврик Для Покера",
+			description = "{{Card}} Создаёт карту #{{RedCard}} Эффект игральных карт удвоен или усилен",
 		},
 	},
 	[enums.Collectibles.SOUL_OF_ENVY] = {
@@ -108,6 +128,10 @@ descriptions.Collectibles = {
 			name = "嫉妒之魂",
 			description = "↑ {{Damage}} 每有一个物资的持有数为0则获得伤害+1#物资越多, 伤害增幅越少, 在达到{{Coin}}15硬币 /  {{Bomb}}5炸弹 / {{Key}}5钥匙时变为+0",
 		},
+        ru = {
+			name = "Душа Зависти",
+			description = "↑ +1 урона за каждый пикап значение которого 0#Повышение урона уменьшается за каждый пикап который есть у Айзека вплоть до +0 при:#{{Blank}} {{Coin}} 15 монет#{{Blank}} {{Bomb}} 5 бомб#{{Blank}} {{Key}} 5 ключей",
+		},
 	},
 	[enums.Collectibles.CARD_SLEEVE] = {
 		en_us = {
@@ -117,6 +141,10 @@ descriptions.Collectibles = {
 		zh_cn = {
 			name = "塔罗卡套",
 			description = "{{Card}} 消耗持有的塔罗牌, 并将其与角色融合#{{Card}} 只能拥有一张融合卡牌的力量, 后续的卡牌会覆盖已有的",
+		},
+        ru = {
+			name = "Протектор Для Карт",
+			description = "{{Card}} Убирает активную карту таро, зачаровывая её на Айзека пока у вас есть этот предмет#{{Card}} Зачарование другой карты заменит эффект предыдущего зачарования",
 		},
 	},
 	[enums.Collectibles.CALENDAR] = {
@@ -128,6 +156,10 @@ descriptions.Collectibles = {
 			name = "日历",
 			description = "根据今天是星期几获得属性提升",
 		},
+        ru = {
+			name = "Календарь",
+			description = "Повышает характеристику в зависимости от текущего дня недели:",
+		},
 	},
 	[enums.Collectibles.SHREDDER] = {
 		en_us = {
@@ -138,15 +170,25 @@ descriptions.Collectibles = {
 			name = "碎纸机",
 			description = "{{Card}} 粉碎角色当前副手槽持有的卡牌, 生成5个随机掉落物, 本局内永远不会再出现那张卡",
 		},
+        ru = {
+			name = "Шредер",
+			description = "{{Card}} Уничтожает карту в активном слоте расходников Айзека, Создаёт 5 случайных пикапов и перманентно удаляет эту карту из пула карт до конца текущего забега",
+		},
 	},
     [enums.Collectibles.ACE_OF_HEARTS] = {
 		en_us = {
 			name = "Ace of Hearts",
-			description = "All Heart pick ups have a 50% chance to be rerolled into other pickup types#Almost all {{Heart}} Heart pickups are replaced with {{Card}} Cards",
+			description = "{{Heart}} Decreases the spawn rate of hearts by 50%" ..
+            "#{{Card}} All heart pickups turn into random cards" ..
+            "#{{Card" .. Card.CARD_LOVERS .. "}} Hearts spawned by cards are unaffected",
 		},
 		zh_cn = {
 			name = "红桃王牌",
-			description = "所有拾取的心有50%的概率被重随为其他掉落物#几乎所有{{Heart}}心掉落物被替换为{{Card}}卡牌",
+			description = "!!! 所有的心掉落物被转化#50%转化成卡牌, 50%转化为其他掉落物#不影响由卡牌生成的心掉落物",
+		},
+        ru = {
+			name = "Туз Червей",
+			description = "Все пикапы сердца будут заменяться на 50% случайную карту или 50% другой случайный пикап#Сердца {{Heart}} созданные с помощью {{Card}} карт не будут заменяться",
 		},
 	},
     [enums.Collectibles.MAGIC_SKIN_SINGLE_USE] = {
@@ -154,9 +196,13 @@ descriptions.Collectibles = {
 			name = "Magic Skin",
 			description = "{{Warning}} SINGLE USE {{Warning}}#Spawns an item from the current room's item pool#{{BrokenHeart}} Turns 1 heart container or 1 Bone Heart or 2 Soul Hearts into a Broken Heart#",
 		},
-		en_us = {
+		zh_cn = {
 			name = "玄奇驴皮",
 			description = "{{Warning}} 一次性 {{Warning}}#生成当前房间道具池的1个道具#{{BrokenHeart}} 将1心之容器或2魂心转换为1碎心",
+		},
+        ru = {
+			name = "Магическая кожа",
+			description = "{{Warning}} ОДНОРАЗОВОЕ {{Warning}}#Создаёт предмет пула текущей комнаты#{{BrokenHeart}} Превращает 1 контейнер сердец или 1 костяное сердце или 2 синих сердца в сломанное сердце#",
 		},
 	},
 }
@@ -165,30 +211,37 @@ descriptions.CalendarDays = {--add some icons for stats being added
     [1] = {
         en_us = "#{{ColorSilver}}Sunday:{{CR}} #↑ +1 Damage",
         zh_cn = "#{{ColorSilver}}周日:{{CR}}#↑ {{Damage}} 伤害+1",
+        ru = "#{{ColorSilver}}Воскресенье:{{CR}} #↑ +1 урон",
     },
     [2] = {
         en_us = "#{{ColorSilver}}Monday:{{CR}} #↑ +0.7 Tears",
         zh_cn = "#{{ColorSilver}}周一:{{CR}} #↑ {{Tears}} 射速+0.7",
+        ru = "#{{ColorSilver}}Понедельник:{{CR}} #↑ +0.7 Скорострельности",
     },
     [3] = {
         en_us = "#{{ColorSilver}}Tuesday:{{CR}} #↑ +1 Damage",
         zh_cn = "#{{ColorSilver}}周二:{{CR}} #↑ {{Damage}} 伤害+1",
+        ru = "#{{ColorSilver}}Вторник:{{CR}} #↑ +1 Урон",
     },
     [4] = {
         en_us = "#{{ColorSilver}}Wednesday:{{CR}} #↑ +0.3 Speed",
         zh_cn = "#{{ColorSilver}}周三:{{CR}} #↑ {{Speed}} 移速+0.3",
+        ru = "#{{ColorSilver}}Среда:{{CR}} #↑ +0.3 Скорости",
     },
     [5] = {
         en_us = "#{{ColorSilver}}Thursday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart",
         zh_cn = "#{{ColorSilver}}周四:{{CR}} #↑ {{Heart}} 心之容器+1#{{HealingRed}} 治疗1红心",
+        ru = "#{{ColorSilver}}Четверг:{{CR}} #↑ +1 к здоровью #{{HealingRed}} Лечит 1 красное сердце",
     },
     [6] = {
         en_us = "#{{ColorSilver}}Friday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart",
         zh_cn = "#{{ColorSilver}}周五:{{CR}} #↑ {{Heart}} 心之容器+1#{{HealingRed}} 治疗1红心",
+        ru = "#{{ColorSilver}}Пятница:{{CR}} #↑ +1 к здоровью #{{HealingRed}} Лечит 1 красное сердце",
     },
     [7] = {
         en_us = "#{{ColorSilver}}Saturday:{{CR}} #↑ +0.7 Tears",
         zh_cn = "#{{ColorSilver}}周六:{{CR}} #↑ {{Tears}} 射速+0.7",
+         ru = "#{{ColorSilver}}Суббота:{{CR}} #↑ +0.7 Скорострельности",
     },
 }
 
@@ -203,6 +256,10 @@ descriptions.Trinkets = {
 			name = "约瑟夫的茶杯",
 			description = "复制最后一个拾取的道具的效果",
 		},
+        ru = {
+			name = "Чашка радости",
+			description = "Копирует эффект последнего подобранного пассивного предмета",
+		},
 	},
 	[enums.Trinkets.EAR_OF_GRAIN] = {
 		en_us = {
@@ -212,6 +269,10 @@ descriptions.Trinkets = {
 		zh_cn = {
 			name = "谷物穗",
 			description = "{{BossRoom}} 进入头目房时, 额外与饥荒骑士进行战争#击败饥荒骑士仍会掉落额外的{{Collectible73}} 肉块/{{Collectible207}} 绷带球#饥荒骑士的生命值会动态变化",
+		},
+        ru = {
+			name = "Колос Зерна",
+			description = "Голод появляется как дополнительный босс при входе в {{BossRoom}} комнату босса. #При смерти Голод создаст {{Collectible73}} кубик мяса/{{Collectible207}} шар из пластырей #Количество здоровья Голода зависит от текущего этажа",
 		},
 	},
 }
@@ -225,6 +286,10 @@ descriptions.Cards = {
 		zh_cn = {
 			name = "XX - 宙",
 			description = "{{Collectible422}} 时间倒流回到上一个房间",
+		},
+        ru = {
+			name = "XX - Эон",
+			description = "Перенесет вас в предыдущую комнату#Все вокруг восстанавливает свое первоначальное состояние, какое они имели, когда вы были в предыдущей комнате",
 		},
 	},
 }
@@ -241,7 +306,12 @@ descriptions.Birthrights = {
             name = "约瑟夫",
             description = "可以拥有第2张融合卡牌的力量" ..
             "#立即将当前的融合卡牌放到这个额外槽位中"
-        }
+        },
+         ru = {
+            name = "Джозеф",
+            description = "Добавляет второй перманентный слот для зачарования карты." ..
+            "#Текущая зачарованная карта будет автоматически помещена в этот слот.",
+        },
     }
 }
 
@@ -260,7 +330,14 @@ descriptions.Characters = {
             description = "#长按使用键以将选定的塔罗牌融合, 持续获得其力量"..
             "#只能拥有一张融合卡牌的力量, 后续的卡牌会覆盖已有的"..
             "#!!! 受到惩罚伤害有概率失去融合的塔罗牌"
-        }
+        },
+         ru = {
+            name = "Джозеф",
+            description = "Может носить 2 карты/руны одновременно"..
+            "#Зажатие кнопки использования поглотит активную карту Таро, зачаруя её на Джозефа"..
+            "#Зачарование новой карты убирает эффект предыдущего зачарования"..
+            "#!!! При получении урона не самповреждения с шансом снимает зачарованную карту"
+        },
     }
 }
 
@@ -273,6 +350,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{EnchantIcon}} {{ColorPurpleGlow}}当融合这张卡时: "
         },
+         ru = {
+            description = "{{EnchantIcon}} {{ColorPurpleGlow}}Когда зачарована: "
+        },
     },
     ZERO = {
         en_us = {
@@ -280,6 +360,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Warning}} {{ColorLime}}绝对不会{{CR}}受击失效"
+        },
+         ru = {
+            description = "{{Warning}} {{ColorLime}}0%{{CR}} Шанс Потери Зачарования "
         },
     },
     LOW = {
@@ -289,6 +372,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorGreen}}小概率{{CR}}受击失效"
         },
+         ru = {
+            description = "{{Warning}} {{ColorGreen}}НИЗКИЙ{{CR}} Шанс Потери Зачарования"
+        },
     },
     MED = {
         en_us = {
@@ -296,6 +382,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Warning}} {{ColorYellow}}中等概率{{CR}}受击失效"
+        },
+         ru = {
+            description = "{{Warning}} {{ColorYellow}}СРЕДНИЙ{{CR}} Шанс Потери Зачарования"
         },
     },
     HIGH = {
@@ -305,6 +394,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorRed}}高概率{{CR}}受击失效"
         },
+         ru = {
+            description = "{{Warning}} {{ColorRed}}ВЫСОКИЙ{{CR}} Шанс Потери Зачарования"
+        },
     },
     HUNDRED = {
         en_us = {
@@ -313,13 +405,19 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorRed}}受击后立即失效{{CR}}"
         },
+        ru = {
+            description = "{{Warning}} {{ColorRed}}100%{{CR}} Шанс Потери Зачарования"
+        },
     },
     [Card.CARD_FOOL] = {
         en_us = {
-            description = "Spawns a Portal to an unexplored room when the room is clear of enemies"
+            description = "Spawns a Portal to an unexplored regular room on room clear"
         },
         zh_cn = {
             description = "清理一个有敌人的房间后, 生成一个前往未探索房间的传送门"
+        },
+        ru = {
+            description = "Создаёт портал в незачищенную обычную комнату при зачистке комнаты"
         },
     },
     [Card.CARD_MAGICIAN] = {
@@ -329,6 +427,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "获得跟踪泪弹"
         },
+         ru = {
+            description = "Самонаводящиеся Слёзы"
+        },
     },
     [Card.CARD_HIGH_PRIESTESS] = {
         en_us = {
@@ -336,6 +437,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "50%的概率在进入房间后触发{{Card3}} 女祭司效果"--50% chance to trigger The High Priestess when entering a new room
+        },
+        ru = {
+            description = "50% шанс активировать верховную жрицу при входе в новую комнату"
         },
     },
     [Card.CARD_EMPRESS] = {
@@ -345,6 +449,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "↑ {{Speed}} 移速+0.3#↑ {{Damage}} {{ColorYellow}}伤害+1"
         },
+         ru = {
+            description = "↑ {{Speed}} +0.3 Скорости#↑ {{Damage}} {{ColorYellow}}+1 Урон"
+        },
     },
     [Card.CARD_EMPEROR] = {
         en_us = {
@@ -352,6 +459,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{BossRoom}} 允许头目房道具二选一"
+        },
+        ru = {
+            description = "{{BossRoom}} Даёт Айзеку выбор между 2 предметами после победы над боссом"
         },
     },
     [Card.CARD_HIEROPHANT] = {
@@ -361,6 +471,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{SoulHeart}} 13%的概率在清理房间后额外生成魂心(首次清理必定触发)"
         },
+         ru = {
+            description = "{{SoulHeart}} 13% шанс создать дополнительную награду в виде синего сердца при зачистке комнаты, первая комната гарантированно создаст синее сердце"
+        },
     },
     [Card.CARD_LOVERS] = {
         en_us = {
@@ -368,6 +481,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Heart}} 20%的概率在清理房间后额外生成红心(首次清理必定触发)"
+        },
+        ru = {
+            description = "{{Heart}} 20% шанс создать дополнительную награду в виде красного сердца при зачистке комнаты, первая комната гарантированно создаст красное сердце"
         },
     },
     [Card.CARD_CHARIOT] = {
@@ -377,6 +493,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Chargeable}} 持续移动10s后触发{{Card8}} 战车的效果"
         },
+        ru = {
+            description = "{{Chargeable}} Активирует эффект {{Card8}} Колесницы при неприрывном движении в течении 10 секунд"
+        },
     },
     [Card.CARD_JUSTICE] = {
         en_us = {
@@ -384,6 +503,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Card9}} 14%的概率在清理房间后触发正义的效果(首次清理必定触发)#{{Warning}} 效果可能并不完整"
+        },
+        ru = {
+            description = "{{Card9}} 14% шанс активировать эффект карты Справедливость при зачистке комнаты , первая комната гарантированно активрует эффект#{{Warning}} Не все 4 пикапа могут появиться"
         },
     },
     [Card.CARD_HERMIT] = {
@@ -393,6 +515,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Shop}} 在商店内生成1个通往地下商店的暗门, 售卖饰品, 符文, 卡牌, 特殊心和任意道具池的道具"
         },
+        ru = {
+            description = "{{Shop}} Добавляет люк в каждый магазин#Который ведет во второй магазин в котором продаются брелоки, руны, карты, специальные средца и предметы из любого пула"
+        },
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
         en_us = {
@@ -400,6 +525,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} 生成一个小抽奖机跟班#{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} 也有可能出现小预言机跟班"
+        },
+        ru = {
+            description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} Создаёт Миниатюрную Слот Машину фамильяра #{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} или фамильяра Миниатюрного Предсказателя"
         },
     },
     [Card.CARD_STRENGTH] = {
@@ -409,6 +537,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "↑ {{Speed}} 移速+0.3#↑ {{Damage}} 伤害+0.3#↑ {{Damage}} {{ColorYellow}}伤害倍率x1.25#↑ {{Range}} 射程+5.25#↑ 泪弹高度+0.5"
         },
+        ru = {
+            description = "↑ {{Speed}} +0.3 Скорости#↑ {{Damage}} +0.3 Урона#↑ {{Damage}} {{ColorYellow}}x1.25 Множитель Урона#↑ {{Range}} +5.25 Дальности#↑ +0.5 Высота Полёта Слезы"
+        },
     },
     [Card.CARD_HANGED_MAN] = {
         en_us = {
@@ -416,6 +547,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "永久的飞行"
+        },
+        ru = {
+            description = "Постоянный Полёт"
         },
     },
     [Card.CARD_DEATH] = {
@@ -425,6 +559,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Collectible265}} 生成一个枯骨宝宝"
         },
+        ru = {
+            description = "{{Collectible265}} Создаёт Высушенного Малыша"
+        },
     },
     [Card.CARD_TEMPERANCE] = {
         en_us = {
@@ -432,6 +569,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}} 生成一个小献血机跟班"
+        },
+        ru = {
+            description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}}Создаёт фамильяра Миниатюрный Банк Крови"
         },
     },
     [Card.CARD_DEVIL] = {
@@ -441,6 +581,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "↑ {{Damage}} {{ColorYellow}}伤害+1.5"
         },
+        ru = {
+            description = "↑ {{Damage}} {{ColorYellow}}+1.5 Урона"
+        },
     },
     [Card.CARD_TOWER] = {
         en_us = {
@@ -448,6 +591,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Warning}} 受伤时, 生成6个即爆炸弹#该炸弹继承角色的炸弹效果"
+        },
+        ru = {
+            description = "{{Warning}} Получение урона создаёт 6 Тролль Бомб#Тролль Бомбы имеют эффекты бомб Айзека"
         },
     },
     [Card.CARD_STARS] = {
@@ -457,6 +603,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{TreasureRoom}} 允许宝箱房道具二选一"
         },
+        ru = {
+            description = "{{TreasureRoom}} Даёт Айзеку выбор между двумя предметами в комнате сокровищ"
+        },
     },
     [Card.CARD_MOON] = {
         en_us = {
@@ -465,6 +614,10 @@ descriptions.Enchants = {
         zh_cn = {
             description = "每层额外增加1个{{SecretRoom}}隐藏房和{{SuperSecretRoom}}超级隐藏房#每层揭示1个隐藏房#{{Timer}} 隐藏房内有光束, 接触时在本层获得:#↑ {{Tears}} 射速+0.5#↑ {{Tears}} 每层首个光柱额外+0.5射速#{{HalfSoulHeart}} 1半魂心"
         },
+        ru = {
+            description = "Добавляет дополнительную {{SecretRoom}} Секретную комнату и {{SuperSecretRoom}} Супер Секретную Комнату на каждый этаж#Показывает местоположение одной секретной комнаты#{{Timer}} В секретных комнатах находится луч света который до конца этажа даёт:#↑ {{Tears}} +0.5 Скорострельности#↑ {{Tears}} дополнительно +0.5 Скорострельности за первый луч света на этаже#{{HalfSoulHeart}} Половинку Синего Сердца"
+        },
+        
     },
     [Card.CARD_SUN] = {
         en_us = {
@@ -473,6 +626,10 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Burning}} 进入房间灼烧所有的敌人#击败头目后, 在本层获得:#↑ {{Damage}} 伤害+3#↑ {{Luck}} 幸运+1#{{Card20}} 太阳的效果#{{Battery}} 将主动道具完全充能#{{CurseBlind}} 移除诅咒"
         },
+        ru = {
+            description = "{{Burning}} При входе в комнату поджигает всех врагов#При убийстве босса этажа, Айзек получает:#↑ {{Damage}} +3 Урона#↑ {{Luck}} +1 Удачу#{{Card20}} Эффект карты Солнце#{{Battery}} Полностью заряжает активный предмет#{{CurseBlind}} Убирает проклятье этажа"
+        },
+        
     },
     [Card.CARD_JUDGEMENT] = {
         en_us = {
@@ -481,6 +638,10 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Collectible144}} 生成一个乞丐朋友跟班#{{Collectible278}} 或一个黑暗乞丐跟班"
         },	
+        ru = {
+            description = "{{Collectible144}} Создаёт фамильяра попрошайку#{{Collectible278}} или дьявольского попрошайку"
+        },	
+        
     },
         [Card.CARD_WORLD] = {
         en_us = {
@@ -488,6 +649,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "揭示每层全图并显示房间类型(无法揭示{{SuperSecretRoom}}超级隐藏房的位置)"
+        },
+        ru = {
+            description = "Полностью раскрывает карту каждого этажа (за исключением {{SuperSecretRoom}} Супер Секретной Комнаты)"
         },
     },
     [Card.CARD_REVERSE_FOOL] = {
@@ -497,6 +661,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "受到伤害掉落3-5个硬币, 炸弹或钥匙#可能生成变种掉落物#40%的概率尝试掉落{{Collectible74}} 25美分或{{Collectible19}} 砰! 的道具底座"
         },
+        ru = {
+            description = "При получении урона Айзек роняет 3-5 монет, бомб или ключей#Пикапы могут замениться другим типом того же пикапа, такими как золотой ключ, никель, дайм, и так далее# 40% шанс для монет и бомб выпасть в виде предмета {{Collectible74}} Четвертак или {{Collectible19}} Бум! если хватает пикапов)"
+        },
     },
     [Card.CARD_REVERSE_MAGICIAN] = {
         en_us = {
@@ -504,6 +671,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "获得一个驱散敌人和敌弹的光环"
+        },
+        ru = {
+            description = "Даёт ауру которая отталкивает врагов и вражеские снаряды"
         },
     },
     [Card.CARD_REVERSE_HIGH_PRIESTESS] = {
@@ -513,6 +683,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Card58}} 无限时间的逆位女祭司  :)嘻嘻"
         },
+        ru = {
+            description = "{{Card58}} Постоянно призывает мамины ноги на персонажа"
+        },
     },
     [Card.CARD_REVERSE_EMPRESS] = {
         en_us = {
@@ -521,13 +694,19 @@ descriptions.Enchants = {
         zh_cn = {
             description = "↑ {{Heart}} 临时获得心之容器+2#↑ {{Tears}} {{ColorYellow}}射速修正+1#↓ {{Speed}} 移速-0.1"
         },
+        ru = {
+            description = "↑ {{Heart}} +2 к здоровью#↑ {{Tears}} {{ColorYellow}}+1 Скорострельности#↓ {{Speed}} -0.1 Скорости"
+        },
     },
     [Card.CARD_REVERSE_EMPEROR] = {
         en_us = {
-            description = "{{Card60}} A Portal leading to The Emperor? Boss Room appears after defeating the Boss of the floor#stays open until you enter it"
+            description = "{{Card60}} A Portal leading to The Emperor? Boss Room appears after defeating the Boss of the floor"
         },
         zh_cn = {
-            description = "{{Card60}} 击败本层头目后生成一个通往额外头目房的传送门#进入前始终保持开启"
+            description = "{{Card60}} 击败本层头目后生成一个通往额外头目房的传送门#"
+        },
+        ru = {
+            description = "{{Card60}} Портал ведущий в босс комнату карты Император? появляется после победы над боссом этажа"
         },
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
@@ -537,6 +716,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{EmptyBoneHeart}} 14%的概率在清理房间后额外生成骨心(首次清理必定触发)"
         },
+        ru = {
+            description = "{{EmptyBoneHeart}} 14% шанс создать дополнительную награду в виде костяного сердца при зачистке комнаты, первая комната гарантированно создаст костяное сердце"
+        },
     },
     [Card.CARD_REVERSE_LOVERS] = {
         en_us = {
@@ -544,6 +726,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{Collectible642}} 有概率将道具替换为一次性的玄奇驴皮"
+        },
+        ru = {
+            description = "{{Collectible642}} Предметы иногда заменяются на Волшебную Кожу с одним использованием"
         },
     },
     [Card.CARD_REVERSE_CHARIOT] = {
@@ -553,6 +738,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Chargeable}} 静止不动4s触发{{Card63}}逆位战车的效果"
         },
+        ru = {
+            description = "{{Chargeable}} Активирует эффект {{Card63}} Колесницы? если не двигаться в течении 4 секунд"
+        },
     },
     [Card.CARD_REVERSE_JUSTICE] = {
         en_us = {
@@ -560,6 +748,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "25%的概率将清理房间战利品替换为金箱子"
+        },
+        ru = {
+            description = "25% шанс заменить награду за зачистку комнаты на золотой сундук"
         },
     },
     [Card.CARD_REVERSE_HERMIT] = {
@@ -569,13 +760,19 @@ descriptions.Enchants = {
         zh_cn = {
             description = "触碰任何非硬币掉落物会将其分解为等价的硬币"
         },
+        ru = {
+            description = "При касании пикапа не монеты превращает этот пикап в количество монет по стоимости магазина"
+        },
     },
     [Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = {
         en_us = {
-            description = "{{DiceRoom}} Attempts to Spawn a Dice Room in a valid location"
+            description = "{{DiceRoom}} Spawns a dice room on the floor if possible"
         },
         zh_cn = {
             description = "{{DiceRoom}} 尝试在合适的位置生成骰子房"
+        },
+        ru = {
+            description = "{{DiceRoom}} Создаёт кубик-комнату на этаже если возможно"
         },
     },
     [Card.CARD_REVERSE_STRENGTH] = {
@@ -585,6 +782,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Weakness}} 进入新房间虚弱所有敌人10s"
         },
+        ru = {
+            description = "{{Weakness}} При входе в комнату накладывает эффект слабости на всех врагов на 10 секунд"
+        },
     },
     [Card.CARD_REVERSE_HANGED_MAN] = {
         en_us = {
@@ -593,13 +793,19 @@ descriptions.Enchants = {
         zh_cn = {
             description = "↓ {{Speed}} 移速-0.1#三重泪弹#{{Coin}} 击杀的敌人掉落硬币"
         },
+        ru = {
+            description = "↓ {{Speed}} -0.1 Скорости#Тройной выстрел#{{Coin}} С убитых врагов падают исчезающие монеты"
+        },
     },
     [Card.CARD_REVERSE_DEATH] = {
         en_us = {
-            description = "Enemies have a chance to spawn Bone entities on death"
+            description = "Enemies have a chance to spawn friendly Bone entities or shards on death"
         },
         zh_cn = {
             description = "敌人死亡后有概率生成骨头"
+        },
+        ru = {
+            description = "Враги при смерти могут создать летающие осколки костей или дружелюбного скелета"
         },
     },
     [Card.CARD_REVERSE_TEMPERANCE] = {
@@ -609,6 +815,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Pill}} 进入新房间有20%的概率强制服用一个随机药丸#{{Collectible252}} 获得小药袋的效果"
         },
+        ru = {
+            description = "{{Pill}} При входе в новую комнату с шансом 20% Айзек использует случайную пилюлю#{{Collectible252}} Даёт эффект предмета Маленький Мешочек"
+        },
     },
     [Card.CARD_REVERSE_DEVIL] = {
         en_us = {
@@ -616,6 +825,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "获得飞行#{{Collectible390}} 生成撒拉弗跟班"
+        },
+        ru = {
+            description = "Даёт полёт#{{Collectible390}} Создаёт фамильяра Серафима"
         },
     },
     [Card.CARD_REVERSE_TOWER] = {
@@ -625,13 +837,19 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Card72}} 受到伤害后触发逆位高塔的效果"
         },
+        ru = {
+            description = "{{Card72}} При получении урона активирует эффект карты Башня?"
+        },
     },
     [Card.CARD_REVERSE_STARS] = {
         en_us = {
-            description = "Hangs a golden sword above Isaac's head, which doubles all pedestal items#{{Warning}} After taking any damage, the sword will fall and deal 3 hearts of non-lethal damage to Isaac, rerolling all his passive items#Invincibility effects can prevent the damage, but your items will still be rerolled"
+            description = "Hangs a golden sword above Isaac's head, which doubles all pedestal items#{{Warning}} After taking damage, the sword will fall and deal 3 hearts of non-lethal damage to Isaac, rerolling all his passive items#Invincibility effects can prevent the damage, but your items will still be rerolled"
         },
         zh_cn = {
             description = "角色的头顶悬挂金剑, 复制所有的底座道具#{{Warning}} 受到任何伤害会导致金剑立即掉落, 造成3颗心额外伤害(不致死), 重随持有的所有被动道具#无敌效果只会保护你不受到额外伤害, 仍会重随道具"
+        },
+        ru = {
+            description = "Создаёт Золотой меч висящий над головой Айзека, который удваивает все пьедесталы#{{Warning}} После получения урона, меч упадёт и нанесёт не летальный урон в три полных сердца Айзеку, Изменяя все его пассивные предметы#С помощью неуязвимости можно избежать урона но предметы всё равно будут изменены"
         },
     },
     [Card.CARD_REVERSE_MOON] = {
@@ -641,6 +859,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "清理房间后有概率打开一个红房间#在红房间中有50%的概率触发"
         },
+        ru = {
+            description = "Создаёт проход в красную комнату после зачистки комнаты если возможно#50% шанс на срабатывание в красных комнатах"
+        },
     },
     [Card.CARD_REVERSE_SUN] = {
         en_us = {
@@ -648,6 +869,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "#↑ {{Damage}} {{ColorYellow}}伤害+1#飞行和灵体泪弹#{{BoneHeart}} 心之容器变为骨心(可恢复)#{{CurseDarkness}} 黑暗诅咒"
+        },
+        ru = {
+            description = "#↑ {{Damage}} {{ColorYellow}}+1 Урон#Полёт и спектральные слёзы#{{BoneHeart}} Превращает красные сердца в костяные (Обратимо)#{{CurseDarkness}} Проклятие Темноты"
         },
     },
     [Card.CARD_REVERSE_JUDGEMENT] = {
@@ -657,6 +881,9 @@ descriptions.Enchants = {
         zh_cn = {
             description = "所有底座道具在2个道具之间切换"
         },
+        ru = {
+            description = "Пьедесталы переключаются между 2 предметами"
+        },
     },
     [Card.CARD_REVERSE_WORLD] = {
         en_us = {
@@ -664,6 +891,9 @@ descriptions.Enchants = {
         },
         zh_cn = {
             description = "{{LadderRoom}} 每层初始房间生成一个暗门"
+        },
+        ru = {
+            description = "{{LadderRoom}} Создаёт люк в полу в стартовой комнате который ведёт в Ретро сокровищницу"
         },
     },
 
