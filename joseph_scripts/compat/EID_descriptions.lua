@@ -307,10 +307,15 @@ descriptions.Birthrights = {
             description = "可以拥有第2张融合卡牌的力量" ..
             "#立即将当前的融合卡牌放到这个额外槽位中"
         },
-         ru = {
+        ru = {
             name = "Джозеф",
             description = "Добавляет второй перманентный слот для зачарования карты." ..
             "#Текущая зачарованная карта будет автоматически помещена в этот слот.",
+        },
+        spa = {
+            name = "José",
+            description = "Añade un espacio adicional permanente para encantar cartas." ..
+            "#La carta actualmente encantada se pondrá automáticamente en este espacio.",
         },
     }
 }
@@ -331,12 +336,19 @@ descriptions.Characters = {
             "#只能拥有一张融合卡牌的力量, 后续的卡牌会覆盖已有的"..
             "#!!! 受到惩罚伤害有概率失去融合的塔罗牌"
         },
-         ru = {
+        ru = {
             name = "Джозеф",
             description = "Может носить 2 карты/руны одновременно"..
             "#Зажатие кнопки использования поглотит активную карту Таро, зачаруя её на Джозефа"..
             "#Зачарование новой карты убирает эффект предыдущего зачарования"..
             "#!!! При получении урона не самповреждения с шансом снимает зачарованную карту"
+        },
+        spa = {
+            name = "José",
+            description = "Puede llevar 2 cartas/runas a la vez"..
+            "#Mantener presionado el botón de uso consumirá la carta del Tarot que se tenga en ese momento, encantándola en José"..
+            "#Encantar una nueva carta eliminará el efecto del encantamiento anterior"..
+            "#!!! Recibir daño no propio tiene una probabilidad de eliminar la carta encantada"
         },
     }
 }
@@ -350,8 +362,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{EnchantIcon}} {{ColorPurpleGlow}}当融合这张卡时: "
         },
-         ru = {
+        ru = {
             description = "{{EnchantIcon}} {{ColorPurpleGlow}}Когда зачарована: "
+        },
+        spa = {
+            description = "{{EnchantIcon}} {{ColorPurpleGlow}}Al encantarse: "
         },
     },
     ZERO = {
@@ -361,8 +376,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorLime}}绝对不会{{CR}}受击失效"
         },
-         ru = {
+        ru = {
             description = "{{Warning}} {{ColorLime}}0%{{CR}} Шанс Потери Зачарования "
+        },
+        spa = {
+            description = "{{Warning}} {{ColorLime}}0%{{CR}} de Probabilidad de Desencantarse "
         },
     },
     LOW = {
@@ -372,8 +390,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorGreen}}小概率{{CR}}受击失效"
         },
-         ru = {
+        ru = {
             description = "{{Warning}} {{ColorGreen}}НИЗКИЙ{{CR}} Шанс Потери Зачарования"
+        },
+        spa = {
+            description = "{{Warning}} {{ColorGreen}}BAJA{{CR}} Probabilidad de Desencantarse"
         },
     },
     MED = {
@@ -383,8 +404,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorYellow}}中等概率{{CR}}受击失效"
         },
-         ru = {
+        ru = {
             description = "{{Warning}} {{ColorYellow}}СРЕДНИЙ{{CR}} Шанс Потери Зачарования"
+        },
+        spa = {
+            description = "{{Warning}} {{ColorYellow}}MEDIA{{CR}} Probabilidad de Desencantarse"
         },
     },
     HIGH = {
@@ -394,8 +418,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{Warning}} {{ColorRed}}高概率{{CR}}受击失效"
         },
-         ru = {
+        ru = {
             description = "{{Warning}} {{ColorRed}}ВЫСОКИЙ{{CR}} Шанс Потери Зачарования"
+        },
+        spa = {
+            description = "{{Warning}} {{ColorRed}}ALTA{{CR}} Probabilidad de Desencantars"
         },
     },
     HUNDRED = {
@@ -408,6 +435,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Warning}} {{ColorRed}}100%{{CR}} Шанс Потери Зачарования"
         },
+        spa = {
+            description = "{{Warning}} {{ColorRed}}100%{{CR}} de Probabilidad de Desencantarse"
+        },
     },
     [Card.CARD_FOOL] = {
         en_us = {
@@ -419,6 +449,9 @@ descriptions.Enchants = {
         ru = {
             description = "Создаёт портал в незачищенную обычную комнату при зачистке комнаты"
         },
+        spa = {
+            description = "Genera un Portal a una habitación sin explorar al limpiar una habitación"
+        },
     },
     [Card.CARD_MAGICIAN] = {
         en_us = {
@@ -427,8 +460,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "获得跟踪泪弹"
         },
-         ru = {
+        ru = {
             description = "Самонаводящиеся Слёзы"
+        },
+        spa = {
+            description = "Lágrimas Teledirigidas"
         },
     },
     [Card.CARD_HIGH_PRIESTESS] = {
@@ -449,8 +485,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "↑ {{Speed}} 移速+0.3#↑ {{Damage}} {{ColorYellow}}伤害+1"
         },
-         ru = {
+        ru = {
             description = "↑ {{Speed}} +0.3 Скорости#↑ {{Damage}} {{ColorYellow}}+1 Урон"
+        },
+        spa = {
+            description = "↑ {{Speed}} Velocidad +0.3#↑ {{Damage}} {{ColorYellow}}Daño +1.5"
         },
     },
     [Card.CARD_EMPEROR] = {
@@ -463,6 +502,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{BossRoom}} Даёт Айзеку выбор между 2 предметами после победы над боссом"
         },
+        spa = {
+            description = "{{BossRoom}} Permite elegir entre 2 objetos al derrotar un jefe"
+        },
     },
     [Card.CARD_HIEROPHANT] = {
         en_us = {
@@ -471,8 +513,11 @@ descriptions.Enchants = {
         zh_cn = {
             description = "{{SoulHeart}} 13%的概率在清理房间后额外生成魂心(首次清理必定触发)"
         },
-         ru = {
+        ru = {
             description = "{{SoulHeart}} 13% шанс создать дополнительную награду в виде синего сердца при зачистке комнаты, первая комната гарантированно создаст синее сердце"
+        },
+        spa = {
+            description = "{{SoulHeart}} 13% de probabilidad de generar un Corazón de Alma extra al terminar una habitación, está garantizado en la primera habitación"
         },
     },
     [Card.CARD_LOVERS] = {
@@ -485,6 +530,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Heart}} 20% шанс создать дополнительную награду в виде красного сердца при зачистке комнаты, первая комната гарантированно создаст красное сердце"
         },
+        spa = {
+            description = "{{Heart}} 20% de probabilidad de generar un Corazón Rojo extra al terminar una habitación, está garantizado en la primera habitación"
+        },
     },
     [Card.CARD_CHARIOT] = {
         en_us = {
@@ -495,6 +543,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{Chargeable}} Активирует эффект {{Card8}} Колесницы при неприрывном движении в течении 10 секунд"
+        },
+        spa = {
+            description = "{{Chargeable}} Activa el efecto de {{Card8}} El Carruaje al moverse constantemente por 10 segundos"
         },
     },
     [Card.CARD_JUSTICE] = {
@@ -507,6 +558,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Card9}} 14% шанс активировать эффект карты Справедливость при зачистке комнаты , первая комната гарантированно активрует эффект#{{Warning}} Не все 4 пикапа могут появиться"
         },
+        spa = {
+            description = "{{Card9}} 14% de probabilidad de activar el efecto de Justicia al limpiar una habitación, está garantizado en la primera habitación#{{Warning}} No todos los recolectables aparecen"
+        },
     },
     [Card.CARD_HERMIT] = {
         en_us = {
@@ -518,6 +572,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Shop}} Добавляет люк в каждый магазин#Который ведет во второй магазин в котором продаются брелоки, руны, карты, специальные средца и предметы из любого пула"
         },
+        spa = {
+            description = "{{Shop}} Abre una trampilla en cada tienda#La trampilla lleva a una tienda subterránea que vende baratijas, runas, cartas, corazones especiales y objetos de cualquier pool"
+        },
     },
     [Card.CARD_WHEEL_OF_FORTUNE] = {
         en_us = {
@@ -528,6 +585,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} Создаёт Миниатюрную Слот Машину фамильяра #{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} или фамильяра Миниатюрного Предсказателя"
+        },
+        spa = {
+            description = "{{Collectible" .. enums.Collectibles.LIL_SLOT_MACHINE .. "}} Genera una Pequeña Máquina Tragaperras Familiar#{{Collectible" .. enums.Collectibles.LIL_FORTUNE_TELLER .. "}} o una Pequeña Máquina Adivina Familiar"
         },
     },
     [Card.CARD_STRENGTH] = {
@@ -718,6 +778,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{EmptyBoneHeart}} 14% шанс создать дополнительную награду в виде костяного сердца при зачистке комнаты, первая комната гарантированно создаст костяное сердце"
+        },
+        spa = {
+            description = "{{EmptyBoneHeart}} 14% de probabilidad de generar un Corazón de Hueso al terminar una habitación, está garantizado en la primera habitación"
         },
     },
     [Card.CARD_REVERSE_LOVERS] = {
