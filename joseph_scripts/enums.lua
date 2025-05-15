@@ -228,7 +228,7 @@ enums.CardDisenchantChances[Card.CARD_DEVIL] = 0.90
 enums.CardDisenchantChances[Card.CARD_TOWER] = 0.10
 enums.CardDisenchantChances[Card.CARD_STARS] = 0.25
 enums.CardDisenchantChances[Card.CARD_MOON] = 0.25
-enums.CardDisenchantChances[Card.CARD_SUN] = 0.25
+enums.CardDisenchantChances[Card.CARD_SUN] = 0.50
 enums.CardDisenchantChances[Card.CARD_JUDGEMENT] = 0.25
 enums.CardDisenchantChances[Card.CARD_WORLD] = 0.25
 
