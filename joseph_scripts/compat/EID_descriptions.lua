@@ -600,6 +600,9 @@ descriptions.Enchants = {
         ru = {
             description = "↑ {{Speed}} +0.3 Скорости#↑ {{Damage}} +0.3 Урона#↑ {{Damage}} {{ColorYellow}}x1.25 Множитель Урона#↑ {{Range}} +5.25 Дальности#↑ +0.5 Высота Полёта Слезы"
         },
+        spa = {
+            description = "↑ {{Speed}} Velocidad +0.3#↑ {{Damage}} Daño +0.3#↑ {{Damage}} {{ColorYellow}}Daño x1.25#↑{{Range}} Alcance +5.25#↑ Altura de lágrimas +0.5"
+        },
     },
     [Card.CARD_HANGED_MAN] = {
         en_us = {
@@ -610,6 +613,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "Постоянный Полёт"
+        },
+        spa = {
+            description = "Vuelo Permanente"
         },
     },
     [Card.CARD_DEATH] = {
@@ -622,6 +628,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Collectible265}} Создаёт Высушенного Малыша"
         },
+        spa = {
+            description = "{{Collectible265}} Genera un Bebé Seco"
+        },
     },
     [Card.CARD_TEMPERANCE] = {
         en_us = {
@@ -632,6 +641,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}}Создаёт фамильяра Миниатюрный Банк Крови"
+        },
+        spa = {
+            description = "{{Collectible" .. enums.Collectibles.LIL_BLOOD_BANK .. "}}Genera una Máquina de Donación de Sangre Familiar"
         },
     },
     [Card.CARD_DEVIL] = {
@@ -644,6 +656,9 @@ descriptions.Enchants = {
         ru = {
             description = "↑ {{Damage}} {{ColorYellow}}+1.5 Урона"
         },
+        spa = {
+            description = "↑ {{Damage}} {{ColorYellow}}Daño +1.5"
+        },
     },
     [Card.CARD_TOWER] = {
         en_us = {
@@ -654,6 +669,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{Warning}} Получение урона создаёт 6 Тролль Бомб#Тролль Бомбы имеют эффекты бомб Айзека"
+        },
+        spa = {
+            description = "{{Warning}} Genera 6 bombas troll al recibir daño#Las bombas copian los efectos de tus bombas"
         },
     },
     [Card.CARD_STARS] = {
@@ -666,6 +684,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{TreasureRoom}} Даёт Айзеку выбор между двумя предметами в комнате сокровищ"
         },
+        spa = {
+            description = "{{TreasureRoom}} Permite elegir entre 2 objetos en la sala del tesoro"
+        },
     },
     [Card.CARD_MOON] = {
         en_us = {
@@ -677,7 +698,9 @@ descriptions.Enchants = {
         ru = {
             description = "Добавляет дополнительную {{SecretRoom}} Секретную комнату и {{SuperSecretRoom}} Супер Секретную Комнату на каждый этаж#Показывает местоположение одной секретной комнаты#{{Timer}} В секретных комнатах находится луч света который до конца этажа даёт:#↑ {{Tears}} +0.5 Скорострельности#↑ {{Tears}} дополнительно +0.5 Скорострельности за первый луч света на этаже#{{HalfSoulHeart}} Половинку Синего Сердца"
         },
-        
+        spa = {
+            description = "Agrega una {{SecretRoom}} habitación secreta y una {{SuperSecretRoom}} súper secreta adicional a cada piso#Las habitaciones secretas contienen un rayo de luz que al tocarlo otorga lo siguiente: #↑ {{Tears}} Lágrimas +1 al tocar el primer rayo#↑ {{Tears}} Lágrimas +0.5 al tocar los siguientes rayos#{{HalfSoulHeart}} Medio Corazón de alma"
+        },
     },
     [Card.CARD_SUN] = {
         en_us = {
@@ -689,21 +712,25 @@ descriptions.Enchants = {
         ru = {
             description = "{{Burning}} При входе в комнату поджигает всех врагов#При убийстве босса этажа, Айзек получает:#↑ {{Damage}} +3 Урона#↑ {{Luck}} +1 Удачу#{{Card20}} Эффект карты Солнце#{{Battery}} Полностью заряжает активный предмет#{{CurseBlind}} Убирает проклятье этажа"
         },
-        
+        spa = {
+            description = "{{Burning}} Entrar a una habitación quema a todos los enemigos#Al matar al jefe del piso, otorga lo siguiente para el resto del piso:↑{{Damage}} Daño +3#↑ {{Luck}} Suerte +1#{{Card20}} Efecto de el Sol#{{Battery}} Recarga el objeto activo#{{CurseBlind}} Quita todas las maldiciones"
+        },
     },
     [Card.CARD_JUDGEMENT] = {
         en_us = {
             description = "{{Collectible144}} Spawns a Bum Friend Familiar#{{Collectible278}} or a Dark Bum Familiar"
-        },	
+        },
         zh_cn = {
             description = "{{Collectible144}} 生成一个乞丐朋友跟班#{{Collectible278}} 或一个黑暗乞丐跟班"
-        },	
+        },
         ru = {
             description = "{{Collectible144}} Создаёт фамильяра попрошайку#{{Collectible278}} или дьявольского попрошайку"
-        },	
-        
+        },
+        spa = {
+            description = "{{Collectible144}} Genera un Amigo Pordiosero Familiar#{{Collectible278}} o un Pordiosero Oscuro Familiar"
+        },
     },
-        [Card.CARD_WORLD] = {
+    [Card.CARD_WORLD] = {
         en_us = {
             description = "Full mapping effect for each floor (except {{SuperSecretRoom}} Super Secret Room)"
         },
@@ -712,6 +739,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "Полностью раскрывает карту каждого этажа (за исключением {{SuperSecretRoom}} Супер Секретной Комнаты)"
+        },
+        spa = {
+            description = "Revela el mapa del piso actual (excepto la {{SuperSecretRoom}} Habitación Súper Secreta)"
         },
     },
     [Card.CARD_REVERSE_FOOL] = {
