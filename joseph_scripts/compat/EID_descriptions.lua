@@ -754,6 +754,9 @@ descriptions.Enchants = {
         ru = {
             description = "При получении урона Айзек роняет 3-5 монет, бомб или ключей#Пикапы могут замениться другим типом того же пикапа, такими как золотой ключ, никель, дайм, и так далее# 40% шанс для монет и бомб выпасть в виде предмета {{Collectible74}} Четвертак или {{Collectible19}} Бум! если хватает пикапов)"
         },
+        spa = {
+            description = "recibir daño hace que Isaac suelte de 3 a 5 monedas, bombas or llaves#Los recolectables pueden ser reemplazados con otras variantes, como llaves de oro, monedas de cinco y diez centavos, etc# 40% de probabilidad de que las Monedas y Bombas sean soltadas como {{Collectible74}} Un Cuarto o {{Collectible19}} ¡Buum! a ser posible)"
+        },
     },
     [Card.CARD_REVERSE_MAGICIAN] = {
         en_us = {
@@ -764,6 +767,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "Даёт ауру которая отталкивает врагов и вражеские снаряды"
+        },
+        spa = {
+            description = "Otorga un aura que empuja a enemigos y proyectiles"
         },
     },
     [Card.CARD_REVERSE_HIGH_PRIESTESS] = {
@@ -776,6 +782,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Card58}} Постоянно призывает мамины ноги на персонажа"
         },
+        spa = {
+            description = "{{Card58}} Quita el límite de 60 segundos del efecto de ¿La Suma Sacerdotisa? :)"
+        },
     },
     [Card.CARD_REVERSE_EMPRESS] = {
         en_us = {
@@ -787,6 +796,9 @@ descriptions.Enchants = {
         ru = {
             description = "↑ {{Heart}} +2 к здоровью#↑ {{Tears}} {{ColorYellow}}+1 Скорострельности#↓ {{Speed}} -0.1 Скорости"
         },
+        spa = {
+            description = "↑ {{Heart}} +2 corazones rojos#↑ {{Tears}} {{ColorYellow}}Lágrimas +1#↓ {{Speed}} Velocidad -0.1"
+        },
     },
     [Card.CARD_REVERSE_EMPEROR] = {
         en_us = {
@@ -797,6 +809,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{Card60}} Портал ведущий в босс комнату карты Император? появляется после победы над боссом этажа"
+        },
+        spa = {
+            description = "{{Card60}} Un Portal que lleva a la Sala de Jefe de ¿El Emperador? aparece tras derrotar a la Jefe del piso"
         },
     },
     [Card.CARD_REVERSE_HIEROPHANT] = {
@@ -823,6 +838,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Collectible642}} Предметы иногда заменяются на Волшебную Кожу с одним использованием"
         },
+        spa = {
+            description = "{{Collectible642}} Los objectos pueden ser reemplazados con una Piel Mágica de 1 Solo Uso"
+        },
     },
     [Card.CARD_REVERSE_CHARIOT] = {
         en_us = {
@@ -834,6 +852,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Chargeable}} Активирует эффект {{Card63}} Колесницы? если не двигаться в течении 4 секунд"
         },
+        spa = {
+            description = "{{Chargeable}} Activa el efecto de {{Card63}} ¿El Carruaje? permaneciendo quieto durante 4 segundos"
+        },
     },
     [Card.CARD_REVERSE_JUSTICE] = {
         en_us = {
@@ -844,6 +865,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "25% шанс заменить награду за зачистку комнаты на золотой сундук"
+        },
+        spa = {
+            description = "25% de probabilidad de reemplazar la recompensa al limpiar una habitación con un cofre dorado"
         },
     },
     [Card.CARD_REVERSE_HERMIT] = {
