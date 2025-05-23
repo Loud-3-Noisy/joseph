@@ -880,6 +880,9 @@ descriptions.Enchants = {
         ru = {
             description = "При касании пикапа не монеты превращает этот пикап в количество монет по стоимости магазина"
         },
+        spa = {
+            description = "Tocar cualquier recolectable que no sea una moneda los convertire un número de monedas igual a su Valor en la Tienda"
+        },
     },
     [Card.CARD_REVERSE_WHEEL_OF_FORTUNE] = {
         en_us = {
@@ -890,6 +893,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{DiceRoom}} Создаёт кубик-комнату на этаже если возможно"
+        },
+        spa = {
+            description = "{{DiceRoom}} Genera una sala de dado en el suelo a ser posible"
         },
     },
     [Card.CARD_REVERSE_STRENGTH] = {
@@ -902,6 +908,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Weakness}} При входе в комнату накладывает эффект слабости на всех врагов на 10 секунд"
         },
+        spa = {
+            description = "{{Weakness}} Entrar a una habitación debilita a todos los enemigos por 10 segundos"
+        },
     },
     [Card.CARD_REVERSE_HANGED_MAN] = {
         en_us = {
@@ -912,6 +921,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "↓ {{Speed}} -0.1 Скорости#Тройной выстрел#{{Coin}} С убитых врагов падают исчезающие монеты"
+        },
+        spa = {
+            description = "↓ {{Speed}} Velocidad -0.1#Disparo triple#{{Coin}} Los enemigos asesinados dejan caer monedas que desaparecen"
         },
     },
     [Card.CARD_REVERSE_DEATH] = {
@@ -924,6 +936,9 @@ descriptions.Enchants = {
         ru = {
             description = "Враги при смерти могут создать летающие осколки костей или дружелюбного скелета"
         },
+        spa = {
+            description = "Los enemigos asesinados tienen una probabilidad de generar entidades de hueso o fragmentos amigables"
+        },
     },
     [Card.CARD_REVERSE_TEMPERANCE] = {
         en_us = {
@@ -934,6 +949,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{Pill}} При входе в новую комнату с шансом 20% Айзек использует случайную пилюлю#{{Collectible252}} Даёт эффект предмета Маленький Мешочек"
+        },
+        spa = {
+            description = "{{Pill}} Entrar a una nueva habitación tiene una probabilidad del 20% de obligar a Isaac a comer una píldora al azar#{{Collectible252}} Otorga los efectos de Pequeña Bolsa"
         },
     },
     [Card.CARD_REVERSE_DEVIL] = {
@@ -946,6 +964,9 @@ descriptions.Enchants = {
         ru = {
             description = "Даёт полёт#{{Collectible390}} Создаёт фамильяра Серафима"
         },
+        spa = {
+            description = "Permite volar#{{Collectible390}} Genera un familiar Serafín"
+        },
     },
     [Card.CARD_REVERSE_TOWER] = {
         en_us = {
@@ -957,6 +978,9 @@ descriptions.Enchants = {
         ru = {
             description = "{{Card72}} При получении урона активирует эффект карты Башня?"
         },
+        spa = {
+            description = "{{Card72}} Recibir daño activa los efectos de ¿La Torre?"
+        },
     },
     [Card.CARD_REVERSE_STARS] = {
         en_us = {
@@ -967,6 +991,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "Создаёт Золотой меч висящий над головой Айзека, который удваивает все пьедесталы#{{Warning}} После получения урона, меч упадёт и нанесёт не летальный урон в три полных сердца Айзеку, Изменяя все его пассивные предметы#С помощью неуязвимости можно избежать урона но предметы всё равно будут изменены"
+        },
+        spa = {
+            description = "Genera una espada de oro sobre tu cabeza, que duplica los objetos en pedestales#{{Warning}} Tras recibir daño, la espada se cae y hace 3 corazones de daño no letal a Isaac, rerolleando todos sus objetos pasivos#Invincibility effects can prevent the damage, pero tus objectos todavía serán rerolleados"
         },
     },
     [Card.CARD_REVERSE_MOON] = {
