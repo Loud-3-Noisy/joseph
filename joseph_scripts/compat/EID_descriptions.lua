@@ -62,6 +62,10 @@ descriptions.Collectibles = {
             name = "Миниатюрная Слот Машина",
             description = "{{Coin}} Летает возле персонажа и собирает монеты#Создаёт выплаты {{Slotmachine}} слот машины каждые 3 собранные монеты",
         },
+        spa = {
+            name = "Pequeña Máquina Tragaperras",
+            description = "{{Coin}} Recoge monedas cercanas#Genera recompensas de {{Slotmachine}} Máquina Tragaperras cada 3 monedas",
+        },
     },
 	[enums.Collectibles.LIL_FORTUNE_TELLER] = {
 		en_us = {
@@ -75,8 +79,12 @@ descriptions.Collectibles = {
         ru = {
 			name = "Миниатюрный Предсказатель",
 			description = "{{Coin}} Летает возле персонажа и собирает монеты#Создаёт выплаты {{FortuneTeller}} автомата с предсказаниями каждые 4 собранные монеты",
-        }
-	},	
+        },
+        spa = {
+			name = "Pequeña Máquina Adivina",
+			description = "{{Coin}} Recoge monedas cercanas#Genera recompensas de {{FortuneTeller}} Máquina Adivina cada 3 monedas",
+		},
+	},
 	[enums.Collectibles.LIL_BLOOD_BANK] = {
 		en_us = {
 			name = "Lil Blood Bank",
@@ -89,6 +97,10 @@ descriptions.Collectibles = {
         ru = {
 			name = "Миниатюрный Банк Крови",
 			description = "{{Heart}} Летает возле персонажа и собирает красные сердца#Создаёт выплаты {{BloodDonationMachine}} автомата по сдаче крови в зависимости от собранного сердца",
+		},
+        spa = {
+			name = "Pequeñas Máquina de Sangre",
+			description = "{{Heart}} Recoge Corazones Rojos cercanos#Genera recompensas de {{BloodDonationMachine}} Máquina de Sangre basadas eb ek valor del corazón",
 		},
 	},
 	[enums.Collectibles.SCRAWL] = {
@@ -104,6 +116,10 @@ descriptions.Collectibles = {
 			name = "Испещрение",
 			description = "{{Card}} При входе в незачищенную комнату даёт Айзеку случайную карту#{{Warning}} Карты исчезают сразу после выбрасывании их на пол",
 		},
+        spa = {
+			name = "Garabatos",
+			description = "{{Card}} Entrar en una habitación sin limpiar le da a Isaac una carta al azar#{{Warning}} Las cartas desaparecen al caer al suelo",
+		},
 	},
 	[enums.Collectibles.POKER_MAT] = {
 		en_us = {
@@ -118,6 +134,10 @@ descriptions.Collectibles = {
 			name = "Коврик Для Покера",
 			description = "{{Card}} Создаёт карту #{{RedCard}} Эффект игральных карт удвоен или усилен",
 		},
+        spa = {
+			name = "Estera de Póquer",
+			description = "{{Card}} Genera una carta#{{RedCard}} Los efectos de las cartas de juego son duplicados o mejoran",
+		},
 	},
 	[enums.Collectibles.SOUL_OF_ENVY] = {
 		en_us = {
@@ -131,6 +151,10 @@ descriptions.Collectibles = {
         ru = {
 			name = "Душа Зависти",
 			description = "↑ +1 урона за каждый пикап значение которого 0#Повышение урона уменьшается за каждый пикап который есть у Айзека вплоть до +0 при:#{{Blank}} {{Coin}} 15 монет#{{Blank}} {{Bomb}} 5 бомб#{{Blank}} {{Key}} 5 ключей",
+		},
+        spa = {
+			name = "Alma de Envidia",
+			description = "↑ +1 de daño por cada recolectable con la cuenta de 0#la mejora de daño baja al tener más recolectables, volviendo a +0 con:#{{Blank}} {{Coin}} 15 monedas#{{Blank}} {{Bomb}} 5 bombas#{{Blank}} {{Key}} 5 llaves",
 		},
 	},
 	[enums.Collectibles.CARD_SLEEVE] = {
@@ -1006,6 +1030,9 @@ descriptions.Enchants = {
         ru = {
             description = "Создаёт проход в красную комнату после зачистки комнаты если возможно#50% шанс на срабатывание в красных комнатах"
         },
+        spa = {
+            description = "Limpiar una habitación genera una Habitación Roja a ser posiblr#50% de probabilidad dentro de una habitación roja"
+        },
     },
     [Card.CARD_REVERSE_SUN] = {
         en_us = {
@@ -1016,6 +1043,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "#↑ {{Damage}} {{ColorYellow}}+1 Урон#Полёт и спектральные слёзы#{{BoneHeart}} Превращает красные сердца в костяные (Обратимо)#{{CurseDarkness}} Проклятие Темноты"
+        },
+        spa = {
+            description = "#↑ {{Damage}} {{ColorYellow}}Daño +1.5#Permite volar#Lágrimas espectrales#{{BoneHeart}} Convierte los contenedores de corazón en corazones de hueso (reversible)#{{CurseDarkness}} Otorga Maldición de Oscuridad"
         },
     },
     [Card.CARD_REVERSE_JUDGEMENT] = {
@@ -1028,6 +1058,9 @@ descriptions.Enchants = {
         ru = {
             description = "Пьедесталы переключаются между 2 предметами"
         },
+        spa = {
+            description = "Los objetos en pedestales alternan entre 2 objetos"
+        },
     },
     [Card.CARD_REVERSE_WORLD] = {
         en_us = {
@@ -1038,6 +1071,9 @@ descriptions.Enchants = {
         },
         ru = {
             description = "{{LadderRoom}} Создаёт люк в полу в стартовой комнате который ведёт в Ретро сокровищницу"
+        },
+        spa = {
+            description = "{{LadderRoom}} Genera una trampilla a una mazmorra en la primera sala del piso"
         },
     },
 
