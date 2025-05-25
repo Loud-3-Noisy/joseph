@@ -170,6 +170,10 @@ descriptions.Collectibles = {
 			name = "Протектор Для Карт",
 			description = "{{Card}} Убирает активную карту таро, зачаровывая её на Айзека пока у вас есть этот предмет#{{Card}} Зачарование другой карты заменит эффект предыдущего зачарования",
 		},
+        spa = {
+			name = "Funda de Cartas",
+			description = "{{Card}} Consume la carta del Tarot tenida actualmente, encantándola en usaac al ser tenida#{{Card}} Encantar una nueva carta elimina el efecto del encantamiento anterior",
+		},
 	},
 	[enums.Collectibles.CALENDAR] = {
 		en_us = {
@@ -184,6 +188,10 @@ descriptions.Collectibles = {
 			name = "Календарь",
 			description = "Повышает характеристику в зависимости от текущего дня недели:",
 		},
+        spa = {
+			name = "Calendar",
+			description = "Incrementa una estadística basada en el día de la semana:",
+		},
 	},
 	[enums.Collectibles.SHREDDER] = {
 		en_us = {
@@ -197,6 +205,10 @@ descriptions.Collectibles = {
         ru = {
 			name = "Шредер",
 			description = "{{Card}} Уничтожает карту в активном слоте расходников Айзека, Создаёт 5 случайных пикапов и перманентно удаляет эту карту из пула карт до конца текущего забега",
+		},
+        spa = {
+			name = "Trituradora",
+			description = "{{Card}} Tritura la carta actualemnte seleccionada como consumible, generandp 5 recolectables aleatorios y eliminando permanentemente esa carta de la pool por el resto de la partida",
 		},
 	},
     [enums.Collectibles.ACE_OF_HEARTS] = {
@@ -214,6 +226,12 @@ descriptions.Collectibles = {
 			name = "Туз Червей",
 			description = "Все пикапы сердца будут заменяться на 50% случайную карту или 50% другой случайный пикап#Сердца {{Heart}} созданные с помощью {{Card}} карт не будут заменяться",
 		},
+        spa = {
+			name = "As de corazones",
+			description = "{{Heart}} Disminuye la tasa de aparición de corazones en 50%" ..
+            "#{{Card}} Todas las recolectables de corazones se convierten en cartas aleatorias" ..
+            "#{{Card" .. Card.CARD_LOVERS .. "}} Los corazones generados por cartas no son afectados",
+		},
 	},
     [enums.Collectibles.MAGIC_SKIN_SINGLE_USE] = {
 		en_us = {
@@ -228,6 +246,10 @@ descriptions.Collectibles = {
 			name = "Магическая кожа",
 			description = "{{Warning}} ОДНОРАЗОВОЕ {{Warning}}#Создаёт предмет пула текущей комнаты#{{BrokenHeart}} Превращает 1 контейнер сердец или 1 костяное сердце или 2 синих сердца в сломанное сердце#",
 		},
+        spa = {
+			name = "Piel Mágica",
+			description = "{{Warning}} UN SOLO USO {{Warning}}#Genera un objeto de la pool de objectos de la habitación actual#{{BrokenHeart}} Convierte 1 contenedor de corazón o 1 Corazón de Hueso o 2 corazones de alma en un corazón roto#",
+		},
 	},
 }
 
@@ -236,36 +258,43 @@ descriptions.CalendarDays = {--add some icons for stats being added
         en_us = "#{{ColorSilver}}Sunday:{{CR}} #↑ +1 Damage",
         zh_cn = "#{{ColorSilver}}周日:{{CR}}#↑ {{Damage}} 伤害+1",
         ru = "#{{ColorSilver}}Воскресенье:{{CR}} #↑ +1 урон",
+        spa = "#{{ColorSilver}}Domingo:{{CR}} #↑ +1 de Daño",
     },
     [2] = {
         en_us = "#{{ColorSilver}}Monday:{{CR}} #↑ +0.7 Tears",
         zh_cn = "#{{ColorSilver}}周一:{{CR}} #↑ {{Tears}} 射速+0.7",
         ru = "#{{ColorSilver}}Понедельник:{{CR}} #↑ +0.7 Скорострельности",
+        spa = "#{{ColorSilver}}Lunes:{{CR}} #↑ +0.7 de Lágrimas",
     },
     [3] = {
         en_us = "#{{ColorSilver}}Tuesday:{{CR}} #↑ +1 Damage",
         zh_cn = "#{{ColorSilver}}周二:{{CR}} #↑ {{Damage}} 伤害+1",
         ru = "#{{ColorSilver}}Вторник:{{CR}} #↑ +1 Урон",
+        spa = "#{{ColorSilver}}Martes:{{CR}} #↑ +1 de Daño",
     },
     [4] = {
         en_us = "#{{ColorSilver}}Wednesday:{{CR}} #↑ +0.3 Speed",
         zh_cn = "#{{ColorSilver}}周三:{{CR}} #↑ {{Speed}} 移速+0.3",
         ru = "#{{ColorSilver}}Среда:{{CR}} #↑ +0.3 Скорости",
+        spa = "#{{ColorSilver}}Miércoles:{{CR}} #↑ +0.3 de Velocidad"
     },
     [5] = {
         en_us = "#{{ColorSilver}}Thursday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart",
         zh_cn = "#{{ColorSilver}}周四:{{CR}} #↑ {{Heart}} 心之容器+1#{{HealingRed}} 治疗1红心",
         ru = "#{{ColorSilver}}Четверг:{{CR}} #↑ +1 к здоровью #{{HealingRed}} Лечит 1 красное сердце",
+        spa = "#{{ColorSilver}}Jueves:{{CR}} #↑ +1 de Vida #{{HealingRed}} Cura 1 Corazón",
     },
     [6] = {
         en_us = "#{{ColorSilver}}Friday:{{CR}} #↑ +1 Health #{{HealingRed}} Heals 1 heart",
         zh_cn = "#{{ColorSilver}}周五:{{CR}} #↑ {{Heart}} 心之容器+1#{{HealingRed}} 治疗1红心",
         ru = "#{{ColorSilver}}Пятница:{{CR}} #↑ +1 к здоровью #{{HealingRed}} Лечит 1 красное сердце",
+        spa = "#{{ColorSilver}}Miércoles:{{CR}} #↑ +1 de Vida #{{HealingRed}} Cura 1 Corazón",
     },
     [7] = {
         en_us = "#{{ColorSilver}}Saturday:{{CR}} #↑ +0.7 Tears",
         zh_cn = "#{{ColorSilver}}周六:{{CR}} #↑ {{Tears}} 射速+0.7",
-         ru = "#{{ColorSilver}}Суббота:{{CR}} #↑ +0.7 Скорострельности",
+        ru = "#{{ColorSilver}}Суббота:{{CR}} #↑ +0.7 Скорострельности",
+        spa = "#{{ColorSilver}}Sábado:{{CR}} #↑ +0.7 de Lágrimas",
     },
 }
 
@@ -284,6 +313,10 @@ descriptions.Trinkets = {
 			name = "Чашка радости",
 			description = "Копирует эффект последнего подобранного пассивного предмета",
 		},
+        spa = {
+			name = "Taza de José",
+			description = "Copia el efecto del último objeto recolectado#Cambia al recolectar un objeto nuevo",
+		},
 	},
 	[enums.Trinkets.EAR_OF_GRAIN] = {
 		en_us = {
@@ -297,6 +330,10 @@ descriptions.Trinkets = {
         ru = {
 			name = "Колос Зерна",
 			description = "Голод появляется как дополнительный босс при входе в {{BossRoom}} комнату босса. #При смерти Голод создаст {{Collectible73}} кубик мяса/{{Collectible207}} шар из пластырей #Количество здоровья Голода зависит от текущего этажа",
+		},
+        spa = {
+			name = "Espiga de Trigo",
+			description = "Hambruna aparece como un Jefe adicional contra el que luchar al entrar a una {{BossRoom}} Sala de Jefe. #Derrotar a Hamburna suelta un {{Collectible73}} Cubo de Carno/{{Collectible207}} Bola de Vendas adicional#La vida de Hambruna escala con el piso",
 		},
 	},
 }
@@ -314,6 +351,10 @@ descriptions.Cards = {
         ru = {
 			name = "XX - Эон",
 			description = "Перенесет вас в предыдущую комнату#Все вокруг восстанавливает свое первоначальное состояние, какое они имели, когда вы были в предыдущей комнате",
+		},
+        spa = {
+			name = "XX - El Eón",
+			description = "Regresa a Isaac a la habitación anterior y y revierte todas las acciones hechas en la habitación en la que la carta fue usada",
 		},
 	},
 }
