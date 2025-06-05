@@ -391,7 +391,7 @@ descriptions.Characters = {
         en_us = {
             name = "Joseph",
             description = "Can carry 2 cards/runes at once"..
-            "#Holding down the use button will consumes the currently held Tarot Card, enchanting it onto Joseph"..
+            "#Holding down the use button will consume the currently held Tarot Card, enchanting it onto Joseph"..
             "#Enchanting a new card will remove the previous enchant's effect"..
             "#!!! Taking non-self damage will have chance to remove the enchanted card"
         },
