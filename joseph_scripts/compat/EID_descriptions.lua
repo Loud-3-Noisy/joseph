@@ -657,7 +657,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_STRENGTH] = {
         en_us = {
-            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +0.3 Damage#↑ {{Damage}} {{ColorYellow}}x1.25 Damage multiplier#↑ {{Range}} +5.25 Range#↑ +0.5 Tear height"
+            description = "↑ {{Speed}} +0.3 Speed#↑ {{Damage}} +0.3 Damage#↑ {{Damage}} {{ColorYellow}}x1.25 Damage multiplier#↑ {{Range}} +2.5 Range"
         },
         zh_cn = {
             description = "↑ {{Speed}} 移速+0.3#↑ {{Damage}} 伤害+0.3#↑ {{Damage}} {{ColorYellow}}伤害倍率x1.25#↑ {{Range}} 射程+5.25#↑ 泪弹高度+0.5"
