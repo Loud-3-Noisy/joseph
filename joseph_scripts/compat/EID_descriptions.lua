@@ -142,7 +142,7 @@ descriptions.Collectibles = {
 	[enums.Collectibles.SOUL_OF_ENVY] = {
 		en_us = {
 			name = "Soul of Envy",
-			description = "↑ +1 damage up for each consumable at a count of 0#the damage up decreases the more pickups Isaac have, returning to +0 at:#{{Blank}} {{Coin}} 15 coins#{{Blank}} {{Bomb}} 5 bombs#{{Blank}} {{Key}} 5 keys",
+			description = "↑ +1 damage up for each consumable at a count of 0#The damage up decreases the more pickups Isaac has, returning to +0 at:#{{Blank}} {{Coin}} 15 coins#{{Blank}} {{Bomb}} 5 bombs#{{Blank}} {{Key}} 5 keys",
 		},
 		zh_cn = {
 			name = "嫉妒之魂",
