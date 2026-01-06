@@ -331,7 +331,11 @@ function BaseCardEffects:EnchantmentEffects(player, enchantedCard, slot)
 
     if room:IsClear() and room:IsFirstVisit() then
         if enchantedCard == Card.CARD_FOOL then
-            JosephMod.BaseCardEffects:spawnPortal(3)
+            if REPENTANCE_PLUS then
+                JosephMod.BaseCardEffects:spawnPortal(4)
+            else
+                JosephMod.BaseCardEffects:spawnPortal(3)
+            end
         end
     end
 
@@ -471,7 +475,11 @@ function BaseCardEffects:RoomClearEffect(rng, spawnPos)
     local choicePedestalCount = 0
 
     if utility:AnyPlayerHasEnchantment(Card.CARD_FOOL) then
-        JosephMod.BaseCardEffects:spawnPortal(3)
+            if REPENTANCE_PLUS then
+                JosephMod.BaseCardEffects:spawnPortal(4)
+            else
+                JosephMod.BaseCardEffects:spawnPortal(3)
+            end
     end
 
     for i = 0, Game():GetNumPlayers() - 1 do

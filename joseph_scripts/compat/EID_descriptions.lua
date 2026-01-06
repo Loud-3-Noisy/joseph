@@ -506,7 +506,7 @@ descriptions.Enchants = {
     },
     [Card.CARD_FOOL] = {
         en_us = {
-            description = "Spawns a Portal to an unexplored regular room on room clear"
+            description = "Spawns a Portal to an random room on room clear"
         },
         zh_cn = {
             description = "清理一个有敌人的房间后, 生成一个前往未探索房间的传送门"
