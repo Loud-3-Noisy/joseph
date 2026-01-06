@@ -332,9 +332,10 @@ function BaseCardEffects:EnchantmentEffects(player, enchantedCard, slot)
     if room:IsClear() and room:IsFirstVisit() then
         if enchantedCard == Card.CARD_FOOL then
             if REPENTANCE_PLUS then
-                JosephMod.BaseCardEffects:spawnPortal(4)
+                JosephMod.BaseCardEffects:spawnPortal(4, Color(0.5, 1, 0.4, 1))
             else
                 JosephMod.BaseCardEffects:spawnPortal(3)
+
             end
         end
     end
@@ -476,7 +477,7 @@ function BaseCardEffects:RoomClearEffect(rng, spawnPos)
 
     if utility:AnyPlayerHasEnchantment(Card.CARD_FOOL) then
             if REPENTANCE_PLUS then
-                JosephMod.BaseCardEffects:spawnPortal(4)
+                JosephMod.BaseCardEffects:spawnPortal(4, Color(0.5, 1, 0.4, 1))
             else
                 JosephMod.BaseCardEffects:spawnPortal(3)
             end
@@ -529,7 +530,7 @@ local function isDoor(pos)
 	return false
 end
 
-function BaseCardEffects:spawnPortal(portalType)
+function BaseCardEffects:spawnPortal(portalType, color)
     local player = Isaac.GetPlayer()
     local room = Game():GetRoom()
     local marg = 40
@@ -563,7 +564,10 @@ function BaseCardEffects:spawnPortal(portalType)
         if tempNPC then tempNPC:Remove() end
         attempts = attempts + 1 
     until not overlaps or attempts > 20
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, pos, Vector.Zero, player):ToEffect()
+    local portal = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, pos, Vector.Zero, player):ToEffect()
+    if color then 
+        portal.Color = color
+    end
 end
 
 function BaseCardEffects:RemoveShopTrapdoor()
