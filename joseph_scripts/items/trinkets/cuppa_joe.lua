@@ -153,7 +153,6 @@ JosephMod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, CuppaJoe.NewRoom)
 function CuppaJoe:GetLastPassive(player)
     local history = player:GetHistory():GetCollectiblesHistory()
     local config
-    Isaac.GetPlayer():GetHistory():GetCollectiblesHistory()[1]:GetItemID()
     for i = #history, 1, -1 do
         if not history[i]:IsTrinket() then
             local id = history[i]:GetItemID()
